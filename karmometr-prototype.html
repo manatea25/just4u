@@ -506,8 +506,8 @@
 
     .totem-stage-card {
       display: grid;
-      grid-template-rows: auto 1fr auto;
-      min-height: 610px;
+      grid-template-rows: auto minmax(310px, 1fr) auto;
+      min-height: 540px;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 32px;
@@ -560,7 +560,7 @@
       position: relative;
       display: grid;
       place-items: center;
-      min-height: 350px;
+      min-height: 310px;
       overflow: hidden;
     }
 
@@ -573,14 +573,14 @@
     }
 
     .totem-stage::before {
-      width: 330px;
-      height: 330px;
+      width: 300px;
+      height: 300px;
       animation: spin 18s linear infinite;
     }
 
     .totem-stage::after {
-      width: 230px;
-      height: 230px;
+      width: 210px;
+      height: 210px;
       border-style: dashed;
       animation: spin 14s linear infinite reverse;
     }
@@ -588,7 +588,7 @@
     .totem-art {
       position: relative;
       z-index: 2;
-      width: min(340px, 90%);
+      width: min(310px, 86%);
       height: auto;
       overflow: visible;
       filter: drop-shadow(0 28px 24px rgba(70, 48, 25, 0.18));
@@ -608,7 +608,7 @@
     }
 
     .totem-caption {
-      padding: 0 22px 22px;
+      padding: 0 22px 18px;
       text-align: center;
     }
 
@@ -629,8 +629,8 @@
 
     .progress-card {
       display: grid;
-      gap: 14px;
-      padding: 16px;
+      gap: 12px;
+      padding: 15px;
       border: 1px solid var(--line);
       border-radius: 28px;
       background: rgba(255, 255, 255, 0.56);
@@ -753,7 +753,7 @@
 
     .right-stack {
       display: grid;
-      gap: 14px;
+      gap: 12px;
       align-content: start;
     }
 
@@ -771,7 +771,7 @@
     .quote-card {
       position: relative;
       overflow: hidden;
-      padding: 18px;
+      padding: 16px;
       border-radius: 26px;
       background: var(--night);
       color: var(--surface);
@@ -804,7 +804,7 @@
       position: relative;
       z-index: 1;
       margin: 0;
-      font-size: 1.35rem;
+      font-size: 1.22rem;
       line-height: 1.16;
       letter-spacing: -0.055em;
       font-weight: 950;
