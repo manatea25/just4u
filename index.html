@@ -6,21 +6,19 @@
   <title>KarmoMetr — Кармася Техася</title>
   <style>
     :root {
-      --bg: #0f1726;
-      --bg-soft: #162034;
-      --card: #1b2942;
-      --card-light: #213251;
-      --text: #f4f8ff;
-      --muted: #9eb3d4;
-      --line: #304664;
-      --brand: #64d9cf;
-      --brand-strong: #3ec8bb;
-      --brand-soft: rgba(100, 217, 207, 0.14);
-      --dark-brand: #2d3544;
-      --gold: #ffc96e;
-      --danger: #ff7f8f;
-      --ok: #35d88a;
-      --shadow: 0 16px 36px rgba(1, 8, 20, 0.42);
+      --bg: #0d1524;
+      --bg-2: #111d30;
+      --card: #1a2942;
+      --card-2: #22334f;
+      --line: #334b6d;
+      --text: #eef5ff;
+      --muted: #9fb5d6;
+      --brand: #65dad0;
+      --brand-2: #46c9be;
+      --gold: #ffcb75;
+      --ok: #35d889;
+      --danger: #ff7e8e;
+      --shadow: 0 16px 34px rgba(3, 10, 24, 0.45);
       --r: 18px;
     }
 
@@ -35,10 +33,10 @@
       font-family: Inter, "SF Pro Display", "Segoe UI", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 100% 0%, rgba(100, 217, 207, 0.16), transparent 35%),
-        radial-gradient(circle at 0% 0%, rgba(255, 201, 110, 0.11), transparent 26%),
-        linear-gradient(180deg, #0b1423, #111a2a 45%, #0e1625);
-      line-height: 1.45;
+        radial-gradient(circle at 100% 0, rgba(101, 218, 208, 0.18), transparent 32%),
+        radial-gradient(circle at 0 0, rgba(255, 203, 117, 0.1), transparent 30%),
+        linear-gradient(180deg, #0a1220, #111a2b);
+      line-height: 1.44;
     }
 
     .app {
@@ -50,34 +48,35 @@
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 45;
       margin: 0 -14px;
       padding: 10px 14px;
-      background: rgba(13, 22, 38, 0.9);
-      border-bottom: 1px solid rgba(56, 77, 110, 0.68);
+      border-bottom: 1px solid rgba(58, 80, 114, 0.85);
+      background: rgba(12, 21, 35, 0.92);
       backdrop-filter: blur(10px);
     }
 
     .topbar-row {
       width: min(1120px, 100%);
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
       gap: 10px;
+      align-items: center;
     }
 
     .logo-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
+      min-width: 0;
     }
 
     .logo-box {
-      border-radius: 14px;
-      border: 1px solid #2d415f;
-      background: #0f1a2d;
+      border: 1px solid #3a5378;
+      border-radius: 13px;
       padding: 7px 10px;
+      background: #10203a;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -85,71 +84,162 @@
     }
 
     .logo-word {
-      font-size: 1.2rem;
       font-weight: 900;
       letter-spacing: 0.2px;
-      color: #eff4ff;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      font-size: 1.18rem;
+      color: #f1f7ff;
     }
 
     .logo-mark {
       width: 33px;
       height: 33px;
       border-radius: 10px;
-      background: linear-gradient(145deg, #7be4da, #58cfc4);
       display: grid;
       place-items: center;
-      color: #fff;
-      box-shadow: 0 10px 18px rgba(95, 213, 202, 0.34);
-      font-size: 1.03rem;
+      font-size: 1rem;
+      color: white;
+      background: linear-gradient(145deg, #7ee7de, #58d0c5);
+      box-shadow: 0 8px 16px rgba(88, 208, 197, 0.35);
     }
 
-    .logo-note {
+    .logo-sub {
       color: var(--muted);
       font-size: 0.75rem;
       font-weight: 700;
+      margin-top: 2px;
     }
 
-    .mode-pill {
-      border-radius: 999px;
-      border: 1px solid #3a5479;
-      background: #162740;
-      color: #b5c8e6;
-      padding: 6px 10px;
+    .top-meter {
+      border: 1px solid #3a5378;
+      border-radius: 14px;
+      background: #142640;
+      padding: 8px 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-meter::after {
+      content: "";
+      position: absolute;
+      width: 110px;
+      height: 160%;
+      top: -20%;
+      left: -140px;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.24), transparent);
+      transform: skewX(-18deg);
+      animation: shine 3.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes shine {
+      0%, 20% { left: -160px; }
+      80%, 100% { left: calc(100% + 80px); }
+    }
+
+    .meter-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .meter-title {
+      color: #c6d8f1;
       font-size: 0.72rem;
       font-weight: 800;
-      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .points-pill {
+      border-radius: 999px;
+      border: 1px solid #83e6dd;
+      background: linear-gradient(145deg, #1c4a4a, #1f6260);
+      color: #cafff8;
+      padding: 3px 9px;
+      font-weight: 900;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 0 0 0 rgba(101, 218, 208, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .points-pill.bump {
+      transform: scale(1.08);
+      box-shadow: 0 0 0 8px rgba(101, 218, 208, 0);
+    }
+
+    .meter-track {
+      width: 100%;
+      height: 11px;
+      border-radius: 999px;
+      border: 1px solid #466388;
+      background: #0f1f36;
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #79e5db, #45c9be);
+      border-radius: inherit;
+      position: relative;
+      transition: width 900ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .meter-fill::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      animation: flow 1.4s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes flow {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
+    }
+
+    .meter-hint {
+      margin-top: 5px;
+      color: #9bb2d3;
+      font-size: 0.74rem;
+      font-weight: 700;
     }
 
     .screen {
       display: none;
       padding-top: 14px;
-      animation: rise 0.2s ease;
+      animation: pop-in 0.2s ease;
     }
 
     .screen.active {
       display: block;
     }
 
-    @keyframes rise {
+    @keyframes pop-in {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .card {
-      border-radius: var(--r);
       border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(30, 45, 71, 0.92), rgba(23, 37, 60, 0.94));
-      box-shadow: var(--shadow);
+      border-radius: var(--r);
       padding: 14px;
+      background: linear-gradient(180deg, rgba(29, 44, 69, 0.95), rgba(23, 37, 60, 0.95));
+      box-shadow: var(--shadow);
     }
 
-    .hero-card {
+    .hero {
       padding: 18px;
       background:
-        radial-gradient(circle at 0% 100%, rgba(100, 217, 207, 0.17), transparent 35%),
-        radial-gradient(circle at 100% 0%, rgba(255, 201, 110, 0.11), transparent 30%),
-        linear-gradient(165deg, #1b2a44, #18253e 60%, #132039);
+        radial-gradient(circle at 0 100%, rgba(101, 218, 208, 0.18), transparent 38%),
+        radial-gradient(circle at 100% 0, rgba(255, 203, 117, 0.13), transparent 32%),
+        linear-gradient(160deg, #1d2d48, #182740);
     }
 
     .title {
@@ -162,15 +252,15 @@
     }
 
     .subtitle {
+      color: #a8bedf;
       font-size: 0.95rem;
-      color: #a9bbd7;
       margin-bottom: 14px;
-      max-width: 780px;
+      max-width: 760px;
     }
 
     .screen-title {
-      font-size: 1.14rem;
       color: #f3f8ff;
+      font-size: 1.14rem;
       font-weight: 900;
       margin-bottom: 4px;
     }
@@ -194,20 +284,20 @@
 
     label {
       display: block;
-      color: #c0cfe8;
+      color: #c4d3eb;
+      margin-bottom: 6px;
       font-size: 0.82rem;
       font-weight: 800;
-      margin-bottom: 6px;
     }
 
     input,
     textarea {
       width: 100%;
-      border: 1px solid #3a547a;
+      border: 1px solid #3c567d;
       border-radius: 12px;
-      background: #13213a;
+      background: #13223a;
       color: #eef5ff;
-      padding: 11px 11px;
+      padding: 11px;
       font-size: 0.95rem;
       outline: none;
       transition: 0.2s ease;
@@ -220,8 +310,8 @@
 
     input:focus,
     textarea:focus {
-      border-color: #7ae2d8;
-      box-shadow: 0 0 0 3px rgba(100, 217, 207, 0.2);
+      border-color: #87e7de;
+      box-shadow: 0 0 0 3px rgba(101, 218, 208, 0.2);
     }
 
     .btn {
@@ -241,26 +331,26 @@
 
     .btn-primary {
       color: #fff;
-      background: linear-gradient(145deg, #6ce1d7, #4ecfc3);
-      box-shadow: 0 10px 20px rgba(80, 207, 195, 0.32);
+      background: linear-gradient(145deg, #6fe3d9, #4ecfc3);
+      box-shadow: 0 10px 20px rgba(78, 207, 195, 0.35);
     }
 
     .btn-secondary {
-      color: #c8d7ee;
-      background: #15253f;
-      border: 1px solid #3a557b;
+      color: #c9d9ef;
+      background: #162740;
+      border: 1px solid #3b567b;
     }
 
     .btn-danger {
-      color: #ffdce1;
-      background: rgba(255, 126, 143, 0.13);
-      border: 1px solid rgba(255, 126, 143, 0.48);
+      color: #ffd2d9;
+      background: rgba(255, 126, 142, 0.13);
+      border: 1px solid rgba(255, 126, 142, 0.5);
     }
 
     .row {
       display: flex;
-      align-items: center;
       gap: 10px;
+      align-items: center;
       flex-wrap: wrap;
     }
 
@@ -269,20 +359,19 @@
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(100, 217, 207, 0.38); }
-      100% { box-shadow: 0 0 0 14px rgba(100, 217, 207, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(101, 218, 208, 0.4); }
+      100% { box-shadow: 0 0 0 14px rgba(101, 218, 208, 0); }
     }
 
     .totem-grid {
       display: grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
       gap: 10px;
     }
 
     .totem-card {
-      border: 1px solid #3a547a;
+      border: 1px solid #3c567c;
       border-radius: 16px;
-      background: #15253f;
+      background: #172942;
       padding: 12px;
       display: grid;
       grid-template-columns: 100px 1fr;
@@ -293,32 +382,32 @@
     }
 
     .totem-card:hover {
-      border-color: #87e4da;
+      border-color: #89e5dc;
       transform: translateY(-1px);
-      background: #172944;
+      background: #1a2e49;
     }
 
     .totem-card.selected {
-      border-color: #67ddd2;
-      box-shadow: 0 0 0 3px rgba(100, 217, 207, 0.2);
-      background: #1a2c47;
+      border-color: #68ddd3;
+      box-shadow: 0 0 0 3px rgba(101, 218, 208, 0.2);
+      background: #1d314d;
     }
 
     .totem-art {
-      border-radius: 15px;
-      border: 1px solid #4a6389;
+      border-radius: 14px;
+      border: 1px solid #4d6890;
       background: linear-gradient(145deg, var(--t1), var(--t2));
       min-height: 100px;
-      position: relative;
       display: grid;
       place-items: center;
+      position: relative;
       overflow: hidden;
     }
 
-    .totem-art .emoji {
+    .totem-art span {
       font-size: 2.2rem;
       z-index: 1;
-      filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.28));
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
     }
 
     .totem-art::before {
@@ -333,49 +422,43 @@
     }
 
     .totem-title {
-      color: #eff6ff;
+      color: #eef6ff;
       font-size: 1rem;
       font-weight: 900;
       margin-bottom: 2px;
     }
 
     .totem-sub {
-      color: #abc0df;
+      color: #adc1df;
       font-size: 0.82rem;
       margin-bottom: 7px;
     }
 
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 7px;
-    }
-
-    .chip {
-      border-radius: 999px;
-      border: 1px solid #476287;
-      background: #1f3252;
-      color: #c3d4ed;
-      padding: 4px 8px;
-      font-size: 0.7rem;
-      font-weight: 800;
-    }
-
+    .chips,
     .evo {
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
     }
 
-    .evo span {
+    .chip {
+      border: 1px solid #4a658b;
       border-radius: 999px;
-      border: 1px dashed #516e94;
+      padding: 4px 8px;
       color: #c0d2ea;
+      background: #1d3151;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .evo span {
+      border: 1px dashed #567399;
+      border-radius: 999px;
       padding: 3px 7px;
+      color: #bfd2eb;
+      background: #1a2d49;
       font-size: 0.68rem;
       font-weight: 700;
-      background: #1b2c48;
     }
 
     .welcome {
@@ -397,17 +480,17 @@
       width: 48px;
       height: 48px;
       border-radius: 12px;
-      border: 1px solid #4b658c;
+      border: 1px solid #4b668e;
+      background: #1a2d49;
       object-fit: cover;
-      background: #1b2c48;
       flex-shrink: 0;
     }
 
     .greeting {
       margin-top: 4px;
+      color: #f2f8ff;
       font-size: 1.12rem;
       line-height: 1.2;
-      color: #f1f7ff;
       font-weight: 900;
     }
 
@@ -419,22 +502,22 @@
     }
 
     .kpi {
-      border: 1px solid #3a5379;
+      border: 1px solid #3b567c;
       border-radius: 12px;
-      background: #162840;
+      background: #152840;
       padding: 9px;
       text-align: center;
     }
 
     .kpi strong {
       display: block;
-      color: #f5f9ff;
+      color: #f2f8ff;
       font-size: 1.08rem;
       margin-bottom: 2px;
     }
 
     .kpi span {
-      color: #9fb4d4;
+      color: #a1b6d5;
       font-size: 0.7rem;
       font-weight: 700;
     }
@@ -448,16 +531,16 @@
 
     .deed-list {
       list-style: none;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-top: 8px;
     }
 
     .deed-item {
-      border: 1px solid #3b557b;
+      border: 1px solid #3b567c;
       border-radius: 13px;
-      background: #162942;
+      background: #172a43;
       padding: 10px;
     }
 
@@ -469,10 +552,10 @@
     }
 
     .deed-points {
-      border-radius: 999px;
       border: 1px solid #7de3d9;
+      border-radius: 999px;
       background: #113a39;
-      color: #9ef5eb;
+      color: #9ef4ea;
       font-size: 0.7rem;
       font-weight: 900;
       padding: 3px 7px;
@@ -480,9 +563,9 @@
     }
 
     .totem-panel {
-      border: 1px solid #3a5479;
-      border-radius: 15px;
-      background: #162840;
+      border: 1px solid #3b567c;
+      border-radius: 14px;
+      background: #172a43;
       padding: 12px;
     }
 
@@ -497,7 +580,7 @@
       width: 72px;
       height: 72px;
       border-radius: 17px;
-      border: 1px solid #4d688f;
+      border: 1px solid #4d6890;
       background: linear-gradient(145deg, var(--tb1), var(--tb2));
       display: grid;
       place-items: center;
@@ -526,7 +609,7 @@
       width: 106px;
       height: 106px;
       border-radius: 50%;
-      background: conic-gradient(var(--brand) 0deg, #364f73 0deg);
+      background: conic-gradient(var(--brand) 0deg, #375074 0deg);
       position: relative;
       display: grid;
       place-items: center;
@@ -539,8 +622,8 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: #11213a;
-      border: 1px solid #435d83;
+      border: 1px solid #455f86;
+      background: #12233d;
       position: absolute;
     }
 
@@ -548,17 +631,17 @@
       position: relative;
       z-index: 1;
       display: grid;
-      text-align: center;
       gap: 1px;
+      text-align: center;
     }
 
     .ring-center strong {
-      color: #f2f8ff;
+      color: #f1f7ff;
       font-size: 1.14rem;
     }
 
     .ring-center span {
-      color: #a9bcd8;
+      color: #a7bbd8;
       font-size: 0.68rem;
       font-weight: 700;
     }
@@ -570,10 +653,10 @@
     }
 
     .unlock {
-      border: 1px solid #456185;
+      border: 1px solid #49658b;
       border-radius: 999px;
       background: #1d3150;
-      color: #c3d5ed;
+      color: #c2d5ee;
       padding: 4px 8px;
       font-size: 0.73rem;
       font-weight: 700;
@@ -581,24 +664,24 @@
 
     .sheriff-banner {
       margin-top: 8px;
-      border: 1px dashed #607ea7;
+      border: 1px dashed #617fa8;
       border-radius: 12px;
       padding: 8px 10px;
-      color: #d7e5fa;
+      color: #dae8fc;
+      background: rgba(255, 203, 117, 0.1);
       font-weight: 800;
-      background: rgba(255, 201, 110, 0.08);
       font-size: 0.79rem;
     }
 
     .score-badge {
+      border: 1px solid #466285;
       border-radius: 12px;
-      border: 1px solid #456083;
-      background: #1a2d49;
-      color: #cbe0fa;
+      padding: 10px;
+      color: #d4e8ff;
       font-size: 0.86rem;
       font-weight: 800;
-      padding: 10px;
       text-align: center;
+      background: #1a2e4a;
     }
 
     .quick-templates {
@@ -609,13 +692,13 @@
     }
 
     .quick-templates button {
-      border: 1px solid #456183;
+      border: 1px solid #466285;
       border-radius: 999px;
       background: #1a2e4a;
-      color: #bdd0ea;
+      color: #c1d4ec;
       font-size: 0.73rem;
-      padding: 5px 9px;
       font-weight: 700;
+      padding: 5px 9px;
       cursor: pointer;
     }
 
@@ -627,24 +710,24 @@
     }
 
     .stat {
-      border: 1px solid #3a5479;
+      border: 1px solid #3b567c;
       border-radius: 13px;
-      background: #162840;
+      background: #172a43;
       padding: 10px;
     }
 
     .stat strong {
       display: block;
-      font-size: 1.22rem;
       color: #f3f8ff;
+      font-size: 1.22rem;
       margin-bottom: 2px;
     }
 
     .chart {
       margin-top: 10px;
-      border: 1px solid #3a5479;
+      border: 1px solid #3b567c;
       border-radius: 14px;
-      background: #162840;
+      background: #172a43;
       padding: 12px;
     }
 
@@ -666,13 +749,13 @@
     .bar {
       width: 100%;
       border-radius: 8px 8px 4px 4px;
-      background: linear-gradient(180deg, #87eadf, #55cdc2);
-      border: 1px solid #7de2d8;
+      background: linear-gradient(180deg, #89eadf, #57cec3);
+      border: 1px solid #7fe4da;
       min-height: 7px;
     }
 
     .bar-slot span {
-      color: #9fb4d4;
+      color: #a1b6d5;
       font-size: 0.69rem;
       font-weight: 700;
     }
@@ -702,16 +785,16 @@
 
     .day {
       min-height: 62px;
-      border: 1px solid #3a5479;
+      border: 1px solid #3b567c;
       border-radius: 11px;
-      background: #15273f;
-      color: #dce8f9;
+      background: #162840;
+      color: #dfebfa;
       font-weight: 800;
       text-align: left;
       padding: 7px;
       cursor: pointer;
-      position: relative;
       transition: 0.16s ease;
+      position: relative;
     }
 
     .day:hover {
@@ -719,12 +802,12 @@
     }
 
     .day.today {
-      border-color: #ffcf7d;
+      border-color: #ffd07f;
     }
 
     .day.selected {
       border-color: #66ddd2;
-      box-shadow: 0 0 0 3px rgba(100, 217, 207, 0.22);
+      box-shadow: 0 0 0 3px rgba(101, 218, 208, 0.22);
     }
 
     .day.has-plan::after {
@@ -732,7 +815,7 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #64d9cf;
+      background: #65dad0;
       position: absolute;
       right: 7px;
       bottom: 7px;
@@ -751,9 +834,9 @@
     }
 
     .plan-item {
-      border: 1px solid #3a5479;
+      border: 1px solid #3b567c;
       border-radius: 12px;
-      background: #162840;
+      background: #172a43;
       padding: 9px;
       display: flex;
       justify-content: space-between;
@@ -762,13 +845,13 @@
     }
 
     .plan-item button {
-      border: 1px solid rgba(255, 127, 143, 0.5);
-      background: rgba(255, 127, 143, 0.12);
-      color: #ffd2d9;
+      border: 1px solid rgba(255, 126, 142, 0.5);
       border-radius: 8px;
+      background: rgba(255, 126, 142, 0.12);
+      color: #ffd2d9;
       font-size: 0.74rem;
-      padding: 4px 8px;
       font-weight: 700;
+      padding: 4px 8px;
       cursor: pointer;
     }
 
@@ -788,18 +871,18 @@
     }
 
     .achievements li {
-      border: 1px solid #3a557a;
+      border: 1px solid #3b567c;
       border-radius: 12px;
-      background: #162841;
+      background: #172a43;
       padding: 9px 10px;
-      color: #c0d2eb;
+      color: #c3d5ee;
       font-size: 0.84rem;
     }
 
     .achievements li.done {
-      border-color: #79e1d7;
-      background: rgba(52, 216, 196, 0.14);
-      color: #ddfff7;
+      border-color: #79e2d8;
+      background: rgba(52, 216, 196, 0.16);
+      color: #ddfff8;
       font-weight: 700;
     }
 
@@ -809,16 +892,16 @@
       transform: translateX(-50%);
       bottom: 14px;
       width: min(470px, calc(100% - 16px));
-      border: 1px solid #3b557b;
+      border: 1px solid #3c567d;
       border-radius: 20px;
-      background: rgba(17, 28, 46, 0.96);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+      background: rgba(14, 24, 39, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
       padding: 8px;
       display: none;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 6px;
-      z-index: 50;
+      z-index: 55;
     }
 
     .bottom-nav.show {
@@ -829,34 +912,61 @@
       border: 1px solid transparent;
       border-radius: 12px;
       background: transparent;
-      color: #a5bad9;
-      font-size: 0.72rem;
+      color: #a9bddb;
+      font-size: 0.71rem;
       font-weight: 800;
       padding: 8px 4px;
       display: grid;
       justify-items: center;
       gap: 2px;
       cursor: pointer;
+      transition: 0.18s ease;
     }
 
     .nav-btn .icon {
       font-size: 1.05rem;
       line-height: 1;
+      transition: transform 0.22s ease;
+    }
+
+    .nav-btn:hover .icon {
+      transform: translateY(-1px) scale(1.06);
     }
 
     .nav-btn.active {
-      border-color: #6fded4;
-      background: rgba(100, 217, 207, 0.14);
-      color: #d6fff9;
+      border-color: #70dfd5;
+      color: #d5fff9;
+      background: rgba(101, 218, 208, 0.16);
+      box-shadow: inset 0 0 18px rgba(101, 218, 208, 0.2);
     }
 
     .nav-btn.main-add {
       border: none;
       border-radius: 15px;
-      background: linear-gradient(145deg, #6de1d7, #4ecfc3);
+      background: linear-gradient(145deg, #72e6db, #4ecfc3);
       color: #fff;
-      box-shadow: 0 10px 20px rgba(78, 207, 195, 0.4);
+      box-shadow: 0 12px 24px rgba(78, 207, 195, 0.42);
       transform: translateY(-12px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-btn.main-add::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.45), transparent 54%);
+      pointer-events: none;
+    }
+
+    .nav-btn.tap-bounce .icon {
+      animation: tap-bounce 0.34s ease;
+    }
+
+    @keyframes tap-bounce {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.18); }
+      100% { transform: scale(1); }
     }
 
     .toast {
@@ -866,25 +976,25 @@
       bottom: 96px;
       width: min(470px, calc(100% - 20px));
       border-radius: 14px;
-      border: 1px solid #6ce0d6;
-      background: #113136;
-      color: #c5fff7;
-      box-shadow: 0 12px 30px rgba(3, 10, 20, 0.48);
+      border: 1px solid #6de0d6;
+      background: #123338;
+      color: #c7fff8;
+      box-shadow: 0 14px 30px rgba(2, 9, 20, 0.48);
       padding: 11px 12px;
       font-weight: 800;
       display: none;
-      z-index: 60;
+      z-index: 70;
     }
 
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(6, 14, 26, 0.7);
+      background: rgba(5, 12, 23, 0.72);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 14px;
-      z-index: 70;
+      z-index: 80;
     }
 
     .modal.show {
@@ -893,10 +1003,10 @@
 
     .modal-box {
       width: min(460px, 100%);
+      border: 1px solid #4d6890;
       border-radius: 18px;
-      border: 1px solid #4d688f;
-      background: linear-gradient(170deg, #1a2a44, #17253e);
-      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(165deg, #1b2c47, #172640);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.52);
       padding: 18px;
       position: relative;
       overflow: hidden;
@@ -916,24 +1026,32 @@
       100% { transform: translateY(190px) rotate(390deg); opacity: 0; }
     }
 
-    .sparkle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
+    .spark {
+      position: fixed;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.92);
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-      animation: twinkle 1.4s ease-in-out infinite;
+      background: #8ff2e8;
+      box-shadow: 0 0 8px rgba(143, 242, 232, 0.8);
+      pointer-events: none;
+      z-index: 65;
+      animation: spark-fly 760ms ease forwards;
     }
 
-    @keyframes twinkle {
-      0%, 100% { transform: scale(0.7); opacity: 0.25; }
-      50% { transform: scale(1.2); opacity: 0.9; }
+    @keyframes spark-fly {
+      0% { opacity: 1; transform: translate(0, 0) scale(1); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
     }
 
     @media (min-width: 860px) {
       .home-grid {
         grid-template-columns: 1.2fr 0.8fr;
+      }
+    }
+
+    @media (max-width: 660px) {
+      .topbar-row {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -947,9 +1065,6 @@
       }
       .totem-card {
         grid-template-columns: 92px 1fr;
-      }
-      .mode-pill {
-        display: none;
       }
     }
   </style>
@@ -965,23 +1080,32 @@
               <div class="logo-mark">👍</div>
             </div>
           </div>
-          <div class="logo-note">Кармася Техася · Задовільняємо свою карму</div>
+          <div class="logo-sub">Кармася Техася · Добро на максималках</div>
         </div>
-        <span class="mode-pill">cowboy prestige mode</span>
+        <div class="top-meter">
+          <div class="meter-head">
+            <span class="meter-title">Карма-шкала</span>
+            <span class="points-pill" id="topPoints">⭐ 0</span>
+          </div>
+          <div class="meter-track">
+            <div class="meter-fill" id="topProgressFill"></div>
+          </div>
+          <div class="meter-hint" id="topProgressHint">До рівня 2 залишилось 3 бали.</div>
+        </div>
       </div>
     </header>
 
     <section class="screen active" id="screen-register">
-      <div class="card hero-card">
-        <h1 class="title">Сідлай Кармометр, ковбою</h1>
+      <div class="card hero">
+        <h1 class="title">Залітаємо в Кармометр, ковбою</h1>
         <p class="subtitle">
-          Реєстрація швидка: ім'я, мейл, пароль, фото. Далі обираєш тотем і заходиш у найпафосніший трекер добрих справ.
+          Реєстрація проста і швидка. Далі обереш тотема, і система буде щодня тішити тебе прогресом і пафосною похвалою.
         </p>
         <form id="registerForm" class="stack">
           <div class="grid-2">
             <div>
               <label for="regName">Ім'я</label>
-              <input id="regName" required placeholder="Наприклад: Олег">
+              <input id="regName" required placeholder="Наприклад: Назар">
             </div>
             <div>
               <label for="regEmail">E-mail</label>
@@ -1004,12 +1128,10 @@
     </section>
 
     <section class="screen" id="screen-totem">
-      <div class="card hero-card">
-        <h2 class="title">Тотемні легенди</h2>
-        <p class="subtitle">
-          Кожен тотем має стиль, бонус і свою лінію еволюції. Обирай того, з ким будеш качати карму до космосу.
-        </p>
-        <div class="totem-grid" id="totemGrid"></div>
+      <div class="card hero">
+        <h2 class="title">Обери тотем-партнера</h2>
+        <p class="subtitle">Кожен тотем має характер, бонус і власну еволюцію. Обирай серцем і стилем.</p>
+        <div id="totemGrid" class="totem-grid"></div>
         <div class="row" style="margin-top:12px;">
           <button id="startAppBtn" class="btn btn-primary">Запустити KarmoMetr</button>
           <button class="btn btn-secondary" data-go="register">Назад</button>
@@ -1018,7 +1140,7 @@
     </section>
 
     <section class="screen" id="screen-home">
-      <div class="card hero-card">
+      <div class="card hero">
         <div class="welcome">
           <div class="avatar-row">
             <img class="avatar" id="homeAvatar" alt="Аватар">
@@ -1029,49 +1151,48 @@
           </div>
           <button class="btn btn-secondary" id="rerollGreeting">🎲 Ще пафосу</button>
         </div>
-
         <div class="kpi-grid">
           <div class="kpi"><strong id="kpiDeeds">0</strong><span>справ</span></div>
           <div class="kpi"><strong id="kpiLevel">1</strong><span>рівень</span></div>
           <div class="kpi"><strong id="kpiStreak">0</strong><span>серія</span></div>
-          <div class="kpi"><strong id="kpiPoints">0</strong><span>карма-балів</span></div>
+          <div class="kpi"><strong id="kpiPoints">0</strong><span>балів</span></div>
         </div>
       </div>
 
       <div class="home-grid">
         <div class="card">
           <div class="screen-title">Твої добрі справи</div>
-          <div class="muted">Лог дій, що реально змінюють день людям.</div>
-          <ul class="deed-list" id="deedList"></ul>
+          <div class="muted">Лента дій, які реально роблять день людей кращим.</div>
+          <ul id="deedList" class="deed-list"></ul>
         </div>
 
         <div class="card">
-          <div class="screen-title">Тотем + Кармометр</div>
-          <div class="totem-panel" id="totemPanel"></div>
-          <div class="sheriff-banner" id="dailyMission"></div>
+          <div class="screen-title">Тотем + рівень</div>
+          <div id="totemPanel" class="totem-panel"></div>
+          <div id="dailyMission" class="sheriff-banner"></div>
         </div>
       </div>
     </section>
 
     <section class="screen" id="screen-add">
       <div class="card">
-        <div class="screen-title">Запиши добру справу</div>
+        <div class="screen-title">Додай добру справу</div>
         <p class="subtitle" style="margin-bottom:10px;">
-          Текст обов'язково (+1 бал), медіа опційно (+1 бал бонусом). Роби красиво, система тебе похвалить як треба.
+          Текст обов'язковий (+1), медіа опційно (+1). Після збереження шкала зверху ефектно росте.
         </p>
         <form id="deedForm" class="stack">
           <div>
-            <label for="deedText">Що саме ти зробив(ла)?</label>
-            <textarea id="deedText" required placeholder="Приклад: оплатив літній людині ліки в аптеці."></textarea>
+            <label for="deedText">Що ти зробив(ла)?</label>
+            <textarea id="deedText" required placeholder="Наприклад: допоміг літній людині купити ліки."></textarea>
           </div>
           <div class="quick-templates">
-            <button type="button" data-template="Допоміг(ла) людині донести важкі пакети.">Справa-підказка 1</button>
-            <button type="button" data-template="Переказав(ла) донат у перевірений фонд.">Справa-підказка 2</button>
-            <button type="button" data-template="Підтримав(ла) друга, коли йому було важко.">Справa-підказка 3</button>
+            <button type="button" data-template="Допоміг(ла) людині донести важкі пакети.">Підказка 1</button>
+            <button type="button" data-template="Переказав(ла) донат у перевірений фонд.">Підказка 2</button>
+            <button type="button" data-template="Підтримав(ла) друга, коли йому було важко.">Підказка 3</button>
           </div>
           <div class="grid-2">
             <div>
-              <label for="deedMedia">Медіа (фото / відео / аудіо)</label>
+              <label for="deedMedia">Медіа (опційно)</label>
               <input id="deedMedia" type="file" accept="image/*,video/*,audio/*">
             </div>
             <div>
@@ -1080,7 +1201,7 @@
             </div>
           </div>
           <div class="row">
-            <button class="btn btn-primary pulse" type="submit">Зафіксувати добру справу</button>
+            <button class="btn btn-primary pulse" type="submit">Зафіксувати справу</button>
             <button class="btn btn-secondary" type="button" data-go="home">На головну</button>
           </div>
         </form>
@@ -1089,8 +1210,8 @@
 
     <section class="screen" id="screen-stats">
       <div class="card">
-        <div class="screen-title">Пафосна статистика</div>
-        <div class="muted">Все чітко: де виріс темп, де можна вдарити ще сильніше.</div>
+        <div class="screen-title">Статистика</div>
+        <div class="muted">Скільки зроблено і як росте твій темп.</div>
         <div class="stats-grid">
           <div class="stat"><strong id="statMonth">0</strong><span class="muted">за місяць</span></div>
           <div class="stat"><strong id="statToday">0</strong><span class="muted">сьогодні</span></div>
@@ -1099,13 +1220,13 @@
         </div>
         <div class="chart">
           <div class="row" style="justify-content:space-between;">
-            <b style="font-size:0.93rem;color:#f1f6ff;">Останні 7 днів</b>
+            <b style="font-size:0.93rem;color:#eff6ff;">Останні 7 днів</b>
             <span class="muted" id="statMeta"></span>
           </div>
           <div class="bars" id="bars"></div>
         </div>
         <div class="card" style="margin-top:10px;background:#15263f;">
-          <b style="display:block;color:#eff6ff;margin-bottom:4px;">Коментар шерифа</b>
+          <b style="display:block;color:#eef6ff;margin-bottom:4px;">Висновок шерифа</b>
           <div class="muted" id="statInsight"></div>
         </div>
       </div>
@@ -1113,21 +1234,20 @@
 
     <section class="screen" id="screen-calendar">
       <div class="card">
-        <div class="screen-title">Календар добрих справ</div>
-        <div class="muted">Плануй наперед і тримай ритм чемпіона.</div>
-
+        <div class="screen-title">Календар</div>
+        <div class="muted">Плануй добрі справи наперед.</div>
         <div class="calendar-head">
           <button id="prevMonthBtn" class="btn btn-secondary">←</button>
           <b id="monthLabel"></b>
           <button id="nextMonthBtn" class="btn btn-secondary">→</button>
         </div>
-        <div class="calendar-grid" id="calendarGrid"></div>
+        <div id="calendarGrid" class="calendar-grid"></div>
 
         <div class="card" style="margin-top:10px;background:#15263f;">
           <div id="selectedDateLabel" style="font-weight:800;color:#eef6ff;"></div>
           <ul id="planList" class="plan-list"></ul>
           <form id="planForm" class="row" style="margin-top:8px;">
-            <input id="planInput" placeholder="Заплануй добру справу на цю дату">
+            <input id="planInput" placeholder="Заплануй справу на цю дату">
             <button class="btn btn-primary" type="submit">Додати</button>
           </form>
         </div>
@@ -1138,15 +1258,15 @@
       <div class="card">
         <div class="screen-title">Профіль легенди</div>
         <div class="profile-row">
-          <img id="profileAvatar" class="avatar" alt="Аватар профілю">
+          <img id="profileAvatar" class="avatar" alt="Аватар">
           <div>
-            <div style="font-weight:900;color:#f0f7ff;" id="profileName"></div>
-            <div class="muted" id="profileEmail"></div>
+            <div id="profileName" style="font-weight:900;color:#f0f7ff;"></div>
+            <div id="profileEmail" class="muted"></div>
           </div>
         </div>
         <div class="card" style="margin-top:10px;background:#15263f;">
-          <div style="font-weight:800;color:#eef6ff;" id="profileMeta"></div>
-          <div class="muted" id="profileTotem"></div>
+          <div id="profileMeta" style="font-weight:800;color:#eef6ff;"></div>
+          <div id="profileTotem" class="muted"></div>
         </div>
         <div style="margin-top:10px;font-weight:900;color:#f0f7ff;">Еволюція тотема</div>
         <ul id="achievements" class="achievements"></ul>
@@ -1154,7 +1274,7 @@
     </section>
   </div>
 
-  <nav class="bottom-nav" id="bottomNav">
+  <nav id="bottomNav" class="bottom-nav">
     <button class="nav-btn" data-go="home"><span class="icon">🏠</span><span>Головна</span></button>
     <button class="nav-btn" data-go="stats"><span class="icon">📊</span><span>Стат</span></button>
     <button class="nav-btn main-add" data-go="add"><span class="icon">＋</span><span>Додати</span></button>
@@ -1168,7 +1288,7 @@
     <div id="levelModalBox" class="modal-box">
       <h3 style="font-size:1.4rem;color:#eff6ff;margin-bottom:6px;">Новий рівень! 🤠</h3>
       <p id="levelModalText" style="color:#c6d8f3;font-weight:700;margin-bottom:12px;"></p>
-      <button id="closeLevelModal" class="btn btn-primary">Прийнято. Поїхали далі!</button>
+      <button id="closeLevelModal" class="btn btn-primary">Йдемо далі!</button>
     </div>
   </div>
 
@@ -1179,10 +1299,10 @@
         name: "Бик Буревій",
         emoji: "🐂",
         style: "Важка сила",
-        perk: "+15% до швидкості прокачки рівня",
-        lore: "Проламує будь-яку складність і робить добро масштабно.",
-        colors: ["#1f3958", "#2f567f"],
-        upgrades: ["💍 Каблучка", "🧢 Ковбойський капелюх", "🕶 Чорні окуляри", "⚡ Неон-роги", "👑 Корона шерифа"]
+        perk: "+15% до швидкості прокачки",
+        lore: "Ламає бар'єри і робить добро масштабно.",
+        colors: ["#233b5b", "#335d88"],
+        upgrades: ["💍 Каблучка", "🧢 Капелюх", "🕶 Окуляри", "⚡ Неон-роги", "👑 Корона шерифа"]
       },
       {
         id: "cat",
@@ -1190,9 +1310,9 @@
         emoji: "🐈",
         style: "Точний шик",
         perk: "+1 до серії за 2 справи поспіль",
-        lore: "Робить добро тихо, елегантно і завжди влучно.",
-        colors: ["#25324f", "#3f4f77"],
-        upgrades: ["🎀 Стрічка", "✨ Амулет", "👑 Міні-тіара", "🌙 Місячний плащ", "💠 Лазерний погляд"]
+        lore: "Тиха, елегантна, але дуже ефективна.",
+        colors: ["#26334f", "#42547c"],
+        upgrades: ["🎀 Стрічка", "✨ Амулет", "👑 Тіара", "🌙 Плащ", "💠 Лазерний погляд"]
       },
       {
         id: "dog",
@@ -1200,9 +1320,9 @@
         emoji: "🐕",
         style: "Теплий вайб",
         perk: "+1 бонус за справи з медіа",
-        lore: "Підтримка, енергія і командний дух на кожен день.",
-        colors: ["#2f3348", "#665b57"],
-        upgrades: ["🧣 Бандана", "🛡 Значок шерифа", "🦴 Броня дружби", "🔥 Вогняний комір", "🚀 Турбо-след"]
+        lore: "Несе підтримку і заряджає оточення.",
+        colors: ["#2d3349", "#6b5c59"],
+        upgrades: ["🧣 Бандана", "🛡 Значок", "🦴 Броня дружби", "🔥 Комір", "🚀 Турбо-след"]
       }
     ];
 
@@ -1211,65 +1331,60 @@
     const heroPhrases = [
       "Сідлай день, шерифе добра.",
       "Сьогодні виносимо світ у плюс.",
-      "Твій тотем уже точить копита до перемоги.",
-      "Пафос? Так. І користь теж максимальна.",
-      "Один добрий вчинок — і день стає легендою.",
-      "Ти тут не випадково. Ти тут робити добро гучно.",
+      "Твій тотем уже готовий до ривка.",
+      "Пафос і користь — ідеальна комбо-пара.",
+      "Один вчинок — і день стає легендою.",
+      "Ти тут, щоб робити добро гучно.",
       "Світ чекає твій наступний красивий рух.",
-      "Працюй серцем, а карма порахує все чесно.",
+      "Тримай темп і неси світло.",
       "Це твій день. Вривайся і сяй.",
-      "Ковбойська класика: менше слів, більше добрих дій."
+      "Менше шуму — більше добрих дій."
     ];
 
     const completionPhrases = [
       "Та ти нереальний, бро!",
-      "Шериф добра офіційно схвалює цей хід.",
-      "Гучні оплески. Це було красиво.",
-      "Твоя карма щойно злетіла в стратосферу.",
-      "Оце винос! День у плюс без шансів.",
-      "Тотем реве від гордості.",
+      "Шериф добра схвалює цей хід.",
+      "Твоя карма щойно рвонула вгору.",
+      "Оце винос! День у плюс.",
       "Стиль! Сила! Добро!",
-      "Це рух рівня легенди району.",
-      "Чистий кайф. Справу зараховано.",
-      "Ти щойно підкрутив світ у світліший бік.",
-      "Респект. Глибокий і щирий.",
-      "Сильний вчинок. Сильна людина.",
-      "Вау, як це потужно!",
-      "Карма підморгнула і сказала: топ.",
-      "Залік, ковбою. Без зайвого шуму.",
-      "Оце точний постріл у добро.",
-      "Твій темп лякає байдужість.",
-      "Краса. Просто краса.",
-      "Блискуче виконано.",
-      "Ти зараз як преміум-версія себе.",
-      "Тримай овації, чемпіоне.",
-      "Легендарний рух, занесено в хроніку.",
-      "Виглядає як справжній клас.",
-      "Додаємо +100 до поваги.",
-      "Сьогодні ти в режимі «без пощади до зла».",
-      "Ще один чіткий крок у вершину.",
-      "Це було аристократично потужно.",
+      "Респект. Це було потужно.",
+      "Чистий клас. Справу зараховано.",
+      "Тотем у захваті від тебе.",
+      "Вау, як це красиво зроблено!",
+      "Легендарний мікроподвиг!",
+      "Сильний рух. Продовжуй.",
+      "Карма аплодує стоячи.",
+      "Твій темп ламає байдужість.",
+      "Ще один чіткий постріл у добро.",
+      "Ти реально робиш різницю.",
+      "Дуже сильний вчинок.",
       "Офіційно: день врятовано.",
+      "Додаємо +100 до поваги.",
       "Ти щойно зарядив місто добром.",
-      "Нереально круто. Продовжуй так.",
-      "Більше таких рухів — і ти міф.",
-      "Стильно, сміливо, людяно.",
-      "Справу прийнято. Пафос заслужений.",
-      "Ковбой добра не зупиняється.",
-      "Твоє серце сьогодні на максималках.",
       "Елітний рівень емпатії.",
-      "Тут уже пахне новим рівнем.",
+      "Шикарно. Без зайвих слів.",
+      "Краса. Просто краса.",
+      "Справу прийнято. Пафос заслужений.",
+      "Кармометр сяє від такого ходу.",
       "Сильний день творить сильна дія.",
-      "Ти не просто молодець, ти приклад.",
-      "Кармометр просто сяє від такого ходу."
+      "Тримай овації, чемпіоне.",
+      "Тут уже пахне новим рівнем.",
+      "Влучно, щиро, корисно.",
+      "Твоє серце сьогодні на максималках.",
+      "Ти приклад для інших.",
+      "Виглядає як рівень профі.",
+      "Супер-хід. Записано в легенду.",
+      "Потужно і людяно.",
+      "Ковбой добра не зупиняється.",
+      "Нереально круто. Далі ще сильніше."
     ];
 
-    const dailyMissionPhrases = [
+    const dailyMissions = [
       "🎯 Місія дня: додай ще 1 справу до вечора і забери статус «Залізний шериф».",
       "🔥 Місія дня: зроби справу з медіа і отримай подвійний респект.",
-      "⭐ Місія дня: закрий 2 добрі задачі підряд без пауз.",
-      "🤠 Місія дня: залучи ще одну людину до доброї справи.",
-      "🏆 Місія дня: пробий новий рівень до кінця дня."
+      "⭐ Місія дня: закрий 2 добрі задачі підряд.",
+      "🤠 Місія дня: підтримай когось не словом, а дією.",
+      "🏆 Місія дня: пробий новий рівень сьогодні."
     ];
 
     const state = {
@@ -1278,17 +1393,17 @@
       totemId: "",
       deeds: [],
       plans: {},
-      monthCursor: monthStart(new Date()),
       selectedDate: dateKey(new Date()),
+      monthCursor: firstMonthDay(new Date()),
       greetingTimer: null,
-      dayMission: ""
+      mission: ""
     };
 
     const screens = document.querySelectorAll(".screen");
-    const nav = document.getElementById("bottomNav");
     const navButtons = document.querySelectorAll(".nav-btn");
+    const bottomNav = document.getElementById("bottomNav");
 
-    function monthStart(d) {
+    function firstMonthDay(d) {
       return new Date(d.getFullYear(), d.getMonth(), 1);
     }
 
@@ -1300,14 +1415,12 @@
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    function avatarPlaceholder(name) {
-      const letter = (name || "K").trim().slice(0, 1).toUpperCase();
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><defs><linearGradient id='g' x1='0' x2='1'><stop stop-color='#80e8de'/><stop offset='1' stop-color='#53cec3'/></linearGradient></defs><rect width='120' height='120' rx='24' fill='url(#g)'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='54' font-weight='900' fill='#2c3d55'>${letter}</text></svg>`;
-      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+    function totalPoints() {
+      return state.deeds.reduce((sum, deed) => sum + deed.points, 0);
     }
 
-    function totalPoints() {
-      return state.deeds.reduce((sum, d) => sum + d.points, 0);
+    function currentTotem() {
+      return totems.find((t) => t.id === state.totemId) || totems[0];
     }
 
     function levelInfo(points) {
@@ -1315,14 +1428,10 @@
       for (let i = 1; i < levelThresholds.length; i += 1) {
         if (points >= levelThresholds[i]) level = i + 1;
       }
-      const cur = levelThresholds[level - 1] ?? 0;
+      const current = levelThresholds[level - 1] ?? 0;
       const next = levelThresholds[level] ?? null;
-      const progress = next ? ((points - cur) / (next - cur)) * 100 : 100;
+      const progress = next ? ((points - current) / (next - current)) * 100 : 100;
       return { level, next, progress: Math.max(0, Math.min(100, progress)) };
-    }
-
-    function currentTotem() {
-      return totems.find((t) => t.id === state.totemId) || totems[0];
     }
 
     function streakDays() {
@@ -1339,24 +1448,81 @@
       return streak;
     }
 
+    function avatarPlaceholder(name) {
+      const letter = (name || "K").trim().slice(0, 1).toUpperCase();
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><defs><linearGradient id='g' x1='0' x2='1'><stop stop-color='#87ece3'/><stop offset='1' stop-color='#58d0c5'/></linearGradient></defs><rect width='120' height='120' rx='24' fill='url(#g)'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='54' font-weight='900' fill='#2c3d55'>${letter}</text></svg>`;
+      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+    }
+
     function safe(text) {
       const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#039;" };
       return text.replace(/[&<>"']/g, (m) => map[m]);
     }
 
-    function formatDateTime(value) {
-      const d = new Date(value);
+    function formatDateTime(v) {
+      const d = new Date(v);
       return d.toLocaleString("uk-UA", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
     }
 
     function showToast(text) {
-      const t = document.getElementById("toast");
-      t.textContent = text;
-      t.style.display = "block";
+      const toast = document.getElementById("toast");
+      toast.textContent = text;
+      toast.style.display = "block";
       clearTimeout(showToast.timer);
       showToast.timer = setTimeout(() => {
-        t.style.display = "none";
+        toast.style.display = "none";
       }, 2800);
+    }
+
+    function animatePointsCounter(from, to) {
+      const pill = document.getElementById("topPoints");
+      const start = performance.now();
+      const duration = 700;
+      pill.classList.add("bump");
+      function frame(now) {
+        const p = Math.min(1, (now - start) / duration);
+        const val = Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3)));
+        pill.textContent = `⭐ ${val}`;
+        if (p < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          setTimeout(() => pill.classList.remove("bump"), 160);
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function spawnHeaderSparks() {
+      const rect = document.getElementById("topProgressFill").getBoundingClientRect();
+      for (let i = 0; i < 14; i += 1) {
+        const dot = document.createElement("span");
+        dot.className = "spark";
+        dot.style.left = `${rect.left + rect.width - 8 + Math.random() * 10}px`;
+        dot.style.top = `${rect.top + rect.height / 2}px`;
+        dot.style.setProperty("--dx", `${(Math.random() - 0.5) * 160}px`);
+        dot.style.setProperty("--dy", `${(Math.random() - 0.7) * 120}px`);
+        document.body.appendChild(dot);
+        setTimeout(() => dot.remove(), 760);
+      }
+    }
+
+    function updateTopMeter(options = {}) {
+      const { animate = false, previousPoints = 0 } = options;
+      const points = totalPoints();
+      const lv = levelInfo(points);
+      const fill = document.getElementById("topProgressFill");
+      const hint = document.getElementById("topProgressHint");
+      fill.style.width = `${lv.progress}%`;
+      hint.textContent = lv.next
+        ? `Рівень ${lv.level}. До ${lv.level + 1} ще ${lv.next - points} балів.`
+        : `Макс-рівень досягнуто. Ти легенда.`;
+
+      if (animate) {
+        animatePointsCounter(previousPoints, points);
+        spawnHeaderSparks();
+      } else {
+        document.getElementById("topPoints").textContent = `⭐ ${points}`;
+      }
     }
 
     function setScreen(name) {
@@ -1394,9 +1560,7 @@
         card.type = "button";
         card.className = `totem-card ${state.totemId === totem.id ? "selected" : ""}`;
         card.innerHTML = `
-          <div class="totem-art" style="--t1:${totem.colors[0]};--t2:${totem.colors[1]};">
-            <span class="emoji">${totem.emoji}</span>
-          </div>
+          <div class="totem-art" style="--t1:${totem.colors[0]};--t2:${totem.colors[1]};"><span>${totem.emoji}</span></div>
           <div>
             <div class="totem-title">${totem.name}</div>
             <div class="totem-sub">${totem.lore}</div>
@@ -1404,9 +1568,7 @@
               <span class="chip">Стиль: ${totem.style}</span>
               <span class="chip">Перк: ${totem.perk}</span>
             </div>
-            <div class="evo">
-              ${totem.upgrades.slice(0, 3).map((u) => `<span>${u}</span>`).join("")}
-            </div>
+            <div class="evo">${totem.upgrades.slice(0, 3).map((u) => `<span>${u}</span>`).join("")}</div>
           </div>
         `;
         card.addEventListener("click", () => {
@@ -1424,16 +1586,15 @@
     function startGreetingLoop() {
       clearInterval(state.greetingTimer);
       state.greetingTimer = setInterval(() => {
-        const homeVisible = document.getElementById("screen-home").classList.contains("active");
-        if (homeVisible) refreshGreeting();
+        if (document.getElementById("screen-home").classList.contains("active")) refreshGreeting();
       }, 8000);
     }
 
     function renderHome() {
-      const avatar = state.user.avatar || avatarPlaceholder(state.user.name);
       const points = totalPoints();
       const lv = levelInfo(points);
       const totem = currentTotem();
+      const avatar = state.user.avatar || avatarPlaceholder(state.user.name);
 
       document.getElementById("homeAvatar").src = avatar;
       document.getElementById("homeName").textContent = state.user.name || "герою";
@@ -1444,106 +1605,100 @@
       document.getElementById("kpiStreak").textContent = streakDays();
       document.getElementById("kpiPoints").textContent = points;
 
-      const panel = document.getElementById("totemPanel");
       const deg = Math.round((lv.progress / 100) * 360);
-      const nextHint = lv.next ? `До рівня ${lv.level + 1}: ще ${lv.next - points} балів.` : "Максимальний рівень у демо вже твій.";
+      const nextHint = lv.next ? `До рівня ${lv.level + 1}: ще ${lv.next - points} балів.` : "Максимальний рівень уже твій.";
       const unlocked = totem.upgrades.slice(0, Math.max(0, lv.level - 1));
-      panel.innerHTML = `
+      document.getElementById("totemPanel").innerHTML = `
         <div class="totem-top">
           <div class="totem-big" style="--tb1:${totem.colors[0]};--tb2:${totem.colors[1]};">${totem.emoji}</div>
           <div>
-            <div style="font-weight:900;color:#f1f7ff;">${totem.name}</div>
+            <div style="font-weight:900;color:#f2f8ff;">${totem.name}</div>
             <div class="muted">${totem.style}</div>
             <div class="muted">${totem.perk}</div>
           </div>
-          <div class="ring" style="background: conic-gradient(var(--brand) ${deg}deg, #364f73 ${deg}deg);">
+          <div class="ring" style="background:conic-gradient(var(--brand) ${deg}deg, #375074 ${deg}deg);">
             <div class="ring-center"><strong>${lv.level}</strong><span>рівень</span></div>
           </div>
         </div>
         <div style="margin-bottom:8px;">
-          <div style="font-weight:800;color:#f1f7ff;">${points} карма-балів</div>
+          <div style="font-weight:800;color:#f2f8ff;">${points} карма-балів</div>
           <div class="muted">${nextHint}</div>
         </div>
         <div class="unlock-row">
-          ${
-            unlocked.length
-              ? unlocked.map((u) => `<span class="unlock">${u}</span>`).join("")
-              : '<span class="unlock">Перший апгрейд відкриється на рівні 2</span>'
-          }
+          ${unlocked.length ? unlocked.map((u) => `<span class="unlock">${u}</span>`).join("") : '<span class="unlock">Перший апгрейд на рівні 2</span>'}
         </div>
       `;
 
-      const deedList = document.getElementById("deedList");
-      deedList.innerHTML = "";
+      const list = document.getElementById("deedList");
+      list.innerHTML = "";
       if (!state.deeds.length) {
         const li = document.createElement("li");
         li.className = "deed-item";
-        li.innerHTML = `<div style="font-weight:800;color:#e7f2ff;">Поки що тихо.</div><div class="muted">Натисни «Додати» і занеси першу добру справу.</div>`;
-        deedList.appendChild(li);
+        li.innerHTML = `<div style="font-weight:800;color:#eaf2ff;">Поки що порожньо.</div><div class="muted">Натисни «Додати» і внеси першу добру справу.</div>`;
+        list.appendChild(li);
       } else {
         state.deeds.forEach((deed) => {
           const li = document.createElement("li");
           li.className = "deed-item";
           li.innerHTML = `
             <div class="deed-top">
-              <div style="font-weight:800;color:#eaf3ff;">${safe(deed.text)}</div>
+              <div style="font-weight:800;color:#ecf4ff;">${safe(deed.text)}</div>
               <span class="deed-points">+${deed.points}</span>
             </div>
             <div class="muted">${formatDateTime(deed.createdAt)}${deed.hasMedia ? " · з медіа" : ""}</div>
           `;
-          deedList.appendChild(li);
+          list.appendChild(li);
         });
       }
 
-      if (!state.dayMission) state.dayMission = randomOf(dailyMissionPhrases);
-      document.getElementById("dailyMission").textContent = state.dayMission;
+      if (!state.mission) state.mission = randomOf(dailyMissions);
+      document.getElementById("dailyMission").textContent = state.mission;
+
+      updateTopMeter();
     }
 
-    function countInRange(fromAgo, toAgo) {
+    function countRange(fromAgo, toAgo) {
       const now = new Date();
-      let sum = 0;
+      let total = 0;
       for (let i = fromAgo; i <= toAgo; i += 1) {
         const day = new Date(now);
         day.setDate(now.getDate() - i);
         const key = dateKey(day);
-        sum += state.deeds.filter((d) => dateKey(new Date(d.createdAt)) === key).length;
+        total += state.deeds.filter((d) => dateKey(new Date(d.createdAt)) === key).length;
       }
-      return sum;
+      return total;
     }
 
     function renderStats() {
       const now = new Date();
-      const startMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const start = new Date(now.getFullYear(), now.getMonth(), 1);
       const today = dateKey(now);
 
-      const month = state.deeds.filter((d) => new Date(d.createdAt) >= startMonth).length;
+      const month = state.deeds.filter((d) => new Date(d.createdAt) >= start).length;
       const todayCount = state.deeds.filter((d) => dateKey(new Date(d.createdAt)) === today).length;
-      const withMedia = state.deeds.filter((d) => d.hasMedia).length;
-      const mediaRate = state.deeds.length ? Math.round((withMedia / state.deeds.length) * 100) : 0;
-      const weekNow = countInRange(0, 6);
-      const weekPrev = countInRange(7, 13);
-      const compare = weekPrev === 0 ? (weekNow > 0 ? 100 : 0) : Math.round(((weekNow - weekPrev) / weekPrev) * 100);
+      const media = state.deeds.filter((d) => d.hasMedia).length;
+      const mediaRate = state.deeds.length ? Math.round((media / state.deeds.length) * 100) : 0;
+      const thisWeek = countRange(0, 6);
+      const prevWeek = countRange(7, 13);
+      const compare = prevWeek === 0 ? (thisWeek > 0 ? 100 : 0) : Math.round(((thisWeek - prevWeek) / prevWeek) * 100);
 
       document.getElementById("statMonth").textContent = month;
       document.getElementById("statToday").textContent = todayCount;
       document.getElementById("statCompare").textContent = `${compare >= 0 ? "+" : ""}${compare}%`;
       document.getElementById("statMedia").textContent = `${mediaRate}%`;
-      document.getElementById("statMeta").textContent = `${weekNow} справ за 7 днів`;
+      document.getElementById("statMeta").textContent = `${thisWeek} справ за 7 днів`;
 
       const bars = document.getElementById("bars");
       bars.innerHTML = "";
-      const sample = [];
+      const samples = [];
       for (let i = 6; i >= 0; i -= 1) {
         const d = new Date();
         d.setDate(d.getDate() - i);
         const key = dateKey(d);
-        sample.push({
-          day: d.toLocaleDateString("uk-UA", { weekday: "short" }),
-          count: state.deeds.filter((item) => dateKey(new Date(item.createdAt)) === key).length
-        });
+        samples.push({ day: d.toLocaleDateString("uk-UA", { weekday: "short" }), count: state.deeds.filter((x) => dateKey(new Date(x.createdAt)) === key).length });
       }
-      const max = Math.max(1, ...sample.map((s) => s.count));
-      sample.forEach((s) => {
+      const max = Math.max(1, ...samples.map((s) => s.count));
+      samples.forEach((s) => {
         const slot = document.createElement("div");
         slot.className = "bar-slot";
         const top = document.createElement("span");
@@ -1559,13 +1714,13 @@
 
       const insight = document.getElementById("statInsight");
       if (!state.deeds.length) {
-        insight.textContent = "Ще немає записів. Почни з однієї справи — і графік оживе моментально.";
+        insight.textContent = "Ще немає записів. Додай першу справу — і шкала одразу оживе.";
       } else if (compare >= 20) {
-        insight.textContent = "Ти виносиш цей тиждень сильніше за попередній. Темп реально чемпіонський.";
+        insight.textContent = "Ти набрав потужний темп відносно минулого тижня. Це виглядає елітно.";
       } else if (todayCount === 0) {
-        insight.textContent = "Сьогодні ще порожньо. Закрий 1 справу — і серія не просідатиме.";
+        insight.textContent = "Сьогодні ще тиша. Один добрий хід зараз — і день в плюсі.";
       } else {
-        insight.textContent = "Йдеш стабільно. Ще одна добра справа сьогодні дасть красивий приріст.";
+        insight.textContent = "Ритм стабільний. Ще одна справа сьогодні дасть красивий приріст.";
       }
     }
 
@@ -1576,18 +1731,18 @@
       label.textContent = state.monthCursor.toLocaleDateString("uk-UA", { month: "long", year: "numeric" });
       label.style.textTransform = "capitalize";
 
-      ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"].forEach((day) => {
-        const d = document.createElement("div");
-        d.className = "weekday";
-        d.textContent = day;
-        grid.appendChild(d);
+      ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"].forEach((name) => {
+        const el = document.createElement("div");
+        el.className = "weekday";
+        el.textContent = name;
+        grid.appendChild(el);
       });
 
       const y = state.monthCursor.getFullYear();
       const m = state.monthCursor.getMonth();
       const first = new Date(y, m, 1);
       const offset = (first.getDay() + 6) % 7;
-      const count = new Date(y, m + 1, 0).getDate();
+      const days = new Date(y, m + 1, 0).getDate();
       const today = dateKey(new Date());
 
       for (let i = 0; i < offset; i += 1) {
@@ -1596,22 +1751,22 @@
         grid.appendChild(empty);
       }
 
-      for (let d = 1; d <= count; d += 1) {
+      for (let d = 1; d <= days; d += 1) {
         const date = new Date(y, m, d);
         const key = dateKey(date);
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "day";
-        button.textContent = d;
-        if (key === today) button.classList.add("today");
-        if (key === state.selectedDate) button.classList.add("selected");
-        if ((state.plans[key] || []).length) button.classList.add("has-plan");
-        button.addEventListener("click", () => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "day";
+        b.textContent = d;
+        if (key === today) b.classList.add("today");
+        if (key === state.selectedDate) b.classList.add("selected");
+        if ((state.plans[key] || []).length) b.classList.add("has-plan");
+        b.addEventListener("click", () => {
           state.selectedDate = key;
           renderCalendar();
           renderPlans();
         });
-        grid.appendChild(button);
+        grid.appendChild(b);
       }
     }
 
@@ -1625,7 +1780,7 @@
       if (!plans.length) {
         const li = document.createElement("li");
         li.className = "plan-item";
-        li.innerHTML = `<span class="muted">Планів немає. Додай перший і тримай ритм.</span>`;
+        li.innerHTML = `<span class="muted">Планів поки немає. Додай перший.</span>`;
         list.appendChild(li);
         return;
       }
@@ -1664,7 +1819,7 @@
       for (let i = 1; i <= max; i += 1) {
         const li = document.createElement("li");
         li.textContent = i === 1
-          ? "Рівень 1: тотем обраний і синхронізований."
+          ? "Рівень 1: тотем синхронізовано."
           : `Рівень ${i}: тотем отримує ${totem.upgrades[i - 2] || "легендарний апгрейд"}.`;
         if (i <= lv.level) li.classList.add("done");
         list.appendChild(li);
@@ -1675,30 +1830,20 @@
       const box = document.getElementById("levelModalBox");
       const colors = ["#6de1d7", "#ffd27a", "#9ce8e1", "#7ee2d8", "#ff8d9b"];
       for (let i = 0; i < 26; i += 1) {
-        const confetti = document.createElement("span");
-        confetti.className = "confetti";
-        confetti.style.left = `${Math.random() * 96}%`;
-        confetti.style.top = `${Math.random() * 12}%`;
-        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDelay = `${Math.random() * 0.2}s`;
-        box.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 1300);
-      }
-
-      for (let i = 0; i < 12; i += 1) {
-        const star = document.createElement("span");
-        star.className = "sparkle";
-        star.style.left = `${Math.random() * 96}%`;
-        star.style.top = `${Math.random() * 26}%`;
-        star.style.animationDelay = `${Math.random() * 0.8}s`;
-        box.appendChild(star);
-        setTimeout(() => star.remove(), 1600);
+        const c = document.createElement("span");
+        c.className = "confetti";
+        c.style.left = `${Math.random() * 96}%`;
+        c.style.top = `${Math.random() * 12}%`;
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDelay = `${Math.random() * 0.2}s`;
+        box.appendChild(c);
+        setTimeout(() => c.remove(), 1300);
       }
     }
 
     function showLevelModal(level) {
       const reward = currentTotem().upgrades[level - 2] || "ультра-апгрейд";
-      document.getElementById("levelModalText").textContent = `Ти апнув(ла) рівень ${level}. Нагорода тотема: ${reward}.`;
+      document.getElementById("levelModalText").textContent = `Ти апнув(ла) рівень ${level}. Нагорода: ${reward}.`;
       document.getElementById("levelModal").classList.add("show");
       spawnConfetti();
     }
@@ -1712,14 +1857,14 @@
       state.deeds = [
         {
           id: crypto.randomUUID(),
-          text: "Допоміг(ла) незнайомій людині знайти потрібний автобус.",
+          text: "Підказав(ла) туристам дорогу до метро.",
           points: 1,
           hasMedia: false,
           createdAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString()
         },
         {
           id: crypto.randomUUID(),
-          text: "Зібрав(ла) речі для волонтерського пункту і додав(ла) фото.",
+          text: "Передав(ла) речі до волонтерського пункту і додав(ла) фото.",
           points: 2,
           hasMedia: true,
           createdAt: new Date(now.getTime() - 26 * 60 * 60 * 1000).toISOString()
@@ -1727,12 +1872,13 @@
       ];
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
-      state.plans[dateKey(tomorrow)] = ["Підтримати людину, якій важко, розмовою і дією."];
-      state.dayMission = randomOf(dailyMissionPhrases);
+      state.plans[dateKey(tomorrow)] = ["Підтримати людину конкретною дією."];
+      state.mission = randomOf(dailyMissions);
+      updateTopMeter();
     }
 
-    document.getElementById("registerForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
       state.user.name = document.getElementById("regName").value.trim();
       state.user.email = document.getElementById("regEmail").value.trim();
       const file = document.getElementById("regAvatar").files[0];
@@ -1746,7 +1892,7 @@
         return;
       }
       state.onboardingDone = true;
-      nav.classList.add("show");
+      bottomNav.classList.add("show");
       seedData();
       refreshGreeting();
       startGreetingLoop();
@@ -1756,8 +1902,8 @@
 
     document.getElementById("rerollGreeting").addEventListener("click", refreshGreeting);
 
-    document.getElementById("deedMedia").addEventListener("change", (event) => {
-      const score = event.target.files.length ? 2 : 1;
+    document.getElementById("deedMedia").addEventListener("change", (e) => {
+      const score = e.target.files.length ? 2 : 1;
       document.getElementById("scorePreview").textContent = `Після збереження: +${score} бал`;
     });
 
@@ -1767,15 +1913,16 @@
       });
     });
 
-    document.getElementById("deedForm").addEventListener("submit", (event) => {
-      event.preventDefault();
+    document.getElementById("deedForm").addEventListener("submit", (e) => {
+      e.preventDefault();
       const text = document.getElementById("deedText").value.trim();
       if (!text) {
-        showToast("Опиши добру справу, шерифе.");
+        showToast("Опиши добру справу текстом.");
         return;
       }
 
-      const before = levelInfo(totalPoints()).level;
+      const prevPoints = totalPoints();
+      const beforeLevel = levelInfo(prevPoints).level;
       const hasMedia = document.getElementById("deedMedia").files.length > 0;
       const points = hasMedia ? 2 : 1;
       state.deeds.unshift({
@@ -1789,16 +1936,17 @@
       document.getElementById("deedText").value = "";
       document.getElementById("deedMedia").value = "";
       document.getElementById("scorePreview").textContent = "Після збереження: +1 бал";
-      state.dayMission = randomOf(dailyMissionPhrases);
+      state.mission = randomOf(dailyMissions);
 
-      const after = levelInfo(totalPoints()).level;
-      if (after > before) showLevelModal(after);
+      const afterLevel = levelInfo(totalPoints()).level;
+      if (afterLevel > beforeLevel) showLevelModal(afterLevel);
+      updateTopMeter({ animate: true, previousPoints: prevPoints });
       showToast(randomOf(completionPhrases));
       setScreen("home");
     });
 
-    document.getElementById("planForm").addEventListener("submit", (event) => {
-      event.preventDefault();
+    document.getElementById("planForm").addEventListener("submit", (e) => {
+      e.preventDefault();
       const input = document.getElementById("planInput");
       const text = input.value.trim();
       if (!text) return;
@@ -1807,7 +1955,7 @@
       input.value = "";
       renderCalendar();
       renderPlans();
-      showToast("План додано. Курс на добро зафіксовано.");
+      showToast("План додано.");
     });
 
     document.getElementById("prevMonthBtn").addEventListener("click", () => {
@@ -1821,15 +1969,24 @@
     });
 
     document.getElementById("closeLevelModal").addEventListener("click", closeLevelModal);
-    document.getElementById("levelModal").addEventListener("click", (event) => {
-      if (event.target.id === "levelModal") closeLevelModal();
+    document.getElementById("levelModal").addEventListener("click", (e) => {
+      if (e.target.id === "levelModal") closeLevelModal();
     });
 
-    document.querySelectorAll("[data-go]").forEach((button) => {
-      button.addEventListener("click", () => setScreen(button.dataset.go));
+    navButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btn.classList.add("tap-bounce");
+        setTimeout(() => btn.classList.remove("tap-bounce"), 360);
+        setScreen(btn.dataset.go);
+      });
+    });
+
+    document.querySelectorAll("[data-go]").forEach((btn) => {
+      btn.addEventListener("click", () => setScreen(btn.dataset.go));
     });
 
     renderTotemGrid();
+    updateTopMeter();
     setScreen("register");
   </script>
 </body>
