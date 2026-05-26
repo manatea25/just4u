@@ -9,14 +9,12 @@
       --bg: #0d1524;
       --bg-2: #111d30;
       --card: #1a2942;
-      --card-2: #22334f;
       --line: #334b6d;
       --text: #eef5ff;
       --muted: #9fb5d6;
       --brand: #65dad0;
       --brand-2: #46c9be;
       --gold: #ffcb75;
-      --ok: #35d889;
       --danger: #ff7e8e;
       --shadow: 0 16px 34px rgba(3, 10, 24, 0.45);
       --r: 18px;
@@ -33,10 +31,10 @@
       font-family: Inter, "SF Pro Display", "Segoe UI", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 100% 0, rgba(101, 218, 208, 0.18), transparent 32%),
-        radial-gradient(circle at 0 0, rgba(255, 203, 117, 0.1), transparent 30%),
+        radial-gradient(circle at 100% 0, rgba(101, 218, 208, 0.2), transparent 34%),
+        radial-gradient(circle at 0 0, rgba(255, 203, 117, 0.13), transparent 29%),
         linear-gradient(180deg, #0a1220, #111a2b);
-      line-height: 1.44;
+      line-height: 1.45;
     }
 
     .app {
@@ -65,19 +63,12 @@
       align-items: center;
     }
 
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
     .logo-box {
       border: 1px solid #3a5378;
       border-radius: 13px;
       padding: 7px 10px;
       background: #10203a;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
@@ -96,10 +87,10 @@
       border-radius: 10px;
       display: grid;
       place-items: center;
-      font-size: 1rem;
       color: white;
       background: linear-gradient(145deg, #7ee7de, #58d0c5);
       box-shadow: 0 8px 16px rgba(88, 208, 197, 0.35);
+      font-size: 1rem;
     }
 
     .logo-sub {
@@ -163,7 +154,6 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      box-shadow: 0 0 0 0 rgba(101, 218, 208, 0.4);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -270,17 +260,9 @@
       font-size: 0.84rem;
     }
 
-    .stack {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+    .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 
     label {
       display: block;
@@ -303,13 +285,9 @@
       transition: 0.2s ease;
     }
 
-    textarea {
-      min-height: 112px;
-      resize: vertical;
-    }
+    textarea { min-height: 112px; resize: vertical; }
 
-    input:focus,
-    textarea:focus {
+    input:focus, textarea:focus {
       border-color: #87e7de;
       box-shadow: 0 0 0 3px rgba(101, 218, 208, 0.2);
     }
@@ -322,51 +300,18 @@
       font-weight: 900;
       cursor: pointer;
       transition: transform 0.15s ease, filter 0.15s ease;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.24);
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.04);
-    }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.04); }
+    .btn-primary { color: #fff; background: linear-gradient(145deg, #6fe3d9, #4ecfc3); box-shadow: 0 10px 20px rgba(78, 207, 195, 0.35); }
+    .btn-secondary { color: #c9d9ef; background: #162740; border: 1px solid #3b567b; }
+    .btn-danger { color: #ffd2d9; background: rgba(255, 126, 142, 0.13); border: 1px solid rgba(255, 126, 142, 0.5); }
 
-    .btn-primary {
-      color: #fff;
-      background: linear-gradient(145deg, #6fe3d9, #4ecfc3);
-      box-shadow: 0 10px 20px rgba(78, 207, 195, 0.35);
-    }
+    .pulse { animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(101, 218, 208, 0.4); } 100% { box-shadow: 0 0 0 14px rgba(101, 218, 208, 0); } }
 
-    .btn-secondary {
-      color: #c9d9ef;
-      background: #162740;
-      border: 1px solid #3b567b;
-    }
-
-    .btn-danger {
-      color: #ffd2d9;
-      background: rgba(255, 126, 142, 0.13);
-      border: 1px solid rgba(255, 126, 142, 0.5);
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .pulse {
-      animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(101, 218, 208, 0.4); }
-      100% { box-shadow: 0 0 0 14px rgba(101, 218, 208, 0); }
-    }
-
-    .totem-grid {
-      display: grid;
-      gap: 10px;
-    }
+    .totem-grid { display: grid; gap: 10px; }
 
     .totem-card {
       border: 1px solid #3c567c;
@@ -381,17 +326,8 @@
       transition: 0.2s ease;
     }
 
-    .totem-card:hover {
-      border-color: #89e5dc;
-      transform: translateY(-1px);
-      background: #1a2e49;
-    }
-
-    .totem-card.selected {
-      border-color: #68ddd3;
-      box-shadow: 0 0 0 3px rgba(101, 218, 208, 0.2);
-      background: #1d314d;
-    }
+    .totem-card:hover { border-color: #89e5dc; transform: translateY(-1px); background: #1a2e49; }
+    .totem-card.selected { border-color: #68ddd3; box-shadow: 0 0 0 3px rgba(101, 218, 208, 0.2); background: #1d314d; }
 
     .totem-art {
       border-radius: 14px;
@@ -404,178 +340,52 @@
       overflow: hidden;
     }
 
-    .totem-art span {
-      font-size: 2.2rem;
-      z-index: 1;
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
-    }
+    .totem-art span { font-size: 2.2rem; z-index: 1; filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3)); }
+    .totem-art::before { content: ""; position: absolute; width: 130%; height: 45%; left: -15%; bottom: -13%; background: rgba(255, 255, 255, 0.28); border-radius: 70% 70% 0 0; }
+    .totem-title { color: #eef6ff; font-size: 1rem; font-weight: 900; margin-bottom: 2px; }
+    .totem-sub { color: #adc1df; font-size: 0.82rem; margin-bottom: 7px; }
+    .chips, .evo { display: flex; flex-wrap: wrap; gap: 5px; }
+    .chip { border: 1px solid #4a658b; border-radius: 999px; padding: 4px 8px; color: #c0d2ea; background: #1d3151; font-size: 0.7rem; font-weight: 800; }
+    .evo span { border: 1px dashed #567399; border-radius: 999px; padding: 3px 7px; color: #bfd2eb; background: #1a2d49; font-size: 0.68rem; font-weight: 700; }
 
-    .totem-art::before {
-      content: "";
-      position: absolute;
-      width: 130%;
-      height: 45%;
-      left: -15%;
-      bottom: -13%;
-      background: rgba(255, 255, 255, 0.28);
-      border-radius: 70% 70% 0 0;
-    }
+    .welcome { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .avatar-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .avatar { width: 48px; height: 48px; border-radius: 12px; border: 1px solid #4b668e; background: #1a2d49; object-fit: cover; flex-shrink: 0; }
+    .greeting { margin-top: 4px; color: #f2f8ff; font-size: 1.12rem; line-height: 1.2; font-weight: 900; }
 
-    .totem-title {
-      color: #eef6ff;
-      font-size: 1rem;
-      font-weight: 900;
-      margin-bottom: 2px;
-    }
+    .kpi-grid { margin-top: 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .kpi { border: 1px solid #3b567c; border-radius: 12px; background: #152840; padding: 9px; text-align: center; }
+    .kpi strong { display: block; color: #f2f8ff; font-size: 1.08rem; margin-bottom: 2px; }
+    .kpi span { color: #a1b6d5; font-size: 0.7rem; font-weight: 700; }
 
-    .totem-sub {
-      color: #adc1df;
-      font-size: 0.82rem;
-      margin-bottom: 7px;
-    }
+    .home-grid { margin-top: 10px; display: grid; grid-template-columns: 1fr; gap: 10px; }
 
-    .chips,
-    .evo {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-
-    .chip {
-      border: 1px solid #4a658b;
-      border-radius: 999px;
-      padding: 4px 8px;
-      color: #c0d2ea;
-      background: #1d3151;
-      font-size: 0.7rem;
-      font-weight: 800;
-    }
-
-    .evo span {
-      border: 1px dashed #567399;
-      border-radius: 999px;
-      padding: 3px 7px;
-      color: #bfd2eb;
-      background: #1a2d49;
-      font-size: 0.68rem;
-      font-weight: 700;
-    }
-
-    .welcome {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .avatar-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      border: 1px solid #4b668e;
-      background: #1a2d49;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    .greeting {
-      margin-top: 4px;
-      color: #f2f8ff;
-      font-size: 1.12rem;
-      line-height: 1.2;
-      font-weight: 900;
-    }
-
-    .kpi-grid {
-      margin-top: 12px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .kpi {
-      border: 1px solid #3b567c;
-      border-radius: 12px;
-      background: #152840;
-      padding: 9px;
-      text-align: center;
-    }
-
-    .kpi strong {
-      display: block;
-      color: #f2f8ff;
-      font-size: 1.08rem;
-      margin-bottom: 2px;
-    }
-
-    .kpi span {
-      color: #a1b6d5;
-      font-size: 0.7rem;
-      font-weight: 700;
-    }
-
-    .home-grid {
-      margin-top: 10px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .deed-list {
-      list-style: none;
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
+    .deed-list { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
     .deed-item {
       border: 1px solid #3b567c;
       border-radius: 13px;
       background: #172a43;
       padding: 10px;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
-
-    .deed-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
+    .deed-item:hover { transform: translateY(-1px); border-color: #89e5dc; box-shadow: 0 10px 20px rgba(6, 14, 27, 0.35); }
+    .deed-top { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
     .deed-points {
-      border: 1px solid #7de3d9;
+      border: 1px solid #9bf0e8;
       border-radius: 999px;
-      background: #113a39;
-      color: #9ef4ea;
-      font-size: 0.7rem;
+      background: linear-gradient(145deg, #1e5d59, #1f726c);
+      color: #d4fff9;
+      font-size: 0.72rem;
       font-weight: 900;
-      padding: 3px 7px;
+      padding: 4px 9px;
       white-space: nowrap;
+      box-shadow: 0 0 0 2px rgba(101, 218, 208, 0.14), 0 5px 12px rgba(14, 40, 39, 0.5);
+      letter-spacing: 0.2px;
     }
 
-    .totem-panel {
-      border: 1px solid #3b567c;
-      border-radius: 14px;
-      background: #172a43;
-      padding: 12px;
-    }
-
-    .totem-top {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
+    .totem-panel { border: 1px solid #3b567c; border-radius: 14px; background: #172a43; padding: 12px; }
+    .totem-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
     .totem-big {
       width: 72px;
       height: 72px;
@@ -589,302 +399,58 @@
       flex-shrink: 0;
       position: relative;
       overflow: hidden;
-    }
-
-    .totem-big::after {
-      content: "★";
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 0.75rem;
-    }
-
-    @keyframes bob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-
-    .ring {
-      width: 106px;
-      height: 106px;
-      border-radius: 50%;
-      background: conic-gradient(var(--brand) 0deg, #375074 0deg);
-      position: relative;
-      display: grid;
-      place-items: center;
-      margin-left: auto;
-      flex-shrink: 0;
-    }
-
-    .ring::before {
-      content: "";
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 1px solid #455f86;
-      background: #12233d;
-      position: absolute;
-    }
-
-    .ring-center {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 1px;
-      text-align: center;
-    }
-
-    .ring-center strong {
-      color: #f1f7ff;
-      font-size: 1.14rem;
-    }
-
-    .ring-center span {
-      color: #a7bbd8;
-      font-size: 0.68rem;
-      font-weight: 700;
-    }
-
-    .unlock-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .unlock {
-      border: 1px solid #49658b;
-      border-radius: 999px;
-      background: #1d3150;
-      color: #c2d5ee;
-      padding: 4px 8px;
-      font-size: 0.73rem;
-      font-weight: 700;
-    }
-
-    .sheriff-banner {
-      margin-top: 8px;
-      border: 1px dashed #617fa8;
-      border-radius: 12px;
-      padding: 8px 10px;
-      color: #dae8fc;
-      background: rgba(255, 203, 117, 0.1);
-      font-weight: 800;
-      font-size: 0.79rem;
-    }
-
-    .score-badge {
-      border: 1px solid #466285;
-      border-radius: 12px;
-      padding: 10px;
-      color: #d4e8ff;
-      font-size: 0.86rem;
-      font-weight: 800;
-      text-align: center;
-      background: #1a2e4a;
-    }
-
-    .quick-templates {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 4px;
-    }
-
-    .quick-templates button {
-      border: 1px solid #466285;
-      border-radius: 999px;
-      background: #1a2e4a;
-      color: #c1d4ec;
-      font-size: 0.73rem;
-      font-weight: 700;
-      padding: 5px 9px;
       cursor: pointer;
+      box-shadow: 0 0 0 0 rgba(101, 218, 208, 0.32);
     }
+    .totem-big::before { content: ""; position: absolute; inset: -3px; border: 2px solid rgba(122, 235, 225, 0.64); border-radius: inherit; animation: aura 2.2s ease-in-out infinite; pointer-events: none; }
+    .totem-big::after { content: "★"; position: absolute; top: 4px; right: 6px; color: rgba(255, 255, 255, 0.74); font-size: 0.75rem; }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes aura { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.04); } }
+    .totem-big.talk { animation: totem-talk 0.45s ease; }
+    @keyframes totem-talk { 0% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(-4deg) scale(1.08); } 50% { transform: rotate(4deg) scale(1.08); } 100% { transform: rotate(0deg) scale(1); } }
 
-    .stats-grid {
-      margin-top: 8px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
+    .ring { width: 106px; height: 106px; border-radius: 50%; background: conic-gradient(var(--brand) 0deg, #375074 0deg); position: relative; display: grid; place-items: center; margin-left: auto; flex-shrink: 0; }
+    .ring::before { content: ""; width: 80px; height: 80px; border-radius: 50%; border: 1px solid #455f86; background: #12233d; position: absolute; }
+    .ring-center { position: relative; z-index: 1; display: grid; gap: 1px; text-align: center; }
+    .ring-center strong { color: #f1f7ff; font-size: 1.14rem; }
+    .ring-center span { color: #a7bbd8; font-size: 0.68rem; font-weight: 700; }
 
-    .stat {
-      border: 1px solid #3b567c;
-      border-radius: 13px;
-      background: #172a43;
-      padding: 10px;
-    }
+    .unlock-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .unlock { border: 1px solid #49658b; border-radius: 999px; background: #1d3150; color: #c2d5ee; padding: 4px 8px; font-size: 0.73rem; font-weight: 700; }
+    .sheriff-banner { margin-top: 8px; border: 1px dashed #617fa8; border-radius: 12px; padding: 8px 10px; color: #dae8fc; background: rgba(255, 203, 117, 0.1); font-weight: 800; font-size: 0.79rem; }
+    .totem-talk-bubble { margin-top: 8px; border: 1px solid #6e8fb9; border-radius: 12px; padding: 9px 10px; font-size: 0.8rem; font-weight: 800; color: #e8f3ff; background: linear-gradient(145deg, rgba(88, 119, 163, 0.24), rgba(101, 218, 208, 0.14)); opacity: 0; transform: translateY(4px); transition: 0.22s ease; min-height: 38px; }
+    .totem-talk-bubble.show { opacity: 1; transform: translateY(0); }
 
-    .stat strong {
-      display: block;
-      color: #f3f8ff;
-      font-size: 1.22rem;
-      margin-bottom: 2px;
-    }
+    .score-badge { border: 1px solid #466285; border-radius: 12px; padding: 10px; color: #d4e8ff; font-size: 0.86rem; font-weight: 800; text-align: center; background: #1a2e4a; }
+    .quick-templates { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .quick-templates button { border: 1px solid #466285; border-radius: 999px; background: #1a2e4a; color: #c1d4ec; font-size: 0.73rem; font-weight: 700; padding: 5px 9px; cursor: pointer; }
 
-    .chart {
-      margin-top: 10px;
-      border: 1px solid #3b567c;
-      border-radius: 14px;
-      background: #172a43;
-      padding: 12px;
-    }
+    .stats-grid { margin-top: 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .stat { border: 1px solid #3b567c; border-radius: 13px; background: #172a43; padding: 10px; }
+    .stat strong { display: block; color: #f3f8ff; font-size: 1.22rem; margin-bottom: 2px; }
+    .chart { margin-top: 10px; border: 1px solid #3b567c; border-radius: 14px; background: #172a43; padding: 12px; }
+    .bars { margin-top: 10px; min-height: 154px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; align-items: end; }
+    .bar-slot { display: grid; justify-items: center; gap: 4px; }
+    .bar { width: 100%; border-radius: 8px 8px 4px 4px; background: linear-gradient(180deg, #89eadf, #57cec3); border: 1px solid #7fe4da; min-height: 7px; }
+    .bar-slot span { color: #a1b6d5; font-size: 0.69rem; font-weight: 700; }
 
-    .bars {
-      margin-top: 10px;
-      min-height: 154px;
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 8px;
-      align-items: end;
-    }
+    .calendar-head { margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .calendar-grid { margin-top: 8px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+    .weekday { text-align: center; color: #9db3d4; font-size: 0.72rem; font-weight: 800; padding-bottom: 2px; }
+    .day { min-height: 62px; border: 1px solid #3b567c; border-radius: 11px; background: #162840; color: #dfebfa; font-weight: 800; text-align: left; padding: 7px; cursor: pointer; transition: 0.16s ease; position: relative; }
+    .day:hover { border-color: #89e4da; }
+    .day.today { border-color: #ffd07f; }
+    .day.selected { border-color: #66ddd2; box-shadow: 0 0 0 3px rgba(101, 218, 208, 0.22); }
+    .day.has-plan::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #65dad0; position: absolute; right: 7px; bottom: 7px; }
+    .day.empty { visibility: hidden; }
+    .plan-list { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 7px; }
+    .plan-item { border: 1px solid #3b567c; border-radius: 12px; background: #172a43; padding: 9px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .plan-item button { border: 1px solid rgba(255, 126, 142, 0.5); border-radius: 8px; background: rgba(255, 126, 142, 0.12); color: #ffd2d9; font-size: 0.74rem; font-weight: 700; padding: 4px 8px; cursor: pointer; }
 
-    .bar-slot {
-      display: grid;
-      justify-items: center;
-      gap: 4px;
-    }
-
-    .bar {
-      width: 100%;
-      border-radius: 8px 8px 4px 4px;
-      background: linear-gradient(180deg, #89eadf, #57cec3);
-      border: 1px solid #7fe4da;
-      min-height: 7px;
-    }
-
-    .bar-slot span {
-      color: #a1b6d5;
-      font-size: 0.69rem;
-      font-weight: 700;
-    }
-
-    .calendar-head {
-      margin-top: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .calendar-grid {
-      margin-top: 8px;
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 6px;
-    }
-
-    .weekday {
-      text-align: center;
-      color: #9db3d4;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding-bottom: 2px;
-    }
-
-    .day {
-      min-height: 62px;
-      border: 1px solid #3b567c;
-      border-radius: 11px;
-      background: #162840;
-      color: #dfebfa;
-      font-weight: 800;
-      text-align: left;
-      padding: 7px;
-      cursor: pointer;
-      transition: 0.16s ease;
-      position: relative;
-    }
-
-    .day:hover {
-      border-color: #89e4da;
-    }
-
-    .day.today {
-      border-color: #ffd07f;
-    }
-
-    .day.selected {
-      border-color: #66ddd2;
-      box-shadow: 0 0 0 3px rgba(101, 218, 208, 0.22);
-    }
-
-    .day.has-plan::after {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #65dad0;
-      position: absolute;
-      right: 7px;
-      bottom: 7px;
-    }
-
-    .day.empty {
-      visibility: hidden;
-    }
-
-    .plan-list {
-      list-style: none;
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-
-    .plan-item {
-      border: 1px solid #3b567c;
-      border-radius: 12px;
-      background: #172a43;
-      padding: 9px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .plan-item button {
-      border: 1px solid rgba(255, 126, 142, 0.5);
-      border-radius: 8px;
-      background: rgba(255, 126, 142, 0.12);
-      color: #ffd2d9;
-      font-size: 0.74rem;
-      font-weight: 700;
-      padding: 4px 8px;
-      cursor: pointer;
-    }
-
-    .profile-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    .achievements {
-      list-style: none;
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-
-    .achievements li {
-      border: 1px solid #3b567c;
-      border-radius: 12px;
-      background: #172a43;
-      padding: 9px 10px;
-      color: #c3d5ee;
-      font-size: 0.84rem;
-    }
-
-    .achievements li.done {
-      border-color: #79e2d8;
-      background: rgba(52, 216, 196, 0.16);
-      color: #ddfff8;
-      font-weight: 700;
-    }
+    .profile-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .achievements { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 7px; }
+    .achievements li { border: 1px solid #3b567c; border-radius: 12px; background: #172a43; padding: 9px 10px; color: #c3d5ee; font-size: 0.84rem; }
+    .achievements li.done { border-color: #79e2d8; background: rgba(52, 216, 196, 0.16); color: #ddfff8; font-weight: 700; }
 
     .bottom-nav {
       position: fixed;
@@ -904,70 +470,16 @@
       z-index: 55;
     }
 
-    .bottom-nav.show {
-      display: grid;
-    }
-
-    .nav-btn {
-      border: 1px solid transparent;
-      border-radius: 12px;
-      background: transparent;
-      color: #a9bddb;
-      font-size: 0.71rem;
-      font-weight: 800;
-      padding: 8px 4px;
-      display: grid;
-      justify-items: center;
-      gap: 2px;
-      cursor: pointer;
-      transition: 0.18s ease;
-    }
-
-    .nav-btn .icon {
-      font-size: 1.05rem;
-      line-height: 1;
-      transition: transform 0.22s ease;
-    }
-
-    .nav-btn:hover .icon {
-      transform: translateY(-1px) scale(1.06);
-    }
-
-    .nav-btn.active {
-      border-color: #70dfd5;
-      color: #d5fff9;
-      background: rgba(101, 218, 208, 0.16);
-      box-shadow: inset 0 0 18px rgba(101, 218, 208, 0.2);
-    }
-
-    .nav-btn.main-add {
-      border: none;
-      border-radius: 15px;
-      background: linear-gradient(145deg, #72e6db, #4ecfc3);
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(78, 207, 195, 0.42);
-      transform: translateY(-12px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .nav-btn.main-add::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.45), transparent 54%);
-      pointer-events: none;
-    }
-
-    .nav-btn.tap-bounce .icon {
-      animation: tap-bounce 0.34s ease;
-    }
-
-    @keyframes tap-bounce {
-      0% { transform: scale(1); }
-      40% { transform: scale(1.18); }
-      100% { transform: scale(1); }
-    }
+    .bottom-nav.show { display: grid; }
+    .nav-btn { border: 1px solid transparent; border-radius: 12px; background: transparent; color: #a9bddb; font-size: 0.71rem; font-weight: 800; padding: 8px 4px; display: grid; justify-items: center; gap: 2px; cursor: pointer; transition: 0.18s ease; }
+    .nav-btn .icon { font-size: 1.05rem; line-height: 1; transition: transform 0.22s ease; }
+    .nav-btn:hover .icon { transform: translateY(-1px) scale(1.06); }
+    .nav-btn.active { border-color: #70dfd5; color: #d5fff9; background: rgba(101, 218, 208, 0.16); box-shadow: inset 0 0 18px rgba(101, 218, 208, 0.2); }
+    .nav-btn.main-add { border: none; border-radius: 15px; background: linear-gradient(145deg, #72e6db, #4ecfc3); color: #fff; box-shadow: 0 12px 24px rgba(78, 207, 195, 0.42); transform: translateY(-12px); position: relative; overflow: hidden; animation: add-glow 2.4s ease-in-out infinite; }
+    .nav-btn.main-add::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.45), transparent 54%); pointer-events: none; }
+    .nav-btn.tap-bounce .icon { animation: tap-bounce 0.34s ease; }
+    @keyframes tap-bounce { 0% { transform: scale(1); } 40% { transform: scale(1.18); } 100% { transform: scale(1); } }
+    @keyframes add-glow { 0%, 100% { box-shadow: 0 12px 24px rgba(78, 207, 195, 0.32); } 50% { box-shadow: 0 14px 30px rgba(78, 207, 195, 0.62); } }
 
     .toast {
       position: fixed;
@@ -997,34 +509,15 @@
       z-index: 80;
     }
 
-    .modal.show {
-      display: flex;
-    }
+    .modal.show { display: flex; }
+    .modal-box { width: min(460px, 100%); border: 1px solid #4d6890; border-radius: 18px; background: linear-gradient(165deg, #1b2c47, #172640); box-shadow: 0 22px 45px rgba(0, 0, 0, 0.52); padding: 18px; position: relative; overflow: hidden; }
+    .deed-modal-grid { margin-top: 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .deed-modal-stat { border: 1px solid #49658a; border-radius: 11px; padding: 9px 10px; background: #172b45; }
+    .deed-modal-stat b { display: block; color: #f0f7ff; font-size: 1.02rem; margin-bottom: 2px; }
+    .deed-modal-text { margin-top: 10px; border: 1px solid #456285; border-radius: 12px; padding: 10px; background: #162942; color: #e8f2ff; font-weight: 700; line-height: 1.45; }
 
-    .modal-box {
-      width: min(460px, 100%);
-      border: 1px solid #4d6890;
-      border-radius: 18px;
-      background: linear-gradient(165deg, #1b2c47, #172640);
-      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.52);
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .confetti {
-      position: absolute;
-      width: 8px;
-      height: 14px;
-      border-radius: 2px;
-      animation: confetti 1.2s ease forwards;
-      opacity: 0;
-    }
-
-    @keyframes confetti {
-      0% { transform: translateY(-12px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(190px) rotate(390deg); opacity: 0; }
-    }
+    .confetti { position: absolute; width: 8px; height: 14px; border-radius: 2px; animation: confetti 1.2s ease forwards; opacity: 0; }
+    @keyframes confetti { 0% { transform: translateY(-12px) rotate(0deg); opacity: 1; } 100% { transform: translateY(190px) rotate(390deg); opacity: 0; } }
 
     .spark {
       position: fixed;
@@ -1043,29 +536,13 @@
       100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
     }
 
-    @media (min-width: 860px) {
-      .home-grid {
-        grid-template-columns: 1.2fr 0.8fr;
-      }
-    }
-
-    @media (max-width: 660px) {
-      .topbar-row {
-        grid-template-columns: 1fr;
-      }
-    }
-
+    @media (min-width: 860px) { .home-grid { grid-template-columns: 1.2fr 0.8fr; } }
+    @media (max-width: 660px) { .topbar-row { grid-template-columns: 1fr; } }
     @media (max-width: 560px) {
-      .grid-2,
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-      .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .totem-card {
-        grid-template-columns: 92px 1fr;
-      }
+      .grid-2, .stats-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .totem-card { grid-template-columns: 92px 1fr; }
+      .deed-modal-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1074,11 +551,9 @@
     <header class="topbar">
       <div class="topbar-row">
         <div>
-          <div class="logo-wrap">
-            <div class="logo-box">
-              <div class="logo-word">KarmoMetr</div>
-              <div class="logo-mark">👍</div>
-            </div>
+          <div class="logo-box">
+            <div class="logo-word">KarmoMetr</div>
+            <div class="logo-mark">👍</div>
           </div>
           <div class="logo-sub">Кармася Техася · Добро на максималках</div>
         </div>
@@ -1098,29 +573,15 @@
     <section class="screen active" id="screen-register">
       <div class="card hero">
         <h1 class="title">Залітаємо в Кармометр, ковбою</h1>
-        <p class="subtitle">
-          Реєстрація проста і швидка. Далі обереш тотема, і система буде щодня тішити тебе прогресом і пафосною похвалою.
-        </p>
+        <p class="subtitle">Швидка реєстрація, потім тотем, потім чистий кайф від прогресу і похвали.</p>
         <form id="registerForm" class="stack">
           <div class="grid-2">
-            <div>
-              <label for="regName">Ім'я</label>
-              <input id="regName" required placeholder="Наприклад: Назар">
-            </div>
-            <div>
-              <label for="regEmail">E-mail</label>
-              <input id="regEmail" type="email" required placeholder="you@karmometr.app">
-            </div>
+            <div><label for="regName">Ім'я</label><input id="regName" required placeholder="Наприклад: Назар"></div>
+            <div><label for="regEmail">E-mail</label><input id="regEmail" type="email" required placeholder="you@karmometr.app"></div>
           </div>
           <div class="grid-2">
-            <div>
-              <label for="regPassword">Пароль</label>
-              <input id="regPassword" type="password" required minlength="5" placeholder="••••••">
-            </div>
-            <div>
-              <label for="regAvatar">Фото профілю</label>
-              <input id="regAvatar" type="file" accept="image/*">
-            </div>
+            <div><label for="regPassword">Пароль</label><input id="regPassword" type="password" required minlength="5" placeholder="••••••"></div>
+            <div><label for="regAvatar">Фото профілю</label><input id="regAvatar" type="file" accept="image/*"></div>
           </div>
           <button class="btn btn-primary pulse" type="submit">Далі: обрати тотема</button>
         </form>
@@ -1130,10 +591,10 @@
     <section class="screen" id="screen-totem">
       <div class="card hero">
         <h2 class="title">Обери тотем-партнера</h2>
-        <p class="subtitle">Кожен тотем має характер, бонус і власну еволюцію. Обирай серцем і стилем.</p>
+        <p class="subtitle">Тотем не просто картинка: характер, перк, еволюція і репліки у відповідь.</p>
         <div id="totemGrid" class="totem-grid"></div>
         <div class="row" style="margin-top:12px;">
-          <button id="startAppBtn" class="btn btn-primary">Запустити KarmoMetr</button>
+          <button id="startAppBtn" class="btn btn-primary">Запустити KarmoMetr • легендарний режим</button>
           <button class="btn btn-secondary" data-go="register">Назад</button>
         </div>
       </div>
@@ -1162,10 +623,9 @@
       <div class="home-grid">
         <div class="card">
           <div class="screen-title">Твої добрі справи</div>
-          <div class="muted">Лента дій, які реально роблять день людей кращим.</div>
+          <div class="muted">Клікни на будь-яку справу — відкриється попап із профітом.</div>
           <ul id="deedList" class="deed-list"></ul>
         </div>
-
         <div class="card">
           <div class="screen-title">Тотем + рівень</div>
           <div id="totemPanel" class="totem-panel"></div>
@@ -1177,9 +637,7 @@
     <section class="screen" id="screen-add">
       <div class="card">
         <div class="screen-title">Додай добру справу</div>
-        <p class="subtitle" style="margin-bottom:10px;">
-          Текст обов'язковий (+1), медіа опційно (+1). Після збереження шкала зверху ефектно росте.
-        </p>
+        <p class="subtitle" style="margin-bottom:10px;">Текст обов'язковий (+1), медіа опційно (+1). Після збереження верхня шкала росте ефектно.</p>
         <form id="deedForm" class="stack">
           <div>
             <label for="deedText">Що ти зробив(ла)?</label>
@@ -1191,17 +649,11 @@
             <button type="button" data-template="Підтримав(ла) друга, коли йому було важко.">Підказка 3</button>
           </div>
           <div class="grid-2">
-            <div>
-              <label for="deedMedia">Медіа (опційно)</label>
-              <input id="deedMedia" type="file" accept="image/*,video/*,audio/*">
-            </div>
-            <div>
-              <label>Нарахування</label>
-              <div class="score-badge" id="scorePreview">Після збереження: +1 бал</div>
-            </div>
+            <div><label for="deedMedia">Медіа (опційно)</label><input id="deedMedia" type="file" accept="image/*,video/*,audio/*"></div>
+            <div><label>Нарахування</label><div class="score-badge" id="scorePreview">Після збереження: +1 бал</div></div>
           </div>
           <div class="row">
-            <button class="btn btn-primary pulse" type="submit">Зафіксувати справу</button>
+            <button class="btn btn-primary pulse" type="submit">Зафіксувати легендарну справу</button>
             <button class="btn btn-secondary" type="button" data-go="home">На головну</button>
           </div>
         </form>
@@ -1242,7 +694,6 @@
           <button id="nextMonthBtn" class="btn btn-secondary">→</button>
         </div>
         <div id="calendarGrid" class="calendar-grid"></div>
-
         <div class="card" style="margin-top:10px;background:#15263f;">
           <div id="selectedDateLabel" style="font-weight:800;color:#eef6ff;"></div>
           <ul id="planList" class="plan-list"></ul>
@@ -1289,6 +740,28 @@
       <h3 style="font-size:1.4rem;color:#eff6ff;margin-bottom:6px;">Новий рівень! 🤠</h3>
       <p id="levelModalText" style="color:#c6d8f3;font-weight:700;margin-bottom:12px;"></p>
       <button id="closeLevelModal" class="btn btn-primary">Йдемо далі!</button>
+    </div>
+  </div>
+
+  <div id="deedModal" class="modal">
+    <div class="modal-box">
+      <h3 style="font-size:1.35rem;color:#eff6ff;margin-bottom:4px;">Деталі подвигу</h3>
+      <p id="deedModalDate" class="muted" style="margin-bottom:8px;"></p>
+      <div class="deed-modal-grid">
+        <div class="deed-modal-stat">
+          <b id="deedModalPoints">+0 балів</b>
+          <span class="muted">Нараховано кармі</span>
+        </div>
+        <div class="deed-modal-stat">
+          <b id="deedModalProfit">Профіт: 0</b>
+          <span class="muted">Особистий приріст</span>
+        </div>
+      </div>
+      <div id="deedModalText" class="deed-modal-text"></div>
+      <div id="deedModalPhrase" class="sheriff-banner" style="margin-top:10px;"></div>
+      <div class="row" style="margin-top:12px;">
+        <button id="closeDeedModal" class="btn btn-primary">Зрозуміло, кайфую далі</button>
+      </div>
     </div>
   </div>
 
@@ -1387,6 +860,24 @@
       "🏆 Місія дня: пробий новий рівень сьогодні."
     ];
 
+    const totemReplies = {
+      bull: [
+        "Бик Буревій: «Так тримати. Сила в діях, не в балачках.»",
+        "Бик Буревій: «Ще одна справа — і ми проламаємо новий рівень.»",
+        "Бик Буревій: «Ти сьогодні реально тримаєш удар добра.»"
+      ],
+      cat: [
+        "Кішка Іскра: «Естетично. Точно. По-людськи. Люблю цей стиль.»",
+        "Кішка Іскра: «Тонко спрацював(ла). Карма це цінує.»",
+        "Кішка Іскра: «Ще крок — і ти в еліті добрих сердець.»"
+      ],
+      dog: [
+        "Собака Драйв: «Гав! Це було сильно. Давай ще!»",
+        "Собака Драйв: «Ти заряджаєш інших. Не зупиняйся!»",
+        "Собака Драйв: «Командо, тримаємо ритм добра!»"
+      ]
+    };
+
     const state = {
       onboardingDone: false,
       user: { name: "", email: "", avatar: "" },
@@ -1396,38 +887,23 @@
       selectedDate: dateKey(new Date()),
       monthCursor: firstMonthDay(new Date()),
       greetingTimer: null,
-      mission: ""
+      mission: "",
+      deedModalOpen: false
     };
 
     const screens = document.querySelectorAll(".screen");
     const navButtons = document.querySelectorAll(".nav-btn");
     const bottomNav = document.getElementById("bottomNav");
 
-    function firstMonthDay(d) {
-      return new Date(d.getFullYear(), d.getMonth(), 1);
-    }
-
-    function dateKey(d) {
-      return d.toISOString().slice(0, 10);
-    }
-
-    function randomOf(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
-
-    function totalPoints() {
-      return state.deeds.reduce((sum, deed) => sum + deed.points, 0);
-    }
-
-    function currentTotem() {
-      return totems.find((t) => t.id === state.totemId) || totems[0];
-    }
+    function firstMonthDay(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
+    function dateKey(d) { return d.toISOString().slice(0, 10); }
+    function randomOf(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function totalPoints() { return state.deeds.reduce((sum, deed) => sum + deed.points, 0); }
+    function currentTotem() { return totems.find((t) => t.id === state.totemId) || totems[0]; }
 
     function levelInfo(points) {
       let level = 1;
-      for (let i = 1; i < levelThresholds.length; i += 1) {
-        if (points >= levelThresholds[i]) level = i + 1;
-      }
+      for (let i = 1; i < levelThresholds.length; i += 1) if (points >= levelThresholds[i]) level = i + 1;
       const current = levelThresholds[level - 1] ?? 0;
       const next = levelThresholds[level] ?? null;
       const progress = next ? ((points - current) / (next - current)) * 100 : 100;
@@ -1464,14 +940,22 @@
       return d.toLocaleString("uk-UA", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
     }
 
+    function deedProfitText(deed) {
+      if (deed.points >= 2) return "Профіт: +2 до репутації + медіа-бонус";
+      return "Профіт: +1 до репутації і серії";
+    }
+
+    function deedModalPhrase(deed) {
+      if (deed.hasMedia) return "Шериф каже: «З доказом — подвійно епічно. Так і треба.»";
+      return "Шериф каже: «Чистий добрий хід. Поважаю твою стабільність.»";
+    }
+
     function showToast(text) {
       const toast = document.getElementById("toast");
       toast.textContent = text;
       toast.style.display = "block";
       clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => {
-        toast.style.display = "none";
-      }, 2800);
+      showToast.timer = setTimeout(() => { toast.style.display = "none"; }, 2800);
     }
 
     function animatePointsCounter(from, to) {
@@ -1483,11 +967,8 @@
         const p = Math.min(1, (now - start) / duration);
         const val = Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3)));
         pill.textContent = `⭐ ${val}`;
-        if (p < 1) {
-          requestAnimationFrame(frame);
-        } else {
-          setTimeout(() => pill.classList.remove("bump"), 160);
-        }
+        if (p < 1) requestAnimationFrame(frame);
+        else setTimeout(() => pill.classList.remove("bump"), 160);
       }
       requestAnimationFrame(frame);
     }
@@ -1510,12 +991,10 @@
       const { animate = false, previousPoints = 0 } = options;
       const points = totalPoints();
       const lv = levelInfo(points);
-      const fill = document.getElementById("topProgressFill");
-      const hint = document.getElementById("topProgressHint");
-      fill.style.width = `${lv.progress}%`;
-      hint.textContent = lv.next
+      document.getElementById("topProgressFill").style.width = `${lv.progress}%`;
+      document.getElementById("topProgressHint").textContent = lv.next
         ? `Рівень ${lv.level}. До ${lv.level + 1} ще ${lv.next - points} балів.`
-        : `Макс-рівень досягнуто. Ти легенда.`;
+        : "Макс-рівень досягнуто. Ти легенда.";
 
       if (animate) {
         animatePointsCounter(previousPoints, points);
@@ -1527,7 +1006,6 @@
 
     function setScreen(name) {
       if (!state.onboardingDone && !["register", "totem"].includes(name)) return;
-
       screens.forEach((s) => s.classList.remove("active"));
       const screen = document.getElementById(`screen-${name}`);
       if (screen) screen.classList.add("active");
@@ -1536,10 +1014,7 @@
 
       if (name === "home") renderHome();
       if (name === "stats") renderStats();
-      if (name === "calendar") {
-        renderCalendar();
-        renderPlans();
-      }
+      if (name === "calendar") { renderCalendar(); renderPlans(); }
       if (name === "profile") renderProfile();
     }
 
@@ -1571,10 +1046,7 @@
             <div class="evo">${totem.upgrades.slice(0, 3).map((u) => `<span>${u}</span>`).join("")}</div>
           </div>
         `;
-        card.addEventListener("click", () => {
-          state.totemId = totem.id;
-          renderTotemGrid();
-        });
+        card.addEventListener("click", () => { state.totemId = totem.id; renderTotemGrid(); });
         grid.appendChild(card);
       });
     }
@@ -1610,7 +1082,7 @@
       const unlocked = totem.upgrades.slice(0, Math.max(0, lv.level - 1));
       document.getElementById("totemPanel").innerHTML = `
         <div class="totem-top">
-          <div class="totem-big" style="--tb1:${totem.colors[0]};--tb2:${totem.colors[1]};">${totem.emoji}</div>
+          <div class="totem-big" id="totemAvatarHome" style="--tb1:${totem.colors[0]};--tb2:${totem.colors[1]};">${totem.emoji}</div>
           <div>
             <div style="font-weight:900;color:#f2f8ff;">${totem.name}</div>
             <div class="muted">${totem.style}</div>
@@ -1627,7 +1099,22 @@
         <div class="unlock-row">
           ${unlocked.length ? unlocked.map((u) => `<span class="unlock">${u}</span>`).join("") : '<span class="unlock">Перший апгрейд на рівні 2</span>'}
         </div>
+        <div class="totem-talk-bubble" id="totemTalkBubble">🤠 Клікни на тотема — він відповість тобі пафосно.</div>
       `;
+
+      const totemAvatar = document.getElementById("totemAvatarHome");
+      const totemBubble = document.getElementById("totemTalkBubble");
+      if (totemAvatar && totemBubble) {
+        totemAvatar.addEventListener("click", () => {
+          const reply = randomOf(totemReplies[totem.id] || ["Тотем: «Тримаємо курс на добро.»"]);
+          totemBubble.textContent = reply;
+          totemBubble.classList.add("show");
+          totemAvatar.classList.remove("talk");
+          void totemAvatar.offsetWidth;
+          totemAvatar.classList.add("talk");
+          showToast(reply);
+        });
+      }
 
       const list = document.getElementById("deedList");
       list.innerHTML = "";
@@ -1643,18 +1130,33 @@
           li.innerHTML = `
             <div class="deed-top">
               <div style="font-weight:800;color:#ecf4ff;">${safe(deed.text)}</div>
-              <span class="deed-points">+${deed.points}</span>
+              <span class="deed-points">⚡ +${deed.points}</span>
             </div>
             <div class="muted">${formatDateTime(deed.createdAt)}${deed.hasMedia ? " · з медіа" : ""}</div>
           `;
+          li.addEventListener("click", () => openDeedModal(deed));
           list.appendChild(li);
         });
       }
 
       if (!state.mission) state.mission = randomOf(dailyMissions);
       document.getElementById("dailyMission").textContent = state.mission;
-
       updateTopMeter();
+    }
+
+    function openDeedModal(deed) {
+      state.deedModalOpen = true;
+      document.getElementById("deedModalDate").textContent = `Зафіксовано: ${formatDateTime(deed.createdAt)}`;
+      document.getElementById("deedModalPoints").textContent = `⚡ +${deed.points} бал(и)`;
+      document.getElementById("deedModalProfit").textContent = deedProfitText(deed);
+      document.getElementById("deedModalText").textContent = deed.text;
+      document.getElementById("deedModalPhrase").textContent = deedModalPhrase(deed);
+      document.getElementById("deedModal").classList.add("show");
+    }
+
+    function closeDeedModal() {
+      state.deedModalOpen = false;
+      document.getElementById("deedModal").classList.remove("show");
     }
 
     function countRange(fromAgo, toAgo) {
@@ -1713,15 +1215,10 @@
       });
 
       const insight = document.getElementById("statInsight");
-      if (!state.deeds.length) {
-        insight.textContent = "Ще немає записів. Додай першу справу — і шкала одразу оживе.";
-      } else if (compare >= 20) {
-        insight.textContent = "Ти набрав потужний темп відносно минулого тижня. Це виглядає елітно.";
-      } else if (todayCount === 0) {
-        insight.textContent = "Сьогодні ще тиша. Один добрий хід зараз — і день в плюсі.";
-      } else {
-        insight.textContent = "Ритм стабільний. Ще одна справа сьогодні дасть красивий приріст.";
-      }
+      if (!state.deeds.length) insight.textContent = "Ще немає записів. Додай першу справу — і шкала одразу оживе.";
+      else if (compare >= 20) insight.textContent = "Ти набрав потужний темп відносно минулого тижня. Це виглядає елітно.";
+      else if (todayCount === 0) insight.textContent = "Сьогодні ще тиша. Один добрий хід зараз — і день в плюсі.";
+      else insight.textContent = "Ритм стабільний. Ще одна справа сьогодні дасть красивий приріст.";
     }
 
     function renderCalendar() {
@@ -1750,7 +1247,6 @@
         empty.className = "day empty";
         grid.appendChild(empty);
       }
-
       for (let d = 1; d <= days; d += 1) {
         const date = new Date(y, m, d);
         const key = dateKey(date);
@@ -1761,11 +1257,7 @@
         if (key === today) b.classList.add("today");
         if (key === state.selectedDate) b.classList.add("selected");
         if ((state.plans[key] || []).length) b.classList.add("has-plan");
-        b.addEventListener("click", () => {
-          state.selectedDate = key;
-          renderCalendar();
-          renderPlans();
-        });
+        b.addEventListener("click", () => { state.selectedDate = key; renderCalendar(); renderPlans(); });
         grid.appendChild(b);
       }
     }
@@ -1773,7 +1265,6 @@
     function renderPlans() {
       document.getElementById("selectedDateLabel").textContent =
         `Плани на ${new Date(state.selectedDate).toLocaleDateString("uk-UA", { day: "2-digit", month: "2-digit", year: "numeric" })}`;
-
       const list = document.getElementById("planList");
       list.innerHTML = "";
       const plans = state.plans[state.selectedDate] || [];
@@ -1818,9 +1309,7 @@
       const max = Math.max(lv.level, 8);
       for (let i = 1; i <= max; i += 1) {
         const li = document.createElement("li");
-        li.textContent = i === 1
-          ? "Рівень 1: тотем синхронізовано."
-          : `Рівень ${i}: тотем отримує ${totem.upgrades[i - 2] || "легендарний апгрейд"}.`;
+        li.textContent = i === 1 ? "Рівень 1: тотем синхронізовано." : `Рівень ${i}: тотем отримує ${totem.upgrades[i - 2] || "легендарний апгрейд"}.`;
         if (i <= lv.level) li.classList.add("done");
         list.appendChild(li);
       }
@@ -1855,20 +1344,8 @@
     function seedData() {
       const now = new Date();
       state.deeds = [
-        {
-          id: crypto.randomUUID(),
-          text: "Підказав(ла) туристам дорогу до метро.",
-          points: 1,
-          hasMedia: false,
-          createdAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString()
-        },
-        {
-          id: crypto.randomUUID(),
-          text: "Передав(ла) речі до волонтерського пункту і додав(ла) фото.",
-          points: 2,
-          hasMedia: true,
-          createdAt: new Date(now.getTime() - 26 * 60 * 60 * 1000).toISOString()
-        }
+        { id: crypto.randomUUID(), text: "Підказав(ла) туристам дорогу до метро.", points: 1, hasMedia: false, createdAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString() },
+        { id: crypto.randomUUID(), text: "Передав(ла) речі до волонтерського пункту і додав(ла) фото.", points: 2, hasMedia: true, createdAt: new Date(now.getTime() - 26 * 60 * 60 * 1000).toISOString() }
       ];
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -1908,9 +1385,7 @@
     });
 
     document.querySelectorAll("[data-template]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        document.getElementById("deedText").value = btn.dataset.template;
-      });
+      btn.addEventListener("click", () => { document.getElementById("deedText").value = btn.dataset.template; });
     });
 
     document.getElementById("deedForm").addEventListener("submit", (e) => {
@@ -1920,19 +1395,11 @@
         showToast("Опиши добру справу текстом.");
         return;
       }
-
       const prevPoints = totalPoints();
       const beforeLevel = levelInfo(prevPoints).level;
       const hasMedia = document.getElementById("deedMedia").files.length > 0;
       const points = hasMedia ? 2 : 1;
-      state.deeds.unshift({
-        id: crypto.randomUUID(),
-        text,
-        points,
-        hasMedia,
-        createdAt: new Date().toISOString()
-      });
-
+      state.deeds.unshift({ id: crypto.randomUUID(), text, points, hasMedia, createdAt: new Date().toISOString() });
       document.getElementById("deedText").value = "";
       document.getElementById("deedMedia").value = "";
       document.getElementById("scorePreview").textContent = "Після збереження: +1 бал";
@@ -1962,7 +1429,6 @@
       state.monthCursor = new Date(state.monthCursor.getFullYear(), state.monthCursor.getMonth() - 1, 1);
       renderCalendar();
     });
-
     document.getElementById("nextMonthBtn").addEventListener("click", () => {
       state.monthCursor = new Date(state.monthCursor.getFullYear(), state.monthCursor.getMonth() + 1, 1);
       renderCalendar();
@@ -1971,6 +1437,11 @@
     document.getElementById("closeLevelModal").addEventListener("click", closeLevelModal);
     document.getElementById("levelModal").addEventListener("click", (e) => {
       if (e.target.id === "levelModal") closeLevelModal();
+    });
+
+    document.getElementById("closeDeedModal").addEventListener("click", closeDeedModal);
+    document.getElementById("deedModal").addEventListener("click", (e) => {
+      if (e.target.id === "deedModal") closeDeedModal();
     });
 
     navButtons.forEach((btn) => {
