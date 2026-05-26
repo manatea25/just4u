@@ -6,20 +6,22 @@
   <title>KarmoMetr — Кармася Техася</title>
   <style>
     :root {
-      --bg: #f2f6fb;
-      --surface: #ffffff;
-      --surface-soft: #f8fbff;
-      --text: #2d3443;
-      --muted: #6f7d93;
-      --line: #d8e1ec;
-      --brand: #66dad0;
-      --brand-strong: #43c9be;
-      --dark: #323946;
-      --ok: #1dbb74;
-      --warn: #ff9f43;
-      --danger: #ff6a77;
-      --shadow: 0 14px 32px rgba(41, 57, 80, 0.08);
-      --radius: 18px;
+      --bg: #0f1726;
+      --bg-soft: #162034;
+      --card: #1b2942;
+      --card-light: #213251;
+      --text: #f4f8ff;
+      --muted: #9eb3d4;
+      --line: #304664;
+      --brand: #64d9cf;
+      --brand-strong: #3ec8bb;
+      --brand-soft: rgba(100, 217, 207, 0.14);
+      --dark-brand: #2d3544;
+      --gold: #ffc96e;
+      --danger: #ff7f8f;
+      --ok: #35d88a;
+      --shadow: 0 16px 36px rgba(1, 8, 20, 0.42);
+      --r: 18px;
     }
 
     * {
@@ -33,25 +35,26 @@
       font-family: Inter, "SF Pro Display", "Segoe UI", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top right, rgba(102, 218, 208, 0.22), transparent 31%),
-        radial-gradient(circle at top left, rgba(50, 57, 70, 0.08), transparent 32%),
-        var(--bg);
+        radial-gradient(circle at 100% 0%, rgba(100, 217, 207, 0.16), transparent 35%),
+        radial-gradient(circle at 0% 0%, rgba(255, 201, 110, 0.11), transparent 26%),
+        linear-gradient(180deg, #0b1423, #111a2a 45%, #0e1625);
+      line-height: 1.45;
     }
 
     .app {
       width: min(1120px, 100%);
       margin: 0 auto;
-      padding: 14px 14px 110px;
+      padding: 14px 14px 108px;
     }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 40;
       margin: 0 -14px;
-      padding: 12px 14px;
-      background: rgba(242, 246, 251, 0.9);
-      border-bottom: 1px solid rgba(216, 225, 236, 0.9);
+      padding: 10px 14px;
+      background: rgba(13, 22, 38, 0.9);
+      border-bottom: 1px solid rgba(56, 77, 110, 0.68);
       backdrop-filter: blur(10px);
     }
 
@@ -59,52 +62,59 @@
       width: min(1120px, 100%);
       margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
     }
 
-    .brand {
+    .logo-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .brand-name {
-      font-size: 1.35rem;
+    .logo-box {
+      border-radius: 14px;
+      border: 1px solid #2d415f;
+      background: #0f1a2d;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .logo-word {
+      font-size: 1.2rem;
       font-weight: 900;
-      letter-spacing: -0.2px;
-      color: var(--dark);
+      letter-spacing: 0.2px;
+      color: #eff4ff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
-    .brand-name .accent {
-      color: #2a313e;
-    }
-
-    .brand-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 11px;
-      background: linear-gradient(145deg, #71e2d8, #56ccc2);
-      color: #fff;
+    .logo-mark {
+      width: 33px;
+      height: 33px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #7be4da, #58cfc4);
       display: grid;
       place-items: center;
-      font-size: 1.05rem;
-      box-shadow: 0 8px 16px rgba(80, 202, 192, 0.35);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(95, 213, 202, 0.34);
+      font-size: 1.03rem;
     }
 
-    .brand-sub {
+    .logo-note {
       color: var(--muted);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 700;
-      margin-top: 2px;
     }
 
-    .pill {
-      border: 1px solid #bceee8;
-      background: #ecfcfa;
-      color: #319f96;
+    .mode-pill {
       border-radius: 999px;
+      border: 1px solid #3a5479;
+      background: #162740;
+      color: #b5c8e6;
       padding: 6px 10px;
       font-size: 0.72rem;
       font-weight: 800;
@@ -127,46 +137,47 @@
     }
 
     .card {
-      background: var(--surface);
+      border-radius: var(--r);
       border: 1px solid var(--line);
-      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(30, 45, 71, 0.92), rgba(23, 37, 60, 0.94));
       box-shadow: var(--shadow);
       padding: 14px;
     }
 
-    .hero {
+    .hero-card {
       padding: 18px;
       background:
-        linear-gradient(145deg, rgba(234, 252, 249, 0.97), rgba(255, 255, 255, 0.99)),
-        var(--surface);
+        radial-gradient(circle at 0% 100%, rgba(100, 217, 207, 0.17), transparent 35%),
+        radial-gradient(circle at 100% 0%, rgba(255, 201, 110, 0.11), transparent 30%),
+        linear-gradient(165deg, #1b2a44, #18253e 60%, #132039);
     }
 
     .title {
-      font-size: clamp(1.45rem, 4vw, 2rem);
-      line-height: 1.14;
-      font-weight: 900;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      line-height: 1.1;
       letter-spacing: -0.2px;
-      margin: 6px 0;
-      color: #273449;
+      color: #f4f8ff;
+      font-weight: 900;
+      margin: 4px 0 8px;
     }
 
     .subtitle {
-      color: var(--muted);
-      font-size: 0.96rem;
+      font-size: 0.95rem;
+      color: #a9bbd7;
       margin-bottom: 14px;
-      max-width: 700px;
+      max-width: 780px;
     }
 
     .screen-title {
-      font-size: 1.16rem;
-      color: #2e3d52;
+      font-size: 1.14rem;
+      color: #f3f8ff;
       font-weight: 900;
       margin-bottom: 4px;
     }
 
     .muted {
       color: var(--muted);
-      font-size: 0.86rem;
+      font-size: 0.84rem;
     }
 
     .stack {
@@ -183,23 +194,23 @@
 
     label {
       display: block;
+      color: #c0cfe8;
       font-size: 0.82rem;
       font-weight: 800;
-      color: #4a5c74;
       margin-bottom: 6px;
     }
 
     input,
     textarea {
       width: 100%;
-      border: 1px solid #ccd8e6;
+      border: 1px solid #3a547a;
       border-radius: 12px;
-      background: #fff;
-      color: var(--text);
-      font-size: 0.95rem;
+      background: #13213a;
+      color: #eef5ff;
       padding: 11px 11px;
+      font-size: 0.95rem;
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: 0.2s ease;
     }
 
     textarea {
@@ -209,8 +220,8 @@
 
     input:focus,
     textarea:focus {
-      border-color: #72ddd3;
-      box-shadow: 0 0 0 3px rgba(102, 218, 208, 0.2);
+      border-color: #7ae2d8;
+      box-shadow: 0 0 0 3px rgba(100, 217, 207, 0.2);
     }
 
     .btn {
@@ -218,31 +229,32 @@
       border-radius: 13px;
       padding: 12px 14px;
       font-size: 0.92rem;
-      font-weight: 800;
+      font-weight: 900;
       cursor: pointer;
-      transition: 0.16s ease;
+      transition: transform 0.15s ease, filter 0.15s ease;
     }
 
     .btn:hover {
       transform: translateY(-1px);
+      filter: brightness(1.04);
     }
 
     .btn-primary {
-      background: linear-gradient(145deg, #68ddd3, #4bcac0);
       color: #fff;
-      box-shadow: 0 8px 18px rgba(75, 202, 192, 0.35);
+      background: linear-gradient(145deg, #6ce1d7, #4ecfc3);
+      box-shadow: 0 10px 20px rgba(80, 207, 195, 0.32);
     }
 
     .btn-secondary {
-      background: #f4f8fd;
-      border: 1px solid #d0dbe9;
-      color: #43556f;
+      color: #c8d7ee;
+      background: #15253f;
+      border: 1px solid #3a557b;
     }
 
     .btn-danger {
-      background: #fff3f4;
-      border: 1px solid #ffd1d5;
-      color: #c24752;
+      color: #ffdce1;
+      background: rgba(255, 126, 143, 0.13);
+      border: 1px solid rgba(255, 126, 143, 0.48);
     }
 
     .row {
@@ -252,6 +264,15 @@
       flex-wrap: wrap;
     }
 
+    .pulse {
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(100, 217, 207, 0.38); }
+      100% { box-shadow: 0 0 0 14px rgba(100, 217, 207, 0); }
+    }
+
     .totem-grid {
       display: grid;
       grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -259,100 +280,102 @@
     }
 
     .totem-card {
-      border: 1px solid #d4e0ed;
+      border: 1px solid #3a547a;
       border-radius: 16px;
-      background: #fff;
+      background: #15253f;
       padding: 12px;
       display: grid;
-      grid-template-columns: 92px 1fr;
+      grid-template-columns: 100px 1fr;
       gap: 10px;
-      cursor: pointer;
-      transition: 0.18s ease;
       text-align: left;
+      cursor: pointer;
+      transition: 0.2s ease;
     }
 
     .totem-card:hover {
-      border-color: #89e3da;
-      background: #f7fffe;
+      border-color: #87e4da;
+      transform: translateY(-1px);
+      background: #172944;
     }
 
     .totem-card.selected {
-      border-color: #5fd7cd;
-      background: #ecfcfa;
-      box-shadow: 0 0 0 3px rgba(102, 218, 208, 0.2);
+      border-color: #67ddd2;
+      box-shadow: 0 0 0 3px rgba(100, 217, 207, 0.2);
+      background: #1a2c47;
     }
 
     .totem-art {
       border-radius: 15px;
-      border: 1px solid #c4d8ea;
-      background: linear-gradient(145deg, var(--c1), var(--c2));
+      border: 1px solid #4a6389;
+      background: linear-gradient(145deg, var(--t1), var(--t2));
+      min-height: 100px;
+      position: relative;
       display: grid;
       place-items: center;
-      position: relative;
       overflow: hidden;
-      min-height: 92px;
     }
 
-    .totem-art span {
+    .totem-art .emoji {
       font-size: 2.2rem;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.14));
       z-index: 1;
+      filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.28));
     }
 
     .totem-art::before {
       content: "";
       position: absolute;
-      width: 120%;
-      height: 42%;
-      left: -10%;
-      bottom: -12%;
+      width: 130%;
+      height: 45%;
+      left: -15%;
+      bottom: -13%;
       background: rgba(255, 255, 255, 0.28);
-      border-radius: 60% 60% 0 0;
+      border-radius: 70% 70% 0 0;
     }
 
     .totem-title {
+      color: #eff6ff;
       font-size: 1rem;
       font-weight: 900;
-      color: #2f3d52;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .totem-sub {
-      color: #5f738f;
+      color: #abc0df;
       font-size: 0.82rem;
-      margin-bottom: 6px;
-    }
-
-    .totem-info {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
       margin-bottom: 7px;
     }
 
-    .badge {
-      border-radius: 999px;
-      border: 1px solid #cfe0ed;
-      background: #f8fbff;
-      color: #607590;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 4px 8px;
-    }
-
-    .evolution {
+    .chips {
       display: flex;
-      gap: 5px;
       flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 7px;
     }
 
-    .evolution span {
+    .chip {
       border-radius: 999px;
+      border: 1px solid #476287;
+      background: #1f3252;
+      color: #c3d4ed;
+      padding: 4px 8px;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .evo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .evo span {
+      border-radius: 999px;
+      border: 1px dashed #516e94;
+      color: #c0d2ea;
       padding: 3px 7px;
       font-size: 0.68rem;
-      border: 1px dashed #bdd3e5;
-      color: #60718c;
-      background: #fcfeff;
+      font-weight: 700;
+      background: #1b2c48;
     }
 
     .welcome {
@@ -371,48 +394,48 @@
     }
 
     .avatar {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 12px;
-      border: 1px solid #c7d7e7;
-      background: #eef5ff;
+      border: 1px solid #4b658c;
       object-fit: cover;
+      background: #1b2c48;
       flex-shrink: 0;
     }
 
     .greeting {
       margin-top: 4px;
       font-size: 1.12rem;
-      color: #2b3a50;
-      font-weight: 900;
       line-height: 1.2;
+      color: #f1f7ff;
+      font-weight: 900;
     }
 
     .kpi-grid {
       margin-top: 12px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
     }
 
     .kpi {
-      background: #fff;
-      border: 1px solid #d5e1ed;
+      border: 1px solid #3a5379;
       border-radius: 12px;
+      background: #162840;
       padding: 9px;
       text-align: center;
     }
 
     .kpi strong {
       display: block;
-      font-size: 1.1rem;
-      color: #2f3f55;
+      color: #f5f9ff;
+      font-size: 1.08rem;
       margin-bottom: 2px;
     }
 
     .kpi span {
-      font-size: 0.72rem;
-      color: #6e8096;
+      color: #9fb4d4;
+      font-size: 0.7rem;
       font-weight: 700;
     }
 
@@ -423,43 +446,87 @@
       gap: 10px;
     }
 
+    .deed-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .deed-item {
+      border: 1px solid #3b557b;
+      border-radius: 13px;
+      background: #162942;
+      padding: 10px;
+    }
+
+    .deed-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .deed-points {
+      border-radius: 999px;
+      border: 1px solid #7de3d9;
+      background: #113a39;
+      color: #9ef5eb;
+      font-size: 0.7rem;
+      font-weight: 900;
+      padding: 3px 7px;
+      white-space: nowrap;
+    }
+
     .totem-panel {
-      border: 1px solid #d4e0ec;
+      border: 1px solid #3a5479;
       border-radius: 15px;
-      background: #fff;
+      background: #162840;
       padding: 12px;
     }
 
     .totem-top {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 8px;
     }
 
     .totem-big {
-      width: 70px;
-      height: 70px;
+      width: 72px;
+      height: 72px;
       border-radius: 17px;
-      border: 1px solid #bdd3e5;
-      background: linear-gradient(145deg, var(--t1), var(--t2));
+      border: 1px solid #4d688f;
+      background: linear-gradient(145deg, var(--tb1), var(--tb2));
       display: grid;
       place-items: center;
       font-size: 2rem;
+      animation: bob 2.2s ease-in-out infinite;
       flex-shrink: 0;
-      animation: float 2.2s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
     }
 
-    @keyframes float {
+    .totem-big::after {
+      content: "★";
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.75rem;
+    }
+
+    @keyframes bob {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-3px); }
     }
 
     .ring {
-      width: 102px;
-      height: 102px;
+      width: 106px;
+      height: 106px;
       border-radius: 50%;
-      background: conic-gradient(var(--brand) 0deg, #d7e8f5 0deg);
+      background: conic-gradient(var(--brand) 0deg, #364f73 0deg);
       position: relative;
       display: grid;
       place-items: center;
@@ -469,85 +536,87 @@
 
     .ring::before {
       content: "";
-      width: 78px;
-      height: 78px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      background: #fff;
-      border: 1px solid #d6e3ef;
+      background: #11213a;
+      border: 1px solid #435d83;
       position: absolute;
     }
 
     .ring-center {
       position: relative;
       z-index: 1;
-      text-align: center;
       display: grid;
+      text-align: center;
       gap: 1px;
     }
 
     .ring-center strong {
-      font-size: 1.1rem;
-      color: #2f415a;
+      color: #f2f8ff;
+      font-size: 1.14rem;
     }
 
     .ring-center span {
-      font-size: 0.69rem;
-      color: #6c8099;
+      color: #a9bcd8;
+      font-size: 0.68rem;
       font-weight: 700;
     }
 
-    .meter-info {
-      margin-bottom: 8px;
-    }
-
-    .unlocks {
+    .unlock-row {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
 
     .unlock {
-      border: 1px solid #cfe0ed;
+      border: 1px solid #456185;
       border-radius: 999px;
-      background: #f9fcff;
-      color: #60758f;
+      background: #1d3150;
+      color: #c3d5ed;
       padding: 4px 8px;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 700;
     }
 
-    .deed-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 9px;
+    .sheriff-banner {
+      margin-top: 8px;
+      border: 1px dashed #607ea7;
+      border-radius: 12px;
+      padding: 8px 10px;
+      color: #d7e5fa;
+      font-weight: 800;
+      background: rgba(255, 201, 110, 0.08);
+      font-size: 0.79rem;
     }
 
-    .deed-item {
-      border: 1px solid #d6e2ee;
-      border-radius: 13px;
-      background: #fff;
+    .score-badge {
+      border-radius: 12px;
+      border: 1px solid #456083;
+      background: #1a2d49;
+      color: #cbe0fa;
+      font-size: 0.86rem;
+      font-weight: 800;
       padding: 10px;
+      text-align: center;
     }
 
-    .deed-top {
+    .quick-templates {
       display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: flex-start;
-      margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
     }
 
-    .deed-points {
-      border: 1px solid #bfece6;
-      background: #eafcf9;
-      color: #2d9b91;
+    .quick-templates button {
+      border: 1px solid #456183;
       border-radius: 999px;
-      padding: 3px 7px;
-      font-size: 0.7rem;
-      font-weight: 900;
-      white-space: nowrap;
+      background: #1a2e4a;
+      color: #bdd0ea;
+      font-size: 0.73rem;
+      padding: 5px 9px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     .stats-grid {
@@ -558,30 +627,30 @@
     }
 
     .stat {
-      border: 1px solid #d5e2ef;
+      border: 1px solid #3a5479;
       border-radius: 13px;
-      background: #fff;
+      background: #162840;
       padding: 10px;
     }
 
     .stat strong {
       display: block;
-      color: #2f4059;
-      font-size: 1.24rem;
+      font-size: 1.22rem;
+      color: #f3f8ff;
       margin-bottom: 2px;
     }
 
     .chart {
       margin-top: 10px;
-      border: 1px solid #d5e1ee;
+      border: 1px solid #3a5479;
       border-radius: 14px;
-      background: #fff;
+      background: #162840;
       padding: 12px;
     }
 
     .bars {
       margin-top: 10px;
-      min-height: 150px;
+      min-height: 154px;
       display: grid;
       grid-template-columns: repeat(7, minmax(0, 1fr));
       gap: 8px;
@@ -594,27 +663,26 @@
       gap: 4px;
     }
 
-    .bar-num,
-    .bar-day {
+    .bar {
+      width: 100%;
+      border-radius: 8px 8px 4px 4px;
+      background: linear-gradient(180deg, #87eadf, #55cdc2);
+      border: 1px solid #7de2d8;
+      min-height: 7px;
+    }
+
+    .bar-slot span {
+      color: #9fb4d4;
       font-size: 0.69rem;
-      color: #6b7f96;
       font-weight: 700;
     }
 
-    .bar {
-      width: 100%;
-      border-radius: 8px 8px 5px 5px;
-      background: linear-gradient(180deg, #7be3da, #58ccc2);
-      border: 1px solid #7ad8cf;
-      min-height: 6px;
-    }
-
     .calendar-head {
+      margin-top: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      margin-top: 8px;
     }
 
     .calendar-grid {
@@ -626,48 +694,48 @@
 
     .weekday {
       text-align: center;
-      color: #6d8099;
+      color: #9db3d4;
       font-size: 0.72rem;
       font-weight: 800;
       padding-bottom: 2px;
     }
 
     .day {
-      min-height: 60px;
-      border: 1px solid #d5e2ef;
+      min-height: 62px;
+      border: 1px solid #3a5479;
       border-radius: 11px;
-      background: #fff;
-      color: #34485f;
+      background: #15273f;
+      color: #dce8f9;
       font-weight: 800;
       text-align: left;
       padding: 7px;
       cursor: pointer;
-      transition: 0.17s ease;
       position: relative;
+      transition: 0.16s ease;
     }
 
     .day:hover {
-      border-color: #8ce4dc;
+      border-color: #89e4da;
     }
 
     .day.today {
-      border-color: #5fd8ce;
+      border-color: #ffcf7d;
     }
 
     .day.selected {
-      border-color: #4ec9be;
-      box-shadow: 0 0 0 3px rgba(102, 218, 208, 0.2);
+      border-color: #66ddd2;
+      box-shadow: 0 0 0 3px rgba(100, 217, 207, 0.22);
     }
 
     .day.has-plan::after {
       content: "";
-      position: absolute;
       width: 7px;
       height: 7px;
       border-radius: 50%;
+      background: #64d9cf;
+      position: absolute;
       right: 7px;
       bottom: 7px;
-      background: #46c7bc;
     }
 
     .day.empty {
@@ -676,16 +744,16 @@
 
     .plan-list {
       list-style: none;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 7px;
-      margin-top: 8px;
     }
 
     .plan-item {
-      border: 1px solid #d6e2ef;
+      border: 1px solid #3a5479;
       border-radius: 12px;
-      background: #fff;
+      background: #162840;
       padding: 9px;
       display: flex;
       justify-content: space-between;
@@ -694,44 +762,44 @@
     }
 
     .plan-item button {
-      border: 1px solid #ffd2d6;
-      background: #fff4f5;
-      color: #c24753;
+      border: 1px solid rgba(255, 127, 143, 0.5);
+      background: rgba(255, 127, 143, 0.12);
+      color: #ffd2d9;
       border-radius: 8px;
-      padding: 4px 8px;
       font-size: 0.74rem;
+      padding: 4px 8px;
       font-weight: 700;
       cursor: pointer;
     }
 
     .profile-row {
       display: flex;
-      gap: 10px;
       align-items: center;
+      gap: 10px;
       margin-top: 6px;
     }
 
     .achievements {
       list-style: none;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 7px;
-      margin-top: 8px;
     }
 
     .achievements li {
-      border: 1px solid #d6e2ef;
+      border: 1px solid #3a557a;
       border-radius: 12px;
-      background: #fff;
+      background: #162841;
       padding: 9px 10px;
+      color: #c0d2eb;
       font-size: 0.84rem;
-      color: #4b5f77;
     }
 
     .achievements li.done {
-      border-color: #b8ece5;
-      background: #effcf9;
-      color: #2c6f67;
+      border-color: #79e1d7;
+      background: rgba(52, 216, 196, 0.14);
+      color: #ddfff7;
       font-weight: 700;
     }
 
@@ -741,16 +809,16 @@
       transform: translateX(-50%);
       bottom: 14px;
       width: min(470px, calc(100% - 16px));
-      border: 1px solid #d6e2ee;
+      border: 1px solid #3b557b;
       border-radius: 20px;
-      background: rgba(255, 255, 255, 0.97);
+      background: rgba(17, 28, 46, 0.96);
       backdrop-filter: blur(10px);
-      box-shadow: 0 12px 26px rgba(48, 64, 86, 0.16);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
       padding: 8px;
       display: none;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 6px;
-      z-index: 30;
+      z-index: 50;
     }
 
     .bottom-nav.show {
@@ -761,7 +829,7 @@
       border: 1px solid transparent;
       border-radius: 12px;
       background: transparent;
-      color: #6c8098;
+      color: #a5bad9;
       font-size: 0.72rem;
       font-weight: 800;
       padding: 8px 4px;
@@ -777,17 +845,17 @@
     }
 
     .nav-btn.active {
-      border-color: #bdece7;
-      background: #ecfbf9;
-      color: #319f96;
+      border-color: #6fded4;
+      background: rgba(100, 217, 207, 0.14);
+      color: #d6fff9;
     }
 
     .nav-btn.main-add {
       border: none;
       border-radius: 15px;
-      background: linear-gradient(145deg, #68ddd3, #49c8be);
+      background: linear-gradient(145deg, #6de1d7, #4ecfc3);
       color: #fff;
-      box-shadow: 0 10px 18px rgba(73, 200, 190, 0.35);
+      box-shadow: 0 10px 20px rgba(78, 207, 195, 0.4);
       transform: translateY(-12px);
     }
 
@@ -797,26 +865,26 @@
       transform: translateX(-50%);
       bottom: 96px;
       width: min(470px, calc(100% - 20px));
-      border: 1px solid #b9ebe6;
       border-radius: 14px;
-      background: #fff;
-      color: #2b6f67;
-      font-weight: 800;
-      box-shadow: var(--shadow);
+      border: 1px solid #6ce0d6;
+      background: #113136;
+      color: #c5fff7;
+      box-shadow: 0 12px 30px rgba(3, 10, 20, 0.48);
       padding: 11px 12px;
+      font-weight: 800;
       display: none;
-      z-index: 44;
+      z-index: 60;
     }
 
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(18, 30, 46, 0.46);
+      background: rgba(6, 14, 26, 0.7);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 14px;
-      z-index: 60;
+      z-index: 70;
     }
 
     .modal.show {
@@ -824,12 +892,12 @@
     }
 
     .modal-box {
-      width: min(450px, 100%);
-      border: 1px solid #c9d9e9;
+      width: min(460px, 100%);
       border-radius: 18px;
-      background: #fff;
-      box-shadow: 0 20px 40px rgba(28, 41, 61, 0.24);
-      padding: 16px;
+      border: 1px solid #4d688f;
+      background: linear-gradient(170deg, #1a2a44, #17253e);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.5);
+      padding: 18px;
       position: relative;
       overflow: hidden;
     }
@@ -839,18 +907,33 @@
       width: 8px;
       height: 14px;
       border-radius: 2px;
-      animation: confetti-fall 1.2s ease forwards;
+      animation: confetti 1.2s ease forwards;
       opacity: 0;
     }
 
-    @keyframes confetti-fall {
+    @keyframes confetti {
       0% { transform: translateY(-12px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(180px) rotate(380deg); opacity: 0; }
+      100% { transform: translateY(190px) rotate(390deg); opacity: 0; }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      animation: twinkle 1.4s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { transform: scale(0.7); opacity: 0.25; }
+      50% { transform: scale(1.2); opacity: 0.9; }
     }
 
     @media (min-width: 860px) {
       .home-grid {
-        grid-template-columns: 1.25fr 0.85fr;
+        grid-template-columns: 1.2fr 0.8fr;
       }
     }
 
@@ -859,14 +942,14 @@
       .stats-grid {
         grid-template-columns: 1fr;
       }
-      .pill {
-        display: none;
-      }
-      .totem-card {
-        grid-template-columns: 84px 1fr;
-      }
       .kpi-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .totem-card {
+        grid-template-columns: 92px 1fr;
+      }
+      .mode-pill {
+        display: none;
       }
     }
   </style>
@@ -876,27 +959,29 @@
     <header class="topbar">
       <div class="topbar-row">
         <div>
-          <div class="brand">
-            <div class="brand-name"><span class="accent">Karmo</span>Metr</div>
-            <div class="brand-mark">👍</div>
+          <div class="logo-wrap">
+            <div class="logo-box">
+              <div class="logo-word">KarmoMetr</div>
+              <div class="logo-mark">👍</div>
+            </div>
           </div>
-          <div class="brand-sub">Кармася Техася · Задовільняємо свою карму</div>
+          <div class="logo-note">Кармася Техася · Задовільняємо свою карму</div>
         </div>
-        <span class="pill">mobile first</span>
+        <span class="mode-pill">cowboy prestige mode</span>
       </div>
     </header>
 
     <section class="screen active" id="screen-register">
-      <div class="card hero">
-        <h1 class="title">Починаємо без хаосу</h1>
+      <div class="card hero-card">
+        <h1 class="title">Сідлай Кармометр, ковбою</h1>
         <p class="subtitle">
-          Дуже простий старт: ім'я, мейл, пароль, фото. Далі обираєш тотем і користуєшся застосунком як у реальному мобільному продукті.
+          Реєстрація швидка: ім'я, мейл, пароль, фото. Далі обираєш тотем і заходиш у найпафосніший трекер добрих справ.
         </p>
         <form id="registerForm" class="stack">
           <div class="grid-2">
             <div>
               <label for="regName">Ім'я</label>
-              <input id="regName" required placeholder="Наприклад: Аня">
+              <input id="regName" required placeholder="Наприклад: Олег">
             </div>
             <div>
               <label for="regEmail">E-mail</label>
@@ -909,87 +994,94 @@
               <input id="regPassword" type="password" required minlength="5" placeholder="••••••">
             </div>
             <div>
-              <label for="regAvatar">Фото профілю (опційно)</label>
+              <label for="regAvatar">Фото профілю</label>
               <input id="regAvatar" type="file" accept="image/*">
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">Далі: обрати тотема</button>
+          <button class="btn btn-primary pulse" type="submit">Далі: обрати тотема</button>
         </form>
       </div>
     </section>
 
     <section class="screen" id="screen-totem">
-      <div class="card hero">
-        <h2 class="title">Обери тотемного партнера</h2>
+      <div class="card hero-card">
+        <h2 class="title">Тотемні легенди</h2>
         <p class="subtitle">
-          Це не просто картинка: у кожного тотема свій стиль, бонус і лінійка еволюції по рівнях.
+          Кожен тотем має стиль, бонус і свою лінію еволюції. Обирай того, з ким будеш качати карму до космосу.
         </p>
-        <div id="totemGrid" class="totem-grid"></div>
+        <div class="totem-grid" id="totemGrid"></div>
         <div class="row" style="margin-top:12px;">
-          <button id="startAppBtn" class="btn btn-primary">Зайти в KarmoMetr</button>
+          <button id="startAppBtn" class="btn btn-primary">Запустити KarmoMetr</button>
           <button class="btn btn-secondary" data-go="register">Назад</button>
         </div>
       </div>
     </section>
 
     <section class="screen" id="screen-home">
-      <div class="card hero">
+      <div class="card hero-card">
         <div class="welcome">
           <div class="avatar-row">
             <img class="avatar" id="homeAvatar" alt="Аватар">
             <div>
-              <div class="muted">Привіт, <b id="homeName">герою</b></div>
+              <div class="muted">Шериф добра: <b id="homeName">герою</b></div>
               <div class="greeting" id="greetingText"></div>
             </div>
           </div>
-          <button class="btn btn-secondary" id="rerollGreeting">🎲 Нова фраза</button>
+          <button class="btn btn-secondary" id="rerollGreeting">🎲 Ще пафосу</button>
         </div>
 
         <div class="kpi-grid">
-          <div class="kpi"><strong id="kpiDeeds">0</strong><span>добрих справ</span></div>
+          <div class="kpi"><strong id="kpiDeeds">0</strong><span>справ</span></div>
           <div class="kpi"><strong id="kpiLevel">1</strong><span>рівень</span></div>
-          <div class="kpi"><strong id="kpiStreak">0</strong><span>днів підряд</span></div>
+          <div class="kpi"><strong id="kpiStreak">0</strong><span>серія</span></div>
+          <div class="kpi"><strong id="kpiPoints">0</strong><span>карма-балів</span></div>
         </div>
       </div>
 
       <div class="home-grid">
         <div class="card">
-          <div class="screen-title">Список добрих справ</div>
-          <div class="muted">Що зроблено, коли зроблено і скільки балів отримано.</div>
-          <ul id="deedList" class="deed-list"></ul>
+          <div class="screen-title">Твої добрі справи</div>
+          <div class="muted">Лог дій, що реально змінюють день людям.</div>
+          <ul class="deed-list" id="deedList"></ul>
         </div>
 
         <div class="card">
-          <div class="screen-title">Тотем і кармометр</div>
+          <div class="screen-title">Тотем + Кармометр</div>
           <div class="totem-panel" id="totemPanel"></div>
+          <div class="sheriff-banner" id="dailyMission"></div>
         </div>
       </div>
     </section>
 
     <section class="screen" id="screen-add">
       <div class="card">
-        <div class="screen-title">Додай добру справу</div>
+        <div class="screen-title">Запиши добру справу</div>
         <p class="subtitle" style="margin-bottom:10px;">
-          Обов'язково: текст (+1 бал). Додатково: фото/аудіо/відео (+1 бонусний бал).
+          Текст обов'язково (+1 бал), медіа опційно (+1 бал бонусом). Роби красиво, система тебе похвалить як треба.
         </p>
         <form id="deedForm" class="stack">
           <div>
-            <label for="deedText">Опис справи</label>
-            <textarea id="deedText" required placeholder="Наприклад: допоміг людині з важкими сумками дійти до під'їзду."></textarea>
+            <label for="deedText">Що саме ти зробив(ла)?</label>
+            <textarea id="deedText" required placeholder="Приклад: оплатив літній людині ліки в аптеці."></textarea>
+          </div>
+          <div class="quick-templates">
+            <button type="button" data-template="Допоміг(ла) людині донести важкі пакети.">Справa-підказка 1</button>
+            <button type="button" data-template="Переказав(ла) донат у перевірений фонд.">Справa-підказка 2</button>
+            <button type="button" data-template="Підтримав(ла) друга, коли йому було важко.">Справa-підказка 3</button>
           </div>
           <div class="grid-2">
             <div>
-              <label for="deedMedia">Медіа (опційно)</label>
-              <input id="deedMedia" type="file" accept="image/*,audio/*,video/*">
+              <label for="deedMedia">Медіа (фото / відео / аудіо)</label>
+              <input id="deedMedia" type="file" accept="image/*,video/*,audio/*">
             </div>
             <div>
               <label>Нарахування</label>
-              <div class="badge" id="scorePreview">Після збереження: +1 бал</div>
+              <div class="score-badge" id="scorePreview">Після збереження: +1 бал</div>
             </div>
           </div>
           <div class="row">
-            <button type="submit" class="btn btn-primary">Зберегти справу</button>
-            <button type="button" class="btn btn-secondary" data-go="home">На головну</button>
+            <button class="btn btn-primary pulse" type="submit">Зафіксувати добру справу</button>
+            <button class="btn btn-secondary" type="button" data-go="home">На головну</button>
           </div>
         </form>
       </div>
@@ -997,8 +1089,8 @@
 
     <section class="screen" id="screen-stats">
       <div class="card">
-        <div class="screen-title">Статистика</div>
-        <div class="muted">Проста і читабельна аналітика без перевантаження.</div>
+        <div class="screen-title">Пафосна статистика</div>
+        <div class="muted">Все чітко: де виріс темп, де можна вдарити ще сильніше.</div>
         <div class="stats-grid">
           <div class="stat"><strong id="statMonth">0</strong><span class="muted">за місяць</span></div>
           <div class="stat"><strong id="statToday">0</strong><span class="muted">сьогодні</span></div>
@@ -1007,13 +1099,13 @@
         </div>
         <div class="chart">
           <div class="row" style="justify-content:space-between;">
-            <b style="font-size:0.93rem;color:#33475f;">Останні 7 днів</b>
+            <b style="font-size:0.93rem;color:#f1f6ff;">Останні 7 днів</b>
             <span class="muted" id="statMeta"></span>
           </div>
           <div class="bars" id="bars"></div>
         </div>
-        <div class="card" style="margin-top:10px;background:var(--surface-soft);">
-          <b style="display:block;margin-bottom:4px;color:#30435a;">Висновок</b>
+        <div class="card" style="margin-top:10px;background:#15263f;">
+          <b style="display:block;color:#eff6ff;margin-bottom:4px;">Коментар шерифа</b>
           <div class="muted" id="statInsight"></div>
         </div>
       </div>
@@ -1021,21 +1113,21 @@
 
     <section class="screen" id="screen-calendar">
       <div class="card">
-        <div class="screen-title">Календар планів</div>
-        <div class="muted">Клікни день і заплануй добру справу.</div>
+        <div class="screen-title">Календар добрих справ</div>
+        <div class="muted">Плануй наперед і тримай ритм чемпіона.</div>
 
         <div class="calendar-head">
           <button id="prevMonthBtn" class="btn btn-secondary">←</button>
           <b id="monthLabel"></b>
           <button id="nextMonthBtn" class="btn btn-secondary">→</button>
         </div>
-        <div id="calendarGrid" class="calendar-grid"></div>
+        <div class="calendar-grid" id="calendarGrid"></div>
 
-        <div class="card" style="margin-top:10px;background:var(--surface-soft);">
-          <div id="selectedDateLabel" style="font-weight:800;color:#33475f;"></div>
+        <div class="card" style="margin-top:10px;background:#15263f;">
+          <div id="selectedDateLabel" style="font-weight:800;color:#eef6ff;"></div>
           <ul id="planList" class="plan-list"></ul>
           <form id="planForm" class="row" style="margin-top:8px;">
-            <input id="planInput" placeholder="Заплануй справу на цей день">
+            <input id="planInput" placeholder="Заплануй добру справу на цю дату">
             <button class="btn btn-primary" type="submit">Додати</button>
           </form>
         </div>
@@ -1044,27 +1136,25 @@
 
     <section class="screen" id="screen-profile">
       <div class="card">
-        <div class="screen-title">Профіль і прогрес</div>
+        <div class="screen-title">Профіль легенди</div>
         <div class="profile-row">
-          <img class="avatar" id="profileAvatar" alt="Аватар профілю">
+          <img id="profileAvatar" class="avatar" alt="Аватар профілю">
           <div>
-            <div style="font-weight:900;color:#2f4057;" id="profileName"></div>
+            <div style="font-weight:900;color:#f0f7ff;" id="profileName"></div>
             <div class="muted" id="profileEmail"></div>
           </div>
         </div>
-
-        <div class="card" style="margin-top:10px;background:var(--surface-soft);">
-          <div id="profileMeta" style="font-weight:800;color:#33485f;"></div>
+        <div class="card" style="margin-top:10px;background:#15263f;">
+          <div style="font-weight:800;color:#eef6ff;" id="profileMeta"></div>
           <div class="muted" id="profileTotem"></div>
         </div>
-
-        <div style="margin-top:10px;font-weight:900;color:#32465e;">Еволюція тотема</div>
+        <div style="margin-top:10px;font-weight:900;color:#f0f7ff;">Еволюція тотема</div>
         <ul id="achievements" class="achievements"></ul>
       </div>
     </section>
   </div>
 
-  <nav id="bottomNav" class="bottom-nav">
+  <nav class="bottom-nav" id="bottomNav">
     <button class="nav-btn" data-go="home"><span class="icon">🏠</span><span>Головна</span></button>
     <button class="nav-btn" data-go="stats"><span class="icon">📊</span><span>Стат</span></button>
     <button class="nav-btn main-add" data-go="add"><span class="icon">＋</span><span>Додати</span></button>
@@ -1075,10 +1165,10 @@
   <div id="toast" class="toast"></div>
 
   <div id="levelModal" class="modal">
-    <div class="modal-box" id="levelModalBox">
-      <h3 style="font-size:1.35rem;color:#2f4057;margin-bottom:6px;">Новий рівень 🔥</h3>
-      <p id="levelModalText" style="font-weight:700;color:#4f6179;margin-bottom:12px;"></p>
-      <button id="closeLevelModal" class="btn btn-primary">Круто, далі</button>
+    <div id="levelModalBox" class="modal-box">
+      <h3 style="font-size:1.4rem;color:#eff6ff;margin-bottom:6px;">Новий рівень! 🤠</h3>
+      <p id="levelModalText" style="color:#c6d8f3;font-weight:700;margin-bottom:12px;"></p>
+      <button id="closeLevelModal" class="btn btn-primary">Прийнято. Поїхали далі!</button>
     </div>
   </div>
 
@@ -1086,98 +1176,100 @@
     const totems = [
       {
         id: "bull",
-        name: "Бик Шторм",
+        name: "Бик Буревій",
         emoji: "🐂",
-        mood: "Сила і стабільність",
-        perk: "Швидкий старт по рівнях",
-        about: "Для тих, хто любить потужний темп і великі добрі справи.",
-        colors: ["#e8fdf8", "#d7f6f2"],
-        evolution: ["💍 каблучка", "🧢 кепка", "🕶 окуляри"]
+        style: "Важка сила",
+        perk: "+15% до швидкості прокачки рівня",
+        lore: "Проламує будь-яку складність і робить добро масштабно.",
+        colors: ["#1f3958", "#2f567f"],
+        upgrades: ["💍 Каблучка", "🧢 Ковбойський капелюх", "🕶 Чорні окуляри", "⚡ Неон-роги", "👑 Корона шерифа"]
       },
       {
         id: "cat",
-        name: "Кішка Фокус",
+        name: "Кішка Іскра",
         emoji: "🐈",
-        mood: "Елегантність і точність",
-        perk: "Бонус до серії днів",
-        about: "Для тих, хто цінує красиві маленькі вчинки щодня.",
-        colors: ["#f4f6ff", "#e7ecff"],
-        evolution: ["🎀 стрічка", "✨ підвіска", "👑 корона"]
+        style: "Точний шик",
+        perk: "+1 до серії за 2 справи поспіль",
+        lore: "Робить добро тихо, елегантно і завжди влучно.",
+        colors: ["#25324f", "#3f4f77"],
+        upgrades: ["🎀 Стрічка", "✨ Амулет", "👑 Міні-тіара", "🌙 Місячний плащ", "💠 Лазерний погляд"]
       },
       {
         id: "dog",
         name: "Собака Драйв",
         emoji: "🐕",
-        mood: "Тепло і командність",
-        perk: "Бонус за справи з медіа",
-        about: "Для тих, хто заряджає інших і діє від серця.",
-        colors: ["#fff7ee", "#ffe7c9"],
-        evolution: ["🧣 бандана", "🛡 значок", "🚀 turbo-пак"]
+        style: "Теплий вайб",
+        perk: "+1 бонус за справи з медіа",
+        lore: "Підтримка, енергія і командний дух на кожен день.",
+        colors: ["#2f3348", "#665b57"],
+        upgrades: ["🧣 Бандана", "🛡 Значок шерифа", "🦴 Броня дружби", "🔥 Вогняний комір", "🚀 Турбо-след"]
       }
-    ];
-
-    const accessories = [
-      "💍 каблучка",
-      "🧢 шапка",
-      "🕶 окуляри",
-      "📿 браслет",
-      "🧥 куртка",
-      "👑 корона",
-      "⚡ неон",
-      "🛡 щит"
     ];
 
     const levelThresholds = [0, 3, 8, 14, 21, 30, 40, 52, 66, 82, 100];
 
     const heroPhrases = [
-      "Твори доброго, ковбою.",
-      "Сьогодні робимо світ кращим красиво.",
-      "Зафігачимо добра без зайвих слів.",
-      "Твоя карма в формі. Не гальмуй.",
-      "Ще один добрий крок — і ти легенда.",
-      "Сьогодні день сильних добрих вчинків.",
-      "Тримай темп і неси користь людям.",
-      "Твій тотем уже в захваті від тебе.",
-      "Один плюс у карму прямо зараз.",
-      "Дій сміливо і по-доброму."
+      "Сідлай день, шерифе добра.",
+      "Сьогодні виносимо світ у плюс.",
+      "Твій тотем уже точить копита до перемоги.",
+      "Пафос? Так. І користь теж максимальна.",
+      "Один добрий вчинок — і день стає легендою.",
+      "Ти тут не випадково. Ти тут робити добро гучно.",
+      "Світ чекає твій наступний красивий рух.",
+      "Працюй серцем, а карма порахує все чесно.",
+      "Це твій день. Вривайся і сяй.",
+      "Ковбойська класика: менше слів, більше добрих дій."
     ];
 
     const completionPhrases = [
       "Та ти нереальний, бро!",
-      "Оце потужний добрий хід!",
-      "Карма дякує тобі гучно.",
-      "Браво! Справу зараховано.",
-      "Респект. Дуже сильний вчинок.",
-      "Стильно і по-людськи.",
-      "Твій день став кращим на максимум.",
-      "Тотем передає: це було круто.",
-      "Ти реально надихаєш.",
-      "Чітко. Красиво. По суті.",
-      "Світ отримав ще трохи тепла.",
-      "Так тримати, машина добра.",
-      "Ти щойно додав світла у день.",
-      "Легендарний міні-подвиг.",
-      "Сильний рух. Продовжуй.",
-      "Карма аплодує стоячи.",
-      "Ідеально виконано.",
-      "Це було бездоганно.",
-      "Вчинок рівня «вау».",
-      "Оце темп, ковбою!",
-      "Нова справа — новий ривок.",
-      "Потужно і з душею.",
-      "Ти на дуже правильній хвилі.",
-      "Ще один плюс у карму, так!",
-      "Це виглядає як рівень профі.",
+      "Шериф добра офіційно схвалює цей хід.",
+      "Гучні оплески. Це було красиво.",
+      "Твоя карма щойно злетіла в стратосферу.",
+      "Оце винос! День у плюс без шансів.",
+      "Тотем реве від гордості.",
+      "Стиль! Сила! Добро!",
+      "Це рух рівня легенди району.",
+      "Чистий кайф. Справу зараховано.",
+      "Ти щойно підкрутив світ у світліший бік.",
+      "Респект. Глибокий і щирий.",
+      "Сильний вчинок. Сильна людина.",
+      "Вау, як це потужно!",
+      "Карма підморгнула і сказала: топ.",
+      "Залік, ковбою. Без зайвого шуму.",
+      "Оце точний постріл у добро.",
+      "Твій темп лякає байдужість.",
       "Краса. Просто краса.",
-      "Добро в тебе виходить природно.",
-      "Шикарний хід.",
-      "Ти молодець, серйозно.",
-      "Працюєш чисто і сильно.",
-      "Тепер день точно не дарма.",
-      "Офіційно: вивіз на відмінно.",
-      "Твоя серія тримається впевнено.",
-      "Влучно, щиро, корисно.",
-      "Кармометр усміхається."
+      "Блискуче виконано.",
+      "Ти зараз як преміум-версія себе.",
+      "Тримай овації, чемпіоне.",
+      "Легендарний рух, занесено в хроніку.",
+      "Виглядає як справжній клас.",
+      "Додаємо +100 до поваги.",
+      "Сьогодні ти в режимі «без пощади до зла».",
+      "Ще один чіткий крок у вершину.",
+      "Це було аристократично потужно.",
+      "Офіційно: день врятовано.",
+      "Ти щойно зарядив місто добром.",
+      "Нереально круто. Продовжуй так.",
+      "Більше таких рухів — і ти міф.",
+      "Стильно, сміливо, людяно.",
+      "Справу прийнято. Пафос заслужений.",
+      "Ковбой добра не зупиняється.",
+      "Твоє серце сьогодні на максималках.",
+      "Елітний рівень емпатії.",
+      "Тут уже пахне новим рівнем.",
+      "Сильний день творить сильна дія.",
+      "Ти не просто молодець, ти приклад.",
+      "Кармометр просто сяє від такого ходу."
+    ];
+
+    const dailyMissionPhrases = [
+      "🎯 Місія дня: додай ще 1 справу до вечора і забери статус «Залізний шериф».",
+      "🔥 Місія дня: зроби справу з медіа і отримай подвійний респект.",
+      "⭐ Місія дня: закрий 2 добрі задачі підряд без пауз.",
+      "🤠 Місія дня: залучи ще одну людину до доброї справи.",
+      "🏆 Місія дня: пробий новий рівень до кінця дня."
     ];
 
     const state = {
@@ -1186,70 +1278,75 @@
       totemId: "",
       deeds: [],
       plans: {},
-      monthCursor: firstDayOfMonth(new Date()),
-      selectedDate: isoDate(new Date())
+      monthCursor: monthStart(new Date()),
+      selectedDate: dateKey(new Date()),
+      greetingTimer: null,
+      dayMission: ""
     };
 
     const screens = document.querySelectorAll(".screen");
     const nav = document.getElementById("bottomNav");
     const navButtons = document.querySelectorAll(".nav-btn");
 
-    function firstDayOfMonth(d) {
+    function monthStart(d) {
       return new Date(d.getFullYear(), d.getMonth(), 1);
     }
 
-    function isoDate(d) {
+    function dateKey(d) {
       return d.toISOString().slice(0, 10);
     }
 
-    function randomItem(arr) {
+    function randomOf(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
     function avatarPlaceholder(name) {
       const letter = (name || "K").trim().slice(0, 1).toUpperCase();
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#7be3da"/><stop offset="1" stop-color="#58ccc2"/></linearGradient></defs><rect width="120" height="120" rx="24" fill="url(#g)"/><text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Arial" font-size="54" font-weight="900" fill="#2c3a50">${letter}</text></svg>`;
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><defs><linearGradient id='g' x1='0' x2='1'><stop stop-color='#80e8de'/><stop offset='1' stop-color='#53cec3'/></linearGradient></defs><rect width='120' height='120' rx='24' fill='url(#g)'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='54' font-weight='900' fill='#2c3d55'>${letter}</text></svg>`;
       return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
     }
 
-    function escapeHtml(text) {
-      const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#039;" };
-      return text.replace(/[&<>"']/g, (m) => map[m]);
-    }
-
     function totalPoints() {
-      return state.deeds.reduce((sum, deed) => sum + deed.points, 0);
+      return state.deeds.reduce((sum, d) => sum + d.points, 0);
     }
 
-    function levelData(points) {
+    function levelInfo(points) {
       let level = 1;
       for (let i = 1; i < levelThresholds.length; i += 1) {
         if (points >= levelThresholds[i]) level = i + 1;
       }
-      const currentThreshold = levelThresholds[level - 1] ?? 0;
-      const nextThreshold = levelThresholds[level] ?? null;
-      const progress = nextThreshold
-        ? ((points - currentThreshold) / (nextThreshold - currentThreshold)) * 100
-        : 100;
-      return { level, nextThreshold, progress: Math.min(100, Math.max(0, progress)) };
+      const cur = levelThresholds[level - 1] ?? 0;
+      const next = levelThresholds[level] ?? null;
+      const progress = next ? ((points - cur) / (next - cur)) * 100 : 100;
+      return { level, next, progress: Math.max(0, Math.min(100, progress)) };
     }
 
-    function selectedTotem() {
-      return totems.find((item) => item.id === state.totemId) || totems[0];
+    function currentTotem() {
+      return totems.find((t) => t.id === state.totemId) || totems[0];
     }
 
-    function streakCount() {
+    function streakDays() {
       if (!state.deeds.length) return 0;
-      const set = new Set(state.deeds.map((d) => isoDate(new Date(d.createdAt))));
+      const days = new Set(state.deeds.map((d) => dateKey(new Date(d.createdAt))));
       let streak = 0;
       const cursor = new Date();
       while (true) {
-        const key = isoDate(cursor);
-        if (!set.has(key)) break;
+        const key = dateKey(cursor);
+        if (!days.has(key)) break;
         streak += 1;
         cursor.setDate(cursor.getDate() - 1);
       }
       return streak;
+    }
+
+    function safe(text) {
+      const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#039;" };
+      return text.replace(/[&<>"']/g, (m) => map[m]);
+    }
+
+    function formatDateTime(value) {
+      const d = new Date(value);
+      return d.toLocaleString("uk-UA", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
     }
 
     function showToast(text) {
@@ -1259,24 +1356,15 @@
       clearTimeout(showToast.timer);
       showToast.timer = setTimeout(() => {
         t.style.display = "none";
-      }, 2600);
+      }, 2800);
     }
 
-    function formatDateTime(value) {
-      const d = new Date(value);
-      return d.toLocaleString("uk-UA", {
-        day: "2-digit",
-        month: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-      });
-    }
-
-    function switchScreen(name) {
+    function setScreen(name) {
       if (!state.onboardingDone && !["register", "totem"].includes(name)) return;
-      screens.forEach((screen) => screen.classList.remove("active"));
-      const target = document.getElementById(`screen-${name}`);
-      if (target) target.classList.add("active");
+
+      screens.forEach((s) => s.classList.remove("active"));
+      const screen = document.getElementById(`screen-${name}`);
+      if (screen) screen.classList.add("active");
 
       navButtons.forEach((btn) => btn.classList.toggle("active", btn.dataset.go === name));
 
@@ -1298,80 +1386,89 @@
       });
     }
 
-    function renderTotemCards() {
-      const holder = document.getElementById("totemGrid");
-      holder.innerHTML = "";
+    function renderTotemGrid() {
+      const grid = document.getElementById("totemGrid");
+      grid.innerHTML = "";
       totems.forEach((totem) => {
         const card = document.createElement("button");
         card.type = "button";
         card.className = `totem-card ${state.totemId === totem.id ? "selected" : ""}`;
         card.innerHTML = `
-          <div class="totem-art" style="--c1:${totem.colors[0]};--c2:${totem.colors[1]};"><span>${totem.emoji}</span></div>
+          <div class="totem-art" style="--t1:${totem.colors[0]};--t2:${totem.colors[1]};">
+            <span class="emoji">${totem.emoji}</span>
+          </div>
           <div>
             <div class="totem-title">${totem.name}</div>
-            <div class="totem-sub">${totem.about}</div>
-            <div class="totem-info">
-              <span class="badge">Стиль: ${totem.mood}</span>
-              <span class="badge">Перк: ${totem.perk}</span>
+            <div class="totem-sub">${totem.lore}</div>
+            <div class="chips">
+              <span class="chip">Стиль: ${totem.style}</span>
+              <span class="chip">Перк: ${totem.perk}</span>
             </div>
-            <div class="evolution">
-              ${totem.evolution.map((item) => `<span>${item}</span>`).join("")}
+            <div class="evo">
+              ${totem.upgrades.slice(0, 3).map((u) => `<span>${u}</span>`).join("")}
             </div>
           </div>
         `;
         card.addEventListener("click", () => {
           state.totemId = totem.id;
-          renderTotemCards();
+          renderTotemGrid();
         });
-        holder.appendChild(card);
+        grid.appendChild(card);
       });
     }
 
     function refreshGreeting() {
-      document.getElementById("greetingText").textContent = randomItem(heroPhrases);
+      document.getElementById("greetingText").textContent = randomOf(heroPhrases);
+    }
+
+    function startGreetingLoop() {
+      clearInterval(state.greetingTimer);
+      state.greetingTimer = setInterval(() => {
+        const homeVisible = document.getElementById("screen-home").classList.contains("active");
+        if (homeVisible) refreshGreeting();
+      }, 8000);
     }
 
     function renderHome() {
       const avatar = state.user.avatar || avatarPlaceholder(state.user.name);
       const points = totalPoints();
-      const l = levelData(points);
-      const totem = selectedTotem();
+      const lv = levelInfo(points);
+      const totem = currentTotem();
 
       document.getElementById("homeAvatar").src = avatar;
       document.getElementById("homeName").textContent = state.user.name || "герою";
       if (!document.getElementById("greetingText").textContent) refreshGreeting();
 
       document.getElementById("kpiDeeds").textContent = state.deeds.length;
-      document.getElementById("kpiLevel").textContent = l.level;
-      document.getElementById("kpiStreak").textContent = streakCount();
+      document.getElementById("kpiLevel").textContent = lv.level;
+      document.getElementById("kpiStreak").textContent = streakDays();
+      document.getElementById("kpiPoints").textContent = points;
 
       const panel = document.getElementById("totemPanel");
-      const ringDeg = Math.round((l.progress / 100) * 360);
-      const next = l.nextThreshold
-        ? `До рівня ${l.level + 1} залишилось ${l.nextThreshold - points} балів.`
-        : "Максимальний рівень у демо досягнуто.";
-      const unlocked = accessories.slice(0, Math.max(0, l.level - 1));
+      const deg = Math.round((lv.progress / 100) * 360);
+      const nextHint = lv.next ? `До рівня ${lv.level + 1}: ще ${lv.next - points} балів.` : "Максимальний рівень у демо вже твій.";
+      const unlocked = totem.upgrades.slice(0, Math.max(0, lv.level - 1));
       panel.innerHTML = `
         <div class="totem-top">
-          <div class="totem-big" style="--t1:${totem.colors[0]};--t2:${totem.colors[1]};">${totem.emoji}</div>
+          <div class="totem-big" style="--tb1:${totem.colors[0]};--tb2:${totem.colors[1]};">${totem.emoji}</div>
           <div>
-            <div style="font-weight:900;color:#2f4159;margin-bottom:2px;">${totem.name}</div>
-            <div class="muted">${totem.mood}</div>
+            <div style="font-weight:900;color:#f1f7ff;">${totem.name}</div>
+            <div class="muted">${totem.style}</div>
             <div class="muted">${totem.perk}</div>
           </div>
-          <div class="ring" style="background:conic-gradient(var(--brand) ${ringDeg}deg, #d7e8f5 ${ringDeg}deg);">
-            <div class="ring-center"><strong>${l.level}</strong><span>lvl</span></div>
+          <div class="ring" style="background: conic-gradient(var(--brand) ${deg}deg, #364f73 ${deg}deg);">
+            <div class="ring-center"><strong>${lv.level}</strong><span>рівень</span></div>
           </div>
         </div>
-        <div class="meter-info">
-          <div style="font-weight:800;color:#304359;">${points} карма-балів</div>
-          <div class="muted">${next}</div>
+        <div style="margin-bottom:8px;">
+          <div style="font-weight:800;color:#f1f7ff;">${points} карма-балів</div>
+          <div class="muted">${nextHint}</div>
         </div>
-        <div class="unlocks">
+        <div class="unlock-row">
           ${
             unlocked.length
               ? unlocked.map((u) => `<span class="unlock">${u}</span>`).join("")
-              : '<span class="unlock">Перший апгрейд на рівні 2</span>'
+              : '<span class="unlock">Перший апгрейд відкриється на рівні 2</span>'
           }
         </div>
       `;
@@ -1381,7 +1478,7 @@
       if (!state.deeds.length) {
         const li = document.createElement("li");
         li.className = "deed-item";
-        li.innerHTML = `<div style="font-weight:800;color:#3b4f67;">Поки порожньо.</div><div class="muted">Натисни «Додати» і внеси першу добру справу.</div>`;
+        li.innerHTML = `<div style="font-weight:800;color:#e7f2ff;">Поки що тихо.</div><div class="muted">Натисни «Додати» і занеси першу добру справу.</div>`;
         deedList.appendChild(li);
       } else {
         state.deeds.forEach((deed) => {
@@ -1389,7 +1486,7 @@
           li.className = "deed-item";
           li.innerHTML = `
             <div class="deed-top">
-              <div style="font-weight:800;color:#30445d;">${escapeHtml(deed.text)}</div>
+              <div style="font-weight:800;color:#eaf3ff;">${safe(deed.text)}</div>
               <span class="deed-points">+${deed.points}</span>
             </div>
             <div class="muted">${formatDateTime(deed.createdAt)}${deed.hasMedia ? " · з медіа" : ""}</div>
@@ -1397,75 +1494,78 @@
           deedList.appendChild(li);
         });
       }
+
+      if (!state.dayMission) state.dayMission = randomOf(dailyMissionPhrases);
+      document.getElementById("dailyMission").textContent = state.dayMission;
     }
 
-    function countRange(fromDaysAgo, toDaysAgo) {
-      const today = new Date();
-      let total = 0;
-      for (let i = fromDaysAgo; i <= toDaysAgo; i += 1) {
-        const d = new Date(today);
-        d.setDate(today.getDate() - i);
-        const key = isoDate(d);
-        total += state.deeds.filter((item) => isoDate(new Date(item.createdAt)) === key).length;
+    function countInRange(fromAgo, toAgo) {
+      const now = new Date();
+      let sum = 0;
+      for (let i = fromAgo; i <= toAgo; i += 1) {
+        const day = new Date(now);
+        day.setDate(now.getDate() - i);
+        const key = dateKey(day);
+        sum += state.deeds.filter((d) => dateKey(new Date(d.createdAt)) === key).length;
       }
-      return total;
+      return sum;
     }
 
     function renderStats() {
       const now = new Date();
-      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-      const todayKey = isoDate(now);
+      const startMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const today = dateKey(now);
 
-      const monthCount = state.deeds.filter((d) => new Date(d.createdAt) >= monthStart).length;
-      const todayCount = state.deeds.filter((d) => isoDate(new Date(d.createdAt)) === todayKey).length;
-      const mediaCount = state.deeds.filter((d) => d.hasMedia).length;
-      const mediaRate = state.deeds.length ? Math.round((mediaCount / state.deeds.length) * 100) : 0;
-      const currentWeek = countRange(0, 6);
-      const prevWeek = countRange(7, 13);
-      const compare = prevWeek === 0 ? (currentWeek > 0 ? 100 : 0) : Math.round(((currentWeek - prevWeek) / prevWeek) * 100);
+      const month = state.deeds.filter((d) => new Date(d.createdAt) >= startMonth).length;
+      const todayCount = state.deeds.filter((d) => dateKey(new Date(d.createdAt)) === today).length;
+      const withMedia = state.deeds.filter((d) => d.hasMedia).length;
+      const mediaRate = state.deeds.length ? Math.round((withMedia / state.deeds.length) * 100) : 0;
+      const weekNow = countInRange(0, 6);
+      const weekPrev = countInRange(7, 13);
+      const compare = weekPrev === 0 ? (weekNow > 0 ? 100 : 0) : Math.round(((weekNow - weekPrev) / weekPrev) * 100);
 
-      document.getElementById("statMonth").textContent = monthCount;
+      document.getElementById("statMonth").textContent = month;
       document.getElementById("statToday").textContent = todayCount;
       document.getElementById("statCompare").textContent = `${compare >= 0 ? "+" : ""}${compare}%`;
       document.getElementById("statMedia").textContent = `${mediaRate}%`;
-      document.getElementById("statMeta").textContent = `${currentWeek} справ цього тижня`;
+      document.getElementById("statMeta").textContent = `${weekNow} справ за 7 днів`;
 
       const bars = document.getElementById("bars");
       bars.innerHTML = "";
-      const samples = [];
+      const sample = [];
       for (let i = 6; i >= 0; i -= 1) {
         const d = new Date();
         d.setDate(d.getDate() - i);
-        const key = isoDate(d);
-        const count = state.deeds.filter((item) => isoDate(new Date(item.createdAt)) === key).length;
-        samples.push({ date: d, count });
+        const key = dateKey(d);
+        sample.push({
+          day: d.toLocaleDateString("uk-UA", { weekday: "short" }),
+          count: state.deeds.filter((item) => dateKey(new Date(item.createdAt)) === key).length
+        });
       }
-      const max = Math.max(1, ...samples.map((s) => s.count));
-      samples.forEach((s) => {
+      const max = Math.max(1, ...sample.map((s) => s.count));
+      sample.forEach((s) => {
         const slot = document.createElement("div");
         slot.className = "bar-slot";
-        const num = document.createElement("span");
-        num.className = "bar-num";
-        num.textContent = s.count;
+        const top = document.createElement("span");
+        top.textContent = s.count;
         const bar = document.createElement("div");
         bar.className = "bar";
         bar.style.height = `${Math.max(8, (s.count / max) * 112)}px`;
         const day = document.createElement("span");
-        day.className = "bar-day";
-        day.textContent = s.date.toLocaleDateString("uk-UA", { weekday: "short" });
-        slot.append(num, bar, day);
+        day.textContent = s.day;
+        slot.append(top, bar, day);
         bars.appendChild(slot);
       });
 
       const insight = document.getElementById("statInsight");
       if (!state.deeds.length) {
-        insight.textContent = "Ще немає записів. Додай першу добру справу і статистика одразу оживе.";
+        insight.textContent = "Ще немає записів. Почни з однієї справи — і графік оживе моментально.";
       } else if (compare >= 20) {
-        insight.textContent = "Ривок сильний: ти помітно випереджаєш свій минулий тиждень.";
+        insight.textContent = "Ти виносиш цей тиждень сильніше за попередній. Темп реально чемпіонський.";
       } else if (todayCount === 0) {
-        insight.textContent = "Сьогодні ще пусто. Один вчинок зараз — і темп знову піде вгору.";
+        insight.textContent = "Сьогодні ще порожньо. Закрий 1 справу — і серія не просідатиме.";
       } else {
-        insight.textContent = "Темп стабільний. Додай ще одну справу сьогодні для гарного приросту.";
+        insight.textContent = "Йдеш стабільно. Ще одна добра справа сьогодні дасть красивий приріст.";
       }
     }
 
@@ -1476,19 +1576,19 @@
       label.textContent = state.monthCursor.toLocaleDateString("uk-UA", { month: "long", year: "numeric" });
       label.style.textTransform = "capitalize";
 
-      ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"].forEach((name) => {
-        const w = document.createElement("div");
-        w.className = "weekday";
-        w.textContent = name;
-        grid.appendChild(w);
+      ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"].forEach((day) => {
+        const d = document.createElement("div");
+        d.className = "weekday";
+        d.textContent = day;
+        grid.appendChild(d);
       });
 
       const y = state.monthCursor.getFullYear();
       const m = state.monthCursor.getMonth();
       const first = new Date(y, m, 1);
       const offset = (first.getDay() + 6) % 7;
-      const days = new Date(y, m + 1, 0).getDate();
-      const today = isoDate(new Date());
+      const count = new Date(y, m + 1, 0).getDate();
+      const today = dateKey(new Date());
 
       for (let i = 0; i < offset; i += 1) {
         const empty = document.createElement("div");
@@ -1496,28 +1596,28 @@
         grid.appendChild(empty);
       }
 
-      for (let day = 1; day <= days; day += 1) {
-        const d = new Date(y, m, day);
-        const key = isoDate(d);
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "day";
-        btn.textContent = day;
-        if (key === today) btn.classList.add("today");
-        if (key === state.selectedDate) btn.classList.add("selected");
-        if ((state.plans[key] || []).length) btn.classList.add("has-plan");
-        btn.addEventListener("click", () => {
+      for (let d = 1; d <= count; d += 1) {
+        const date = new Date(y, m, d);
+        const key = dateKey(date);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "day";
+        button.textContent = d;
+        if (key === today) button.classList.add("today");
+        if (key === state.selectedDate) button.classList.add("selected");
+        if ((state.plans[key] || []).length) button.classList.add("has-plan");
+        button.addEventListener("click", () => {
           state.selectedDate = key;
           renderCalendar();
           renderPlans();
         });
-        grid.appendChild(btn);
+        grid.appendChild(button);
       }
     }
 
     function renderPlans() {
-      const label = document.getElementById("selectedDateLabel");
-      label.textContent = `Плани на ${new Date(state.selectedDate).toLocaleDateString("uk-UA", { day: "2-digit", month: "2-digit", year: "numeric" })}`;
+      document.getElementById("selectedDateLabel").textContent =
+        `Плани на ${new Date(state.selectedDate).toLocaleDateString("uk-UA", { day: "2-digit", month: "2-digit", year: "numeric" })}`;
 
       const list = document.getElementById("planList");
       list.innerHTML = "";
@@ -1525,14 +1625,14 @@
       if (!plans.length) {
         const li = document.createElement("li");
         li.className = "plan-item";
-        li.innerHTML = `<span class="muted">Планів поки немає. Додай перший.</span>`;
+        li.innerHTML = `<span class="muted">Планів немає. Додай перший і тримай ритм.</span>`;
         list.appendChild(li);
         return;
       }
       plans.forEach((plan, index) => {
         const li = document.createElement("li");
         li.className = "plan-item";
-        li.innerHTML = `<span style="font-size:0.85rem;color:#33485f;">${escapeHtml(plan)}</span>`;
+        li.innerHTML = `<span style="font-size:0.85rem;color:#e6f1ff;">${safe(plan)}</span>`;
         const del = document.createElement("button");
         del.textContent = "Видалити";
         del.addEventListener("click", () => {
@@ -1549,76 +1649,86 @@
     function renderProfile() {
       const avatar = state.user.avatar || avatarPlaceholder(state.user.name);
       const points = totalPoints();
-      const ld = levelData(points);
-      const totem = selectedTotem();
+      const lv = levelInfo(points);
+      const totem = currentTotem();
 
       document.getElementById("profileAvatar").src = avatar;
       document.getElementById("profileName").textContent = state.user.name || "Без імені";
       document.getElementById("profileEmail").textContent = state.user.email || "—";
-      document.getElementById("profileMeta").textContent = `Рівень ${ld.level} · ${points} балів · ${state.deeds.length} справ`;
+      document.getElementById("profileMeta").textContent = `Рівень ${lv.level} · ${points} балів · ${state.deeds.length} справ`;
       document.getElementById("profileTotem").textContent = `Тотем: ${totem.name} ${totem.emoji}`;
 
       const list = document.getElementById("achievements");
       list.innerHTML = "";
-      const max = Math.max(8, ld.level);
+      const max = Math.max(lv.level, 8);
       for (let i = 1; i <= max; i += 1) {
         const li = document.createElement("li");
         li.textContent = i === 1
-          ? "Рівень 1: тотем обраний і синхронізований з тобою."
-          : `Рівень ${i}: тотем отримує ${accessories[i - 2] || "легендарний апгрейд"}.`;
-        if (i <= ld.level) li.classList.add("done");
+          ? "Рівень 1: тотем обраний і синхронізований."
+          : `Рівень ${i}: тотем отримує ${totem.upgrades[i - 2] || "легендарний апгрейд"}.`;
+        if (i <= lv.level) li.classList.add("done");
         list.appendChild(li);
       }
     }
 
-    function sprinkleConfetti() {
+    function spawnConfetti() {
       const box = document.getElementById("levelModalBox");
-      const colors = ["#69ddd3", "#4fcabf", "#ffd57f", "#8ae4db", "#ffc4c9"];
-      for (let i = 0; i < 24; i += 1) {
-        const item = document.createElement("span");
-        item.className = "confetti";
-        item.style.left = `${Math.random() * 96}%`;
-        item.style.top = `${Math.random() * 12}%`;
-        item.style.background = colors[Math.floor(Math.random() * colors.length)];
-        item.style.animationDelay = `${Math.random() * 0.2}s`;
-        box.appendChild(item);
-        setTimeout(() => item.remove(), 1300);
+      const colors = ["#6de1d7", "#ffd27a", "#9ce8e1", "#7ee2d8", "#ff8d9b"];
+      for (let i = 0; i < 26; i += 1) {
+        const confetti = document.createElement("span");
+        confetti.className = "confetti";
+        confetti.style.left = `${Math.random() * 96}%`;
+        confetti.style.top = `${Math.random() * 12}%`;
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = `${Math.random() * 0.2}s`;
+        box.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 1300);
+      }
+
+      for (let i = 0; i < 12; i += 1) {
+        const star = document.createElement("span");
+        star.className = "sparkle";
+        star.style.left = `${Math.random() * 96}%`;
+        star.style.top = `${Math.random() * 26}%`;
+        star.style.animationDelay = `${Math.random() * 0.8}s`;
+        box.appendChild(star);
+        setTimeout(() => star.remove(), 1600);
       }
     }
 
-    function showLevelModal(newLevel) {
-      const reward = accessories[newLevel - 2] || "легендарний апгрейд";
-      document.getElementById("levelModalText").textContent = `Ти досяг(ла) рівня ${newLevel}. Тотем отримує: ${reward}.`;
+    function showLevelModal(level) {
+      const reward = currentTotem().upgrades[level - 2] || "ультра-апгрейд";
+      document.getElementById("levelModalText").textContent = `Ти апнув(ла) рівень ${level}. Нагорода тотема: ${reward}.`;
       document.getElementById("levelModal").classList.add("show");
-      sprinkleConfetti();
+      spawnConfetti();
     }
 
     function closeLevelModal() {
       document.getElementById("levelModal").classList.remove("show");
     }
 
-    function seedDemoData() {
+    function seedData() {
       const now = new Date();
       state.deeds = [
         {
           id: crypto.randomUUID(),
-          text: "Підказав туристам дорогу до метро.",
+          text: "Допоміг(ла) незнайомій людині знайти потрібний автобус.",
           points: 1,
           hasMedia: false,
           createdAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString()
         },
         {
           id: crypto.randomUUID(),
-          text: "Передав пакет речей у пункт допомоги і додав фото.",
+          text: "Зібрав(ла) речі для волонтерського пункту і додав(ла) фото.",
           points: 2,
           hasMedia: true,
           createdAt: new Date(now.getTime() - 26 * 60 * 60 * 1000).toISOString()
         }
       ];
-
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
-      state.plans[isoDate(tomorrow)] = ["Зробити донат у перевірений фонд"];
+      state.plans[dateKey(tomorrow)] = ["Підтримати людину, якій важко, розмовою і дією."];
+      state.dayMission = randomOf(dailyMissionPhrases);
     }
 
     document.getElementById("registerForm").addEventListener("submit", async (event) => {
@@ -1627,37 +1737,45 @@
       state.user.email = document.getElementById("regEmail").value.trim();
       const file = document.getElementById("regAvatar").files[0];
       state.user.avatar = file ? await fileToDataUrl(file) : "";
-      switchScreen("totem");
+      setScreen("totem");
     });
 
     document.getElementById("startAppBtn").addEventListener("click", () => {
       if (!state.totemId) {
-        showToast("Спочатку обери одного тотема.");
+        showToast("Спочатку обери тотема.");
         return;
       }
       state.onboardingDone = true;
       nav.classList.add("show");
-      seedDemoData();
+      seedData();
       refreshGreeting();
-      switchScreen("home");
-      showToast("Профіль створено. Час робити добро.");
+      startGreetingLoop();
+      setScreen("home");
+      showToast("Легенда активована. Час творити добро.");
     });
 
     document.getElementById("rerollGreeting").addEventListener("click", refreshGreeting);
 
     document.getElementById("deedMedia").addEventListener("change", (event) => {
-      const points = event.target.files.length ? 2 : 1;
-      document.getElementById("scorePreview").textContent = `Після збереження: +${points} бал`;
+      const score = event.target.files.length ? 2 : 1;
+      document.getElementById("scorePreview").textContent = `Після збереження: +${score} бал`;
+    });
+
+    document.querySelectorAll("[data-template]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.getElementById("deedText").value = btn.dataset.template;
+      });
     });
 
     document.getElementById("deedForm").addEventListener("submit", (event) => {
       event.preventDefault();
       const text = document.getElementById("deedText").value.trim();
       if (!text) {
-        showToast("Опиши справу текстом.");
+        showToast("Опиши добру справу, шерифе.");
         return;
       }
-      const before = levelData(totalPoints()).level;
+
+      const before = levelInfo(totalPoints()).level;
       const hasMedia = document.getElementById("deedMedia").files.length > 0;
       const points = hasMedia ? 2 : 1;
       state.deeds.unshift({
@@ -1671,11 +1789,12 @@
       document.getElementById("deedText").value = "";
       document.getElementById("deedMedia").value = "";
       document.getElementById("scorePreview").textContent = "Після збереження: +1 бал";
+      state.dayMission = randomOf(dailyMissionPhrases);
 
-      const after = levelData(totalPoints()).level;
+      const after = levelInfo(totalPoints()).level;
       if (after > before) showLevelModal(after);
-      showToast(randomItem(completionPhrases));
-      switchScreen("home");
+      showToast(randomOf(completionPhrases));
+      setScreen("home");
     });
 
     document.getElementById("planForm").addEventListener("submit", (event) => {
@@ -1688,7 +1807,7 @@
       input.value = "";
       renderCalendar();
       renderPlans();
-      showToast("План додано.");
+      showToast("План додано. Курс на добро зафіксовано.");
     });
 
     document.getElementById("prevMonthBtn").addEventListener("click", () => {
@@ -1706,12 +1825,12 @@
       if (event.target.id === "levelModal") closeLevelModal();
     });
 
-    document.querySelectorAll("[data-go]").forEach((btn) => {
-      btn.addEventListener("click", () => switchScreen(btn.dataset.go));
+    document.querySelectorAll("[data-go]").forEach((button) => {
+      button.addEventListener("click", () => setScreen(button.dataset.go));
     });
 
-    renderTotemCards();
-    switchScreen("register");
+    renderTotemGrid();
+    setScreen("register");
   </script>
 </body>
 </html>
