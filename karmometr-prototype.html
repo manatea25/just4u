@@ -435,9 +435,14 @@
     .app-screen {
       display: none;
       height: calc(100% - 78px);
-      padding: 16px 20px 96px;
+      padding: 16px 20px 124px;
       overflow: auto;
       animation: screenIn 0.32s ease both;
+      scrollbar-width: none;
+    }
+
+    .app-screen::-webkit-scrollbar {
+      display: none;
     }
 
     .app-screen.active {
@@ -1071,6 +1076,7 @@
       background: rgba(255, 250, 241, 0.86);
       box-shadow: 0 16px 40px rgba(27, 24, 20, 0.13);
       backdrop-filter: blur(18px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
     }
 
     .bottom-tab {
@@ -1751,6 +1757,7 @@
       document.querySelectorAll(".app-screen").forEach(node => node.classList.toggle("active", node.id === screen + "Screen"));
       document.querySelectorAll(".tab").forEach(node => node.classList.toggle("active", node.dataset.go === screen));
       document.querySelectorAll(".bottom-tab").forEach(node => node.classList.toggle("active", node.dataset.go === screen));
+      document.querySelector(".bottom-nav").classList.toggle("hidden", screen === "auth" || screen === "totem");
       if (screen === "home") $("greeting").textContent = sample(greetings);
       const active = document.querySelector(".app-screen.active");
       if (active) active.scrollTop = 0;
