@@ -1,4 +1,1631 @@
 <!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кармометр — Кармася Техася</title>
+  <style>
+    :root {
+      --bg: #070b18;
+      --bg-soft: #121934;
+      --card: rgba(14, 22, 45, 0.92);
+      --stroke: #2a3b78;
+      --accent: #32f4ca;
+      --accent-2: #7a6cff;
+      --danger: #ff5f8f;
+      --gold: #ffcf43;
+      --text: #f6f8ff;
+      --muted: #99a7d7;
+      --glow: 0 0 0 1px rgba(122, 108, 255, 0.25), 0 14px 40px rgba(10, 16, 36, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(50, 244, 202, 0.11), transparent 33%),
+        radial-gradient(circle at 100% 0%, rgba(122, 108, 255, 0.2), transparent 30%),
+        radial-gradient(circle at 80% 100%, rgba(255, 95, 143, 0.15), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.45;
+    }
+
+    .container {
+      width: min(1220px, 100%);
+      margin: 0 auto;
+      padding: 24px 18px 120px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(122, 108, 255, 0.3);
+      background: rgba(7, 11, 24, 0.86);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      width: min(1220px, 100%);
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      font-size: 1.08rem;
+    }
+
+    .brand .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(140deg, var(--accent), var(--accent-2));
+      color: #091128;
+      box-shadow: 0 8px 20px rgba(50, 244, 202, 0.45);
+      font-size: 1.1rem;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.2px;
+      margin-top: 1px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-btn {
+      border: 1px solid var(--stroke);
+      background: rgba(25, 34, 71, 0.72);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 9px 12px;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: 0.22s ease;
+      font-weight: 700;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .screen {
+      display: none;
+      animation: rise 0.28s ease;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 20px;
+      box-shadow: var(--glow);
+    }
+
+    .title {
+      font-size: clamp(1.6rem, 4vw, 2.15rem);
+      font-weight: 900;
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 18px;
+      font-size: 0.98rem;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid #2d468f;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      color: #b8cdfb;
+      background: rgba(20, 34, 72, 0.65);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      color: #c8d6ff;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    input, textarea {
+      width: 100%;
+      border-radius: 13px;
+      border: 1px solid #30468f;
+      background: rgba(8, 14, 35, 0.72);
+      color: var(--text);
+      padding: 11px 12px;
+      outline: none;
+      font-size: 0.95rem;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(50, 244, 202, 0.14);
+    }
+
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      transition: 0.2s ease;
+      font-size: 0.92rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(140deg, var(--accent), #54ffdd);
+      color: #04102c;
+      box-shadow: 0 10px 24px rgba(50, 244, 202, 0.3);
+    }
+
+    .btn-secondary {
+      border: 1px solid #3b56ad;
+      background: rgba(16, 29, 63, 0.7);
+      color: #dce7ff;
+    }
+
+    .btn-danger {
+      background: linear-gradient(140deg, #ff5f8f, #ff7f6b);
+      color: #fff;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .register-wrap,
+    .totem-wrap {
+      max-width: 880px;
+      margin: 16px auto 0;
+      padding: 24px;
+    }
+
+    .totem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .totem-card {
+      border: 1px solid #3150a4;
+      background: linear-gradient(165deg, rgba(16, 27, 60, 0.82), rgba(9, 16, 35, 0.82));
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-align: center;
+    }
+
+    .totem-card:hover,
+    .totem-card.selected {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(50, 244, 202, 0.18);
+    }
+
+    .totem-emoji {
+      font-size: 3.2rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .totem-name {
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .totem-desc {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .home-grid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .home-hero {
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .user-inline {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 2px solid rgba(122, 108, 255, 0.45);
+      background: #0d1734;
+    }
+
+    .hero-phrase {
+      margin-top: 6px;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: #dff4ff;
+      font-weight: 800;
+      letter-spacing: 0.1px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .deed-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      max-height: 460px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .deed-item {
+      border: 1px solid #2c478f;
+      background: rgba(7, 16, 38, 0.84);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .deed-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .deed-points {
+      color: #08122b;
+      background: linear-gradient(130deg, #50f4cf, #8dfbe7);
+      font-size: 0.78rem;
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .totem-panel {
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .totem-stage {
+      border: 1px solid #2d4ca5;
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 14px;
+      background: linear-gradient(155deg, rgba(20, 34, 74, 0.76), rgba(8, 14, 30, 0.8));
+    }
+
+    .totem-stage .main {
+      font-size: 4.1rem;
+      display: block;
+      animation: floaty 2.2s ease-in-out infinite;
+      margin-bottom: 8px;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .accessories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 28px;
+    }
+
+    .acc {
+      border-radius: 999px;
+      border: 1px solid #3659be;
+      background: rgba(10, 22, 52, 0.85);
+      padding: 4px 8px;
+      font-size: 0.85rem;
+    }
+
+    .meter {
+      border: 1px solid #3354b3;
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(10, 18, 45, 0.78);
+      text-align: center;
+    }
+
+    .meter-ring {
+      width: 138px;
+      height: 138px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--accent) 0deg, rgba(60, 84, 160, 0.34) 0deg);
+      position: relative;
+    }
+
+    .meter-ring::before {
+      content: "";
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      background: #0a1231;
+      border: 1px solid #304d9e;
+      position: absolute;
+    }
+
+    .meter-center {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 2px;
+      text-align: center;
+    }
+
+    .meter-center strong {
+      font-size: 1.2rem;
+    }
+
+    .floating-add {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 76px;
+      height: 76px;
+      border-radius: 28px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      color: #07102b;
+      font-size: 2rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 16px 30px rgba(50, 244, 202, 0.35);
+      z-index: 30;
+    }
+
+    .section-pad {
+      padding: 16px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .stat {
+      border: 1px solid #2f4eac;
+      border-radius: 15px;
+      background: rgba(8, 16, 40, 0.85);
+      padding: 13px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+      color: #ebf6ff;
+    }
+
+    .bar-chart {
+      margin-top: 14px;
+      border: 1px solid #294597;
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(8, 15, 36, 0.78);
+    }
+
+    .bars {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      align-items: end;
+      min-height: 170px;
+      margin-top: 12px;
+    }
+
+    .bar-wrap {
+      display: grid;
+      justify-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #cbd8ff;
+    }
+
+    .bar {
+      width: 100%;
+      border-radius: 10px 10px 6px 6px;
+      background: linear-gradient(180deg, #56f8d8, #7b71ff);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      min-height: 5px;
+    }
+
+    .calendar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .day-name {
+      color: #c8d8ff;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding-bottom: 2px;
+    }
+
+    .day {
+      min-height: 72px;
+      border: 1px solid #2c4ca5;
+      border-radius: 13px;
+      background: rgba(9, 17, 39, 0.86);
+      color: var(--text);
+      font-weight: 700;
+      text-align: left;
+      padding: 7px 8px;
+      cursor: pointer;
+      position: relative;
+      transition: 0.2s ease;
+    }
+
+    .day:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .day.today {
+      border-color: #ffd05d;
+    }
+
+    .day.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(50, 244, 202, 0.18) inset;
+    }
+
+    .day.has-plan::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+    }
+
+    .day.empty {
+      visibility: hidden;
+    }
+
+    .plans-list {
+      list-style: none;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .plan-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #2f4ea9;
+      border-radius: 12px;
+      padding: 8px 10px;
+      background: rgba(10, 18, 42, 0.82);
+    }
+
+    .plan-item button {
+      border: none;
+      border-radius: 9px;
+      background: rgba(255, 95, 143, 0.15);
+      border: 1px solid #ff5f8f;
+      color: #ffc6d8;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-weight: 700;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .achievement-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .achievement-list li {
+      border: 1px solid #2f4ea9;
+      border-radius: 12px;
+      background: rgba(11, 20, 46, 0.78);
+      padding: 10px;
+      font-size: 0.88rem;
+    }
+
+    .toast {
+      position: fixed;
+      right: 14px;
+      bottom: 110px;
+      z-index: 50;
+      max-width: 380px;
+      background: linear-gradient(145deg, rgba(12, 23, 52, 0.97), rgba(20, 37, 85, 0.97));
+      border: 1px solid var(--accent);
+      border-radius: 14px;
+      padding: 12px 13px;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      font-weight: 800;
+      color: #dffdf7;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 8, 20, 0.7);
+      z-index: 60;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      max-width: 540px;
+      width: 100%;
+      border-radius: 20px;
+      padding: 22px;
+      border: 1px solid #3c5ec8;
+      background: linear-gradient(160deg, rgba(10, 18, 42, 0.97), rgba(20, 37, 87, 0.97));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 14px;
+      border-radius: 2px;
+      opacity: 0;
+      animation: confetti-fall 1.4s ease forwards;
+    }
+
+    @keyframes confetti-fall {
+      0% { opacity: 1; transform: translateY(-10px) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(210px) rotate(480deg); }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 1020px) {
+      .home-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .form-grid,
+      .totem-grid {
+        grid-template-columns: 1fr;
+      }
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav {
+        width: 100%;
+      }
+      .nav-btn {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="logo">⚡</span>
+        <div>
+          Кармометр
+          <small>Кармася Техася • Задовільняємо свою карму</small>
+        </div>
+      </div>
+      <nav class="nav hidden" id="appNav">
+        <button class="nav-btn" data-screen="home">🏠 Головна</button>
+        <button class="nav-btn" data-screen="add">➕ Додати справу</button>
+        <button class="nav-btn" data-screen="stats">📊 Статистика</button>
+        <button class="nav-btn" data-screen="calendar">🗓️ Календар</button>
+        <button class="nav-btn" data-screen="profile">🤠 Профіль</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="screen active" id="screen-register">
+      <div class="card register-wrap">
+        <span class="chip">Перший заїзд</span>
+        <h1 class="title">Заходь у Кармометр, ковбою</h1>
+        <p class="subtitle">
+          Реєстрація проста: ім'я, мейл, пароль і фото. Далі обереш тотема і поїдеш фармити добро на максимум.
+        </p>
+        <form id="registerForm" class="stack">
+          <div class="form-grid">
+            <div>
+              <label for="regName">Ім'я</label>
+              <input id="regName" required placeholder="Наприклад: Вольт Добряк">
+            </div>
+            <div>
+              <label for="regEmail">E-mail</label>
+              <input id="regEmail" type="email" required placeholder="cowboy@karma.ua">
+            </div>
+            <div>
+              <label for="regPassword">Пароль</label>
+              <input id="regPassword" type="password" required minlength="5" placeholder="Надійний пароль">
+            </div>
+            <div>
+              <label for="regPhoto">Фото профілю (опційно)</label>
+              <input id="regPhoto" type="file" accept="image/*">
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Полетіли обирати тотема</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-totem">
+      <div class="card totem-wrap">
+        <span class="chip">Крок 2</span>
+        <h2 class="title">Обери свою тотемну тварину</h2>
+        <p class="subtitle">
+          Вибір один — вайб назавжди. Твій тотем прокачується разом із рівнем: каблучка, шапка, окуляри і далі в космос.
+        </p>
+        <div class="totem-grid" id="totemGrid"></div>
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+          <button class="btn btn-primary" id="startAppBtn">Стартувати Кармометр</button>
+          <button class="btn btn-secondary" data-screen="register">Назад до реєстрації</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-home">
+      <div class="card home-hero">
+        <div class="user-inline">
+          <img id="homeAvatar" class="avatar" alt="Аватар">
+          <div>
+            <div class="muted">Твій карма-загін на місці, <b id="heroUserName">Герою</b>.</div>
+            <div class="hero-phrase" id="heroPhrase">Твори доброго, ковбой!</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+          <button class="btn btn-secondary" id="rerollGreeting">🎲 Нова зухвала фраза</button>
+          <button class="btn btn-primary" data-screen="add">➕ Записати добру справу</button>
+        </div>
+      </div>
+
+      <div class="home-grid">
+        <div class="card section-pad">
+          <h3 style="margin-bottom:4px;">Лента добрих справ</h3>
+          <div class="muted" style="margin-bottom:12px;">Ліва колонка: що зробив(ла), коли і скільки балів прилетіло.</div>
+          <ul class="deed-list" id="deedsList"></ul>
+        </div>
+
+        <div class="card totem-panel">
+          <div class="totem-stage">
+            <div class="muted" style="margin-bottom:8px;">Твій тотем сьогодні</div>
+            <span class="main" id="totemMainEmoji">🐂</span>
+            <div style="font-weight:900;margin-bottom:8px;" id="totemDisplayName">Бик Буревій</div>
+            <div class="accessories" id="totemAccessories"></div>
+          </div>
+
+          <div class="meter">
+            <div class="meter-ring" id="meterRing">
+              <div class="meter-center">
+                <strong id="levelValue">1</strong>
+                <span style="font-size:0.78rem;color:#c7d7ff;">рівень</span>
+              </div>
+            </div>
+            <div style="font-weight:800;" id="pointsLabel">0 карма-балів</div>
+            <div class="muted" id="nextLevelHint">До рівня 2 потрібно 3 бали.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-add">
+      <div class="card section-pad" style="max-width:900px;margin:0 auto;">
+        <h2 class="title">Додай добру справу і качни карму</h2>
+        <p class="subtitle">Текст обов'язковий (+1 бал). Додаєш фото/аудіо/відео — ще +1 бал бонусом.</p>
+
+        <form id="deedForm" class="stack">
+          <div>
+            <label for="deedText">Що ти зробив(ла) доброго?</label>
+            <textarea id="deedText" required placeholder="Приклад: Допоміг сусіду з важкими сумками, без понтів, просто по-людськи."></textarea>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label for="deedMedia">Медіа-доказ (не обов'язково)</label>
+              <input id="deedMedia" type="file" accept="image/*,video/*,audio/*">
+            </div>
+            <div>
+              <label>Скільки балів залетить</label>
+              <div class="chip" id="pointsPreview">Поки що +1 бал</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-primary" type="submit">🚀 Зафіксувати добру справу</button>
+            <button class="btn btn-secondary" type="button" data-screen="home">Повернутись на головну</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-stats">
+      <div class="card section-pad">
+        <h2 class="title">Статистика, яка реально заводить</h2>
+        <p class="subtitle">Тут видно, наскільки ти розриваєш: за місяць, за тиждень і проти самого себе вчорашнього.</p>
+
+        <div class="stats-grid">
+          <div class="stat">
+            <b id="statMonth">0</b>
+            <span class="muted">Справ за поточний місяць</span>
+          </div>
+          <div class="stat">
+            <b id="statToday">0</b>
+            <span class="muted">Справ сьогодні</span>
+          </div>
+          <div class="stat">
+            <b id="statVsWeek">+0</b>
+            <span class="muted">Сьогодні vs середнє минулого тижня</span>
+          </div>
+          <div class="stat">
+            <b id="statStreak">0</b>
+            <span class="muted">Днів підряд у доброму ритмі</span>
+          </div>
+        </div>
+
+        <div class="bar-chart">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+            <h3>Останні 7 днів</h3>
+            <span class="chip" id="mediaRate">Медіа-підтверджень: 0%</span>
+          </div>
+          <div class="bars" id="barsContainer"></div>
+        </div>
+
+        <div class="card" style="margin-top:12px;padding:14px;border-radius:14px;">
+          <h3 style="margin-bottom:4px;">Зухвалий висновок</h3>
+          <p class="muted" id="insightText"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-calendar">
+      <div class="card section-pad">
+        <h2 class="title">Календар добрих справ</h2>
+        <p class="subtitle">Плануй наперед і не випадай з карма-ритму. Клік по дню — додаєш план.</p>
+
+        <div class="calendar-head">
+          <button class="btn btn-secondary" id="prevMonth">← Місяць назад</button>
+          <h3 id="monthLabel"></h3>
+          <button class="btn btn-secondary" id="nextMonth">Місяць вперед →</button>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <div class="card" style="margin-top:12px;padding:14px;border-radius:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+            <h3 id="selectedDateTitle">Плани на дату</h3>
+            <button class="btn btn-primary" id="addPlanBtn">+ Запланувати добру справу</button>
+          </div>
+          <ul class="plans-list" id="plansList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-profile">
+      <div class="card section-pad">
+        <h2 class="title">Профіль Карма-ковбоя</h2>
+        <p class="subtitle">Твій прогрес, тотем і еволюція рівнів — усе в одному місці.</p>
+
+        <div class="profile-grid">
+          <div class="card" style="padding:14px;border-radius:14px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <img id="profileAvatar" class="avatar" alt="Аватар профілю">
+              <div>
+                <div style="font-weight:900;" id="profileName">Безіменний герой</div>
+                <div class="muted" id="profileEmail">hero@karma.ua</div>
+              </div>
+            </div>
+            <div class="chip" id="profileTotemChip">Тотем: не обрано</div>
+            <div style="margin-top:10px;" class="muted" id="profileMeta">Рівень 1 • 0 балів</div>
+          </div>
+
+          <div class="card" style="padding:14px;border-radius:14px;">
+            <h3>Еволюція тотема по рівнях</h3>
+            <ul class="achievement-list" id="achievementList"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <button class="floating-add hidden" id="floatingAdd" title="Додати добру справу">+</button>
+  <div id="toast" class="toast"></div>
+
+  <div id="levelModal" class="modal">
+    <div class="modal-box" id="levelModalBox">
+      <h2 style="font-size:1.7rem;margin-bottom:8px;">Рівень апнуто! 🔥</h2>
+      <p id="levelModalText" style="margin-bottom:14px;font-weight:700;color:#dcf8ff;"></p>
+      <button class="btn btn-primary" id="closeLevelModal">Прийнято. Йдемо далі!</button>
+    </div>
+  </div>
+
+  <script>
+    const totems = [
+      {
+        id: "bull",
+        name: "Бик Буревій",
+        emoji: "🐂",
+        desc: "Той, хто робить добро потужно й без відкатів."
+      },
+      {
+        id: "cat",
+        name: "Кішка Тінька",
+        emoji: "🐈",
+        desc: "Тиха, стильна, але добро заносить чітко і точно."
+      },
+      {
+        id: "dog",
+        name: "Собака Драйв",
+        emoji: "🐕",
+        desc: "Вірний ритму добрих справ і заряджає всіх навколо."
+      }
+    ];
+
+    const accessoryByLevel = [
+      "💍 каблучка",
+      "🧢 шапка",
+      "🕶️ окуляри",
+      "⛓️ ланцюг",
+      "🔥 неон-ореол",
+      "👑 корона ватажка",
+      "⚡ блискавичний шеврон",
+      "🛡️ щит легенди",
+      "🚀 реактивний буст"
+    ];
+
+    const levelThresholds = [0, 3, 8, 14, 21, 30, 40, 52, 66, 82, 100];
+
+    const greetings = [
+      "Твори доброго, ковбою!",
+      "Зафігачимо добра сьогодні на максимум.",
+      "Твоя карма вже димить від прокачки.",
+      "Не гальмуй — світ чекає твоїх добрих ходів.",
+      "Ти не просто молодець, ти карма-ракета.",
+      "Добро саме себе не зробить. Влітай!",
+      "Тисни на плюс і запускай новий подвиг.",
+      "Сьогодні день, коли ти знову всіх надихаєш.",
+      "Рівень чекає. Тотем готовий. Поїхали.",
+      "Прокачай карму так, щоб всесвіт аплодував."
+    ];
+
+    const completionPhrases = [
+      "Та ти нереальний, бро!",
+      "Шериф добра підписав тобі респект.",
+      "Це було потужно і по-людськи.",
+      "Ще одна світла дія — ще один крок у легенди.",
+      "Твоя карма щойно отримала турбо-режим.",
+      "Оце стиль! Добро зроблено чисто.",
+      "Браво. Світ став трішки кращим через тебе.",
+      "Заліт! Твій тотем пишається тобою.",
+      "Так тримати, машина добрих справ!",
+      "Твій рівень поваги росте, як на дріжджах.",
+      "Легендарний хід. Продовжуй палити добро.",
+      "Карма сказала: оце дійсно круто.",
+      "Сильний хід, ковбою. Прямо в ціль.",
+      "Нормально так влупив по добру!",
+      "Ти зараз не людина, ти карма-шедевр.",
+      "Це епічно. Плюсуємо респект.",
+      "Ти щойно подарував світові +100 до настрою.",
+      "Добро рівня VIP. Без жартів.",
+      "Вау. Потужний залп добрих намірів.",
+      "Твій тотем уже крутить переможний танець.",
+      "Це було красиво, сміливо і вчасно.",
+      "З таким темпом ти станеш міфом району.",
+      "Додав справу як профі. Поважуха.",
+      "Ти не зупиняйся, ти на хвилі.",
+      "Аплодисменти стоячи від команди Кармометра.",
+      "Класика сильного дня: зробив добро — засяяв.",
+      "Чітко. Потужно. По-доброму.",
+      "Ти реально виносиш цей день у плюс.",
+      "Добро оформлено на відмінно.",
+      "Шикарна робота. Ще трохи — і новий рівень.",
+      "Ти качаєш карму як чемпіон.",
+      "Крутий хід. Так виглядає справжня сила.",
+      "Ледь не розплавив шкалу кармометра!",
+      "Справу зараховано: вайб максимально крутий.",
+      "Ти зараз приклад для всього міста."
+    ];
+
+    const state = {
+      user: {
+        name: "",
+        email: "",
+        password: "",
+        avatar: ""
+      },
+      onboardingDone: false,
+      totem: null,
+      deeds: [],
+      plans: {},
+      monthCursor: firstDayOfMonth(new Date()),
+      selectedDate: isoDate(new Date())
+    };
+
+    const screens = document.querySelectorAll(".screen");
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const appNav = document.getElementById("appNav");
+    const floatingAdd = document.getElementById("floatingAdd");
+
+    function firstDayOfMonth(date) {
+      return new Date(date.getFullYear(), date.getMonth(), 1);
+    }
+
+    function isoDate(date) {
+      return date.toISOString().slice(0, 10);
+    }
+
+    function randomFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function getTotalPoints() {
+      return state.deeds.reduce((sum, deed) => sum + deed.points, 0);
+    }
+
+    function getLevelData(points) {
+      let level = 1;
+      for (let i = 1; i < levelThresholds.length; i += 1) {
+        if (points >= levelThresholds[i]) level = i + 1;
+      }
+      const currentThreshold = levelThresholds[level - 1];
+      const nextThreshold = levelThresholds[level] ?? null;
+      const progress = nextThreshold
+        ? ((points - currentThreshold) / (nextThreshold - currentThreshold)) * 100
+        : 100;
+      return { level, currentThreshold, nextThreshold, progress: Math.max(0, Math.min(100, progress)) };
+    }
+
+    function getSelectedTotem() {
+      return totems.find((item) => item.id === state.totem) || totems[0];
+    }
+
+    function formatDateTime(value) {
+      const d = new Date(value);
+      return d.toLocaleString("uk-UA", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function shortDayLabel(value) {
+      return new Date(value).toLocaleDateString("uk-UA", { weekday: "short" });
+    }
+
+    function avatarPlaceholder(name) {
+      const letter = (name || "К").trim().slice(0, 1).toUpperCase();
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#32f4ca"/><stop offset="1" stop-color="#7a6cff"/></linearGradient></defs><rect width="120" height="120" rx="24" fill="url(#g)"/><text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="#071331" font-family="Inter, Arial" font-size="54" font-weight="900">${letter}</text></svg>`;
+      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById("toast");
+      toast.textContent = text;
+      toast.style.display = "block";
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.style.display = "none";
+      }, 2800);
+    }
+
+    function showScreen(name) {
+      if (!state.onboardingDone && !["register", "totem"].includes(name)) return;
+      screens.forEach((screen) => screen.classList.remove("active"));
+      const target = document.getElementById(`screen-${name}`);
+      if (target) target.classList.add("active");
+
+      navButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.screen === name);
+      });
+
+      floatingAdd.classList.toggle("hidden", !state.onboardingDone || name === "add");
+
+      if (name === "home") {
+        refreshGreeting();
+        renderHome();
+      } else if (name === "stats") {
+        renderStats();
+      } else if (name === "calendar") {
+        renderCalendar();
+        renderPlans();
+      } else if (name === "profile") {
+        renderProfile();
+      }
+    }
+
+    function renderTotemCards() {
+      const holder = document.getElementById("totemGrid");
+      holder.innerHTML = "";
+      totems.forEach((totem) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `totem-card ${state.totem === totem.id ? "selected" : ""}`;
+        card.innerHTML = `
+          <span class="totem-emoji">${totem.emoji}</span>
+          <div class="totem-name">${totem.name}</div>
+          <div class="totem-desc">${totem.desc}</div>
+        `;
+        card.addEventListener("click", () => {
+          state.totem = totem.id;
+          renderTotemCards();
+        });
+        holder.appendChild(card);
+      });
+    }
+
+    function refreshGreeting() {
+      const phrase = randomFrom(greetings);
+      document.getElementById("heroPhrase").textContent = phrase;
+    }
+
+    function renderHome() {
+      const total = getTotalPoints();
+      const { level, nextThreshold, progress } = getLevelData(total);
+      const totem = getSelectedTotem();
+      const avatar = state.user.avatar || avatarPlaceholder(state.user.name);
+
+      document.getElementById("homeAvatar").src = avatar;
+      document.getElementById("heroUserName").textContent = state.user.name || "Герою";
+      document.getElementById("totemMainEmoji").textContent = totem.emoji;
+      document.getElementById("totemDisplayName").textContent = totem.name;
+      document.getElementById("levelValue").textContent = level;
+      document.getElementById("pointsLabel").textContent = `${total} карма-балів`;
+
+      const ring = document.getElementById("meterRing");
+      const deg = Math.round((progress / 100) * 360);
+      ring.style.background = `conic-gradient(var(--accent) ${deg}deg, rgba(60, 84, 160, 0.34) ${deg}deg)`;
+
+      const nextHint = document.getElementById("nextLevelHint");
+      if (nextThreshold) {
+        nextHint.textContent = `До рівня ${level + 1} потрібно ${nextThreshold - total} балів.`;
+      } else {
+        nextHint.textContent = "Максимальний рівень пробитий. Ти легенда Кармометра.";
+      }
+
+      const accHolder = document.getElementById("totemAccessories");
+      accHolder.innerHTML = "";
+      const gained = accessoryByLevel.slice(0, Math.max(0, level - 1));
+      if (!gained.length) {
+        const span = document.createElement("span");
+        span.className = "muted";
+        span.textContent = "Перший аксесуар прийде на рівні 2.";
+        accHolder.appendChild(span);
+      } else {
+        gained.forEach((item) => {
+          const span = document.createElement("span");
+          span.className = "acc";
+          span.textContent = item;
+          accHolder.appendChild(span);
+        });
+      }
+
+      const deedList = document.getElementById("deedsList");
+      deedList.innerHTML = "";
+      if (!state.deeds.length) {
+        const li = document.createElement("li");
+        li.className = "deed-item";
+        li.innerHTML = `<b>Поки тихо.</b><div class="muted">Натисни плюс і занеси свою першу добру справу.</div>`;
+        deedList.appendChild(li);
+      } else {
+        state.deeds.forEach((deed) => {
+          const li = document.createElement("li");
+          li.className = "deed-item";
+          li.innerHTML = `
+            <div class="deed-top">
+              <b>${escapeHtml(deed.text)}</b>
+              <span class="deed-points">+${deed.points} бал(и)</span>
+            </div>
+            <div class="muted">${formatDateTime(deed.createdAt)}${deed.hasMedia ? " • з медіа-доказом" : ""}</div>
+          `;
+          deedList.appendChild(li);
+        });
+      }
+    }
+
+    function renderStats() {
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const todayIso = isoDate(now);
+      const todayCount = state.deeds.filter((d) => isoDate(new Date(d.createdAt)) === todayIso).length;
+      const monthCount = state.deeds.filter((d) => new Date(d.createdAt) >= startOfMonth).length;
+
+      const weekBefore = [];
+      for (let i = 1; i <= 7; i += 1) {
+        const date = new Date();
+        date.setDate(now.getDate() - i);
+        weekBefore.push(isoDate(date));
+      }
+      const weekCounts = weekBefore.map((day) => state.deeds.filter((d) => isoDate(new Date(d.createdAt)) === day).length);
+      const weekAvg = weekCounts.length ? (weekCounts.reduce((a, b) => a + b, 0) / weekCounts.length) : 0;
+      const diff = todayCount - weekAvg;
+
+      document.getElementById("statMonth").textContent = monthCount;
+      document.getElementById("statToday").textContent = todayCount;
+      document.getElementById("statVsWeek").textContent = `${diff >= 0 ? "+" : ""}${diff.toFixed(1)}`;
+      document.getElementById("statStreak").textContent = calculateStreak();
+
+      const mediaCount = state.deeds.filter((d) => d.hasMedia).length;
+      const mediaRate = state.deeds.length ? Math.round((mediaCount / state.deeds.length) * 100) : 0;
+      document.getElementById("mediaRate").textContent = `Медіа-підтверджень: ${mediaRate}%`;
+
+      const barsContainer = document.getElementById("barsContainer");
+      barsContainer.innerHTML = "";
+      const chartDays = [];
+      for (let i = 6; i >= 0; i -= 1) {
+        const date = new Date();
+        date.setDate(now.getDate() - i);
+        chartDays.push(date);
+      }
+      const counts = chartDays.map((day) => state.deeds.filter((d) => isoDate(new Date(d.createdAt)) === isoDate(day)).length);
+      const maxCount = Math.max(1, ...counts);
+
+      chartDays.forEach((day, idx) => {
+        const wrap = document.createElement("div");
+        wrap.className = "bar-wrap";
+        const bar = document.createElement("div");
+        bar.className = "bar";
+        bar.style.height = `${Math.max(8, (counts[idx] / maxCount) * 125)}px`;
+        wrap.innerHTML = `<div>${counts[idx]}</div>`;
+        wrap.appendChild(bar);
+        const label = document.createElement("div");
+        label.textContent = shortDayLabel(day);
+        wrap.appendChild(label);
+        barsContainer.appendChild(wrap);
+      });
+
+      const insight = document.getElementById("insightText");
+      if (todayCount >= weekAvg + 1) {
+        insight.textContent = "Сьогодні ти реально вище власного середнього темпу. Це режим легенди.";
+      } else if (todayCount === 0) {
+        insight.textContent = "Сьогодні ще пусто. Одна добра справа прямо зараз і графік знову живий.";
+      } else {
+        insight.textContent = "Темп стабільний. Додай ще одну справу сьогодні — і відрив від минулого тижня буде красивий.";
+      }
+    }
+
+    function calculateStreak() {
+      if (!state.deeds.length) return 0;
+      const deedDays = new Set(state.deeds.map((d) => isoDate(new Date(d.createdAt))));
+      let streak = 0;
+      const date = new Date();
+      while (true) {
+        const key = isoDate(date);
+        if (deedDays.has(key)) {
+          streak += 1;
+          date.setDate(date.getDate() - 1);
+        } else {
+          break;
+        }
+      }
+      return streak;
+    }
+
+    function renderCalendar() {
+      const monthLabel = document.getElementById("monthLabel");
+      monthLabel.textContent = state.monthCursor.toLocaleDateString("uk-UA", {
+        month: "long",
+        year: "numeric"
+      });
+      monthLabel.style.textTransform = "capitalize";
+
+      const grid = document.getElementById("calendarGrid");
+      grid.innerHTML = "";
+
+      ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"].forEach((name) => {
+        const item = document.createElement("div");
+        item.className = "day-name";
+        item.textContent = name;
+        grid.appendChild(item);
+      });
+
+      const year = state.monthCursor.getFullYear();
+      const month = state.monthCursor.getMonth();
+      const first = new Date(year, month, 1);
+      const offset = (first.getDay() + 6) % 7;
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const today = isoDate(new Date());
+
+      for (let i = 0; i < offset; i += 1) {
+        const empty = document.createElement("div");
+        empty.className = "day empty";
+        grid.appendChild(empty);
+      }
+
+      for (let day = 1; day <= daysInMonth; day += 1) {
+        const date = new Date(year, month, day);
+        const key = isoDate(date);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "day";
+        if (key === today) btn.classList.add("today");
+        if (key === state.selectedDate) btn.classList.add("selected");
+        if ((state.plans[key] || []).length) btn.classList.add("has-plan");
+        btn.textContent = day;
+        btn.addEventListener("click", () => {
+          state.selectedDate = key;
+          renderCalendar();
+          renderPlans();
+        });
+        grid.appendChild(btn);
+      }
+    }
+
+    function renderPlans() {
+      const title = document.getElementById("selectedDateTitle");
+      title.textContent = `Плани на ${new Date(state.selectedDate).toLocaleDateString("uk-UA", { day: "2-digit", month: "2-digit", year: "numeric" })}`;
+
+      const list = document.getElementById("plansList");
+      list.innerHTML = "";
+      const plans = state.plans[state.selectedDate] || [];
+      if (!plans.length) {
+        const li = document.createElement("li");
+        li.className = "plan-item";
+        li.innerHTML = `<span class="muted">Планів нема. Додай хоча б один добрий намір.</span>`;
+        list.appendChild(li);
+        return;
+      }
+      plans.forEach((plan, idx) => {
+        const li = document.createElement("li");
+        li.className = "plan-item";
+        li.innerHTML = `<span>${escapeHtml(plan)}</span>`;
+        const del = document.createElement("button");
+        del.textContent = "Видалити";
+        del.addEventListener("click", () => {
+          state.plans[state.selectedDate].splice(idx, 1);
+          if (!state.plans[state.selectedDate].length) delete state.plans[state.selectedDate];
+          renderCalendar();
+          renderPlans();
+        });
+        li.appendChild(del);
+        list.appendChild(li);
+      });
+    }
+
+    function renderProfile() {
+      const avatar = state.user.avatar || avatarPlaceholder(state.user.name);
+      const total = getTotalPoints();
+      const { level } = getLevelData(total);
+      const totem = getSelectedTotem();
+
+      document.getElementById("profileAvatar").src = avatar;
+      document.getElementById("profileName").textContent = state.user.name || "Безіменний герой";
+      document.getElementById("profileEmail").textContent = state.user.email || "hero@karma.ua";
+      document.getElementById("profileTotemChip").textContent = `Тотем: ${totem.name} ${totem.emoji}`;
+      document.getElementById("profileMeta").textContent = `Рівень ${level} • ${total} балів • справ: ${state.deeds.length}`;
+
+      const holder = document.getElementById("achievementList");
+      holder.innerHTML = "";
+      const showLevels = Math.max(level, 6);
+      for (let i = 1; i <= showLevels; i += 1) {
+        const li = document.createElement("li");
+        if (i === 1) {
+          li.textContent = "Рівень 1: тотем прокинувся і став на твій бік.";
+        } else {
+          const acc = accessoryByLevel[i - 2] || "✨ супер-режим";
+          li.textContent = `Рівень ${i}: тотем отримує ${acc}.`;
+        }
+        if (i <= level) {
+          li.style.borderColor = "rgba(50, 244, 202, 0.5)";
+          li.style.color = "#dcfff6";
+        } else {
+          li.style.opacity = "0.65";
+        }
+        holder.appendChild(li);
+      }
+    }
+
+    function createConfetti() {
+      const box = document.getElementById("levelModalBox");
+      const colors = ["#32f4ca", "#ffcf43", "#7a6cff", "#ff5f8f", "#8ef9e8"];
+      for (let i = 0; i < 26; i += 1) {
+        const dot = document.createElement("span");
+        dot.className = "confetti";
+        dot.style.left = `${Math.random() * 98}%`;
+        dot.style.top = `${Math.random() * 14}%`;
+        dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+        dot.style.animationDelay = `${Math.random() * 0.25}s`;
+        box.appendChild(dot);
+        setTimeout(() => dot.remove(), 1500);
+      }
+    }
+
+    function showLevelUpModal(newLevel) {
+      const acc = accessoryByLevel[newLevel - 2] || "ультра-прокачку";
+      const text = document.getElementById("levelModalText");
+      text.textContent = `Рівень ${newLevel}. Твій тотем щойно отримав: ${acc}. Це було дуже, дуже круто.`;
+      document.getElementById("levelModal").classList.add("show");
+      createConfetti();
+    }
+
+    function closeLevelModal() {
+      document.getElementById("levelModal").classList.remove("show");
+    }
+
+    function seedInitialData() {
+      const now = new Date();
+      state.deeds = [
+        {
+          id: crypto.randomUUID(),
+          text: "Перекинув бабусі продукти до квартири.",
+          hasMedia: false,
+          points: 1,
+          createdAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: crypto.randomUUID(),
+          text: "Нагодував безпритульного песика і закинув фото.",
+          hasMedia: true,
+          points: 2,
+          createdAt: new Date(now.getTime() - 26 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: crypto.randomUUID(),
+          text: "Пояснив студенту тему перед екзаменом.",
+          hasMedia: false,
+          points: 1,
+          createdAt: new Date(now.getTime() - 50 * 60 * 60 * 1000).toISOString()
+        }
+      ];
+      state.plans = {};
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      state.plans[isoDate(tomorrow)] = ["Зателефонувати рідним і підтримати"];
+    }
+
+    function escapeHtml(text) {
+      const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#039;" };
+      return text.replace(/[&<>"']/g, (m) => map[m]);
+    }
+
+    async function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    document.getElementById("registerForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      state.user.name = document.getElementById("regName").value.trim();
+      state.user.email = document.getElementById("regEmail").value.trim();
+      state.user.password = document.getElementById("regPassword").value;
+      const photo = document.getElementById("regPhoto").files[0];
+      if (photo) {
+        state.user.avatar = await fileToDataUrl(photo);
+      } else {
+        state.user.avatar = "";
+      }
+      showScreen("totem");
+    });
+
+    document.getElementById("startAppBtn").addEventListener("click", () => {
+      if (!state.totem) {
+        showToast("Спершу обери тотемну тварину. Без тотема ніяк.");
+        return;
+      }
+      state.onboardingDone = true;
+      appNav.classList.remove("hidden");
+      seedInitialData();
+      showScreen("home");
+      showToast("Вітаю в Кармометрі. Поїхали роздавати добро!");
+    });
+
+    document.getElementById("rerollGreeting").addEventListener("click", refreshGreeting);
+    floatingAdd.addEventListener("click", () => showScreen("add"));
+    document.getElementById("closeLevelModal").addEventListener("click", closeLevelModal);
+    document.getElementById("levelModal").addEventListener("click", (e) => {
+      if (e.target.id === "levelModal") closeLevelModal();
+    });
+
+    navButtons.forEach((btn) => {
+      btn.addEventListener("click", () => showScreen(btn.dataset.screen));
+    });
+    document.querySelectorAll("[data-screen]").forEach((btn) => {
+      btn.addEventListener("click", () => showScreen(btn.dataset.screen));
+    });
+
+    const deedMediaInput = document.getElementById("deedMedia");
+    deedMediaInput.addEventListener("change", () => {
+      const plus = deedMediaInput.files.length ? 2 : 1;
+      document.getElementById("pointsPreview").textContent = `Після збереження буде +${plus} бал(и)`;
+    });
+
+    document.getElementById("deedForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const text = document.getElementById("deedText").value.trim();
+      if (!text) {
+        showToast("Опис справи обов'язковий. Напиши хоч пару слів.");
+        return;
+      }
+
+      const beforeLevel = getLevelData(getTotalPoints()).level;
+      const hasMedia = deedMediaInput.files.length > 0;
+      const points = 1 + (hasMedia ? 1 : 0);
+
+      state.deeds.unshift({
+        id: crypto.randomUUID(),
+        text,
+        hasMedia,
+        points,
+        createdAt: new Date().toISOString()
+      });
+
+      const afterLevel = getLevelData(getTotalPoints()).level;
+      if (afterLevel > beforeLevel) {
+        showLevelUpModal(afterLevel);
+      }
+
+      document.getElementById("deedText").value = "";
+      deedMediaInput.value = "";
+      document.getElementById("pointsPreview").textContent = "Поки що +1 бал";
+      showToast(randomFrom(completionPhrases));
+      showScreen("home");
+    });
+
+    document.getElementById("prevMonth").addEventListener("click", () => {
+      state.monthCursor = new Date(state.monthCursor.getFullYear(), state.monthCursor.getMonth() - 1, 1);
+      renderCalendar();
+    });
+
+    document.getElementById("nextMonth").addEventListener("click", () => {
+      state.monthCursor = new Date(state.monthCursor.getFullYear(), state.monthCursor.getMonth() + 1, 1);
+      renderCalendar();
+    });
+
+    document.getElementById("addPlanBtn").addEventListener("click", () => {
+      const text = prompt("Яку добру справу плануєш на цю дату?");
+      if (!text || !text.trim()) return;
+      if (!state.plans[state.selectedDate]) state.plans[state.selectedDate] = [];
+      state.plans[state.selectedDate].push(text.trim());
+      renderCalendar();
+      renderPlans();
+      showToast("План додано. Майбутня карма вже гріє двигун.");
+    });
+
+    renderTotemCards();
+    showScreen("register");
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
