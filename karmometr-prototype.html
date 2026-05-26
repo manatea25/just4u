@@ -1,0 +1,2842 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кармометр — Кармася Техася</title>
+  <style>
+    :root {
+      --bg: #090b12;
+      --bg-2: #111723;
+      --panel: rgba(17, 23, 35, 0.78);
+      --panel-strong: rgba(24, 33, 48, 0.92);
+      --line: rgba(255, 255, 255, 0.12);
+      --line-strong: rgba(255, 255, 255, 0.2);
+      --text: #f5f7fb;
+      --muted: #9aa7b8;
+      --muted-2: #667085;
+      --aqua: #55d8c9;
+      --mint: #70f0b8;
+      --lime: #b8ff6e;
+      --gold: #ffd36e;
+      --rose: #ff7aa8;
+      --violet: #9f8cff;
+      --blue: #63a7ff;
+      --danger: #ff6b6b;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(85, 216, 201, 0.22), transparent 26rem),
+        radial-gradient(circle at 84% 14%, rgba(159, 140, 255, 0.22), transparent 24rem),
+        radial-gradient(circle at 50% 92%, rgba(255, 211, 110, 0.16), transparent 24rem),
+        linear-gradient(135deg, #090b12 0%, #111723 48%, #080b11 100%);
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      content: "";
+    }
+
+    body::before {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at center, black, transparent 76%);
+    }
+
+    body::after {
+      z-index: -1;
+      background:
+        linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.08) 46%, transparent 52%),
+        linear-gradient(210deg, transparent 0%, rgba(85, 216, 201, 0.08) 42%, transparent 48%);
+      animation: skySweep 12s ease-in-out infinite alternate;
+      opacity: 0.7;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    .app-shell {
+      width: min(1480px, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .glass {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(26px);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 16px;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 16px;
+      border-radius: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: max-content;
+    }
+
+    .brand-mark {
+      position: relative;
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border-radius: 17px;
+      background: linear-gradient(145deg, rgba(85, 216, 201, 0.96), rgba(112, 240, 184, 0.9));
+      box-shadow: 0 14px 34px rgba(85, 216, 201, 0.32);
+      overflow: hidden;
+    }
+
+    .brand-mark::before {
+      position: absolute;
+      width: 30px;
+      height: 32px;
+      border-radius: 9px 9px 15px 15px;
+      background: #101722;
+      transform: rotate(-7deg) translateY(2px);
+      content: "";
+      clip-path: polygon(18% 35%, 42% 35%, 42% 12%, 64% 12%, 66% 35%, 86% 35%, 78% 88%, 20% 88%);
+    }
+
+    .brand-mark::after {
+      position: absolute;
+      top: 13px;
+      right: 14px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(255, 211, 110, 0.8);
+      content: "";
+    }
+
+    .brand-word {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .brand-word strong {
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      letter-spacing: -0.05em;
+    }
+
+    .brand-word span {
+      margin-top: 5px;
+      color: var(--aqua);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav-btn,
+    .chip,
+    .ghost-btn,
+    .primary-btn,
+    .tiny-btn {
+      border: 0;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-btn {
+      padding: 11px 14px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      color: var(--text);
+      border-color: rgba(85, 216, 201, 0.44);
+      background: rgba(85, 216, 201, 0.13);
+      transform: translateY(-1px);
+    }
+
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 172px;
+      padding: 8px 12px 8px 8px;
+      border-radius: 999px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+    }
+
+    .avatar,
+    .upload-preview {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 24%, rgba(255, 255, 255, 0.75), transparent 16%),
+        linear-gradient(145deg, var(--aqua), var(--violet));
+      color: #08111a;
+      font-weight: 950;
+    }
+
+    .avatar img,
+    .upload-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-pill small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .screen {
+      display: none;
+      min-height: calc(100vh - 132px);
+      padding: 28px 0 98px;
+      animation: screenIn 0.42s ease both;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .hero-grid,
+    .home-grid,
+    .stats-grid,
+    .profile-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.8fr);
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .phone-card,
+    .panel {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 680px;
+      padding: clamp(28px, 5vw, 64px);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)),
+        radial-gradient(circle at 75% 20%, rgba(85, 216, 201, 0.28), transparent 18rem);
+    }
+
+    .hero-card::before {
+      position: absolute;
+      right: -150px;
+      bottom: -180px;
+      width: 460px;
+      height: 460px;
+      border-radius: 48%;
+      background: linear-gradient(145deg, rgba(85, 216, 201, 0.28), rgba(255, 211, 110, 0.16));
+      filter: blur(4px);
+      animation: blobFloat 8s ease-in-out infinite alternate;
+      content: "";
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: max-content;
+      max-width: 100%;
+      padding: 9px 12px;
+      border: 1px solid rgba(85, 216, 201, 0.34);
+      border-radius: 999px;
+      color: var(--aqua);
+      background: rgba(85, 216, 201, 0.1);
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .spark-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 24px rgba(255, 211, 110, 0.9);
+      animation: pulseDot 1.4s ease-in-out infinite;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin: 28px 0 18px;
+      font-size: clamp(3.2rem, 8vw, 7.7rem);
+      line-height: 0.88;
+      letter-spacing: -0.09em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(110deg, #ffffff 8%, #55d8c9 45%, #ffd36e 82%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-lead {
+      max-width: 690px;
+      color: #cbd5e1;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 34px 0 32px;
+    }
+
+    .primary-btn,
+    .ghost-btn,
+    .tiny-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      font-weight: 950;
+      text-decoration: none;
+    }
+
+    .primary-btn {
+      min-height: 54px;
+      padding: 16px 22px;
+      background: linear-gradient(135deg, var(--aqua), var(--mint));
+      color: #061016;
+      box-shadow: 0 18px 42px rgba(85, 216, 201, 0.26);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 24px 56px rgba(85, 216, 201, 0.38);
+    }
+
+    .ghost-btn {
+      min-height: 54px;
+      padding: 14px 20px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    .ghost-btn:hover,
+    .tiny-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .tiny-btn {
+      min-height: 38px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.055);
+      color: var(--text);
+      font-size: 0.84rem;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 700px;
+    }
+
+    .metric-card,
+    .mini-card,
+    .task-card,
+    .calendar-day,
+    .animal-card,
+    .achievement-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.055);
+      backdrop-filter: blur(18px);
+    }
+
+    .metric-card {
+      min-height: 128px;
+      padding: 18px;
+      border-radius: 22px;
+    }
+
+    .metric-card b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: clamp(1.7rem, 4vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .metric-card span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 750;
+    }
+
+    .phone-card {
+      position: relative;
+      display: grid;
+      min-height: 680px;
+      padding: 16px;
+      background:
+        linear-gradient(150deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+        linear-gradient(180deg, rgba(85, 216, 201, 0.16), rgba(159, 140, 255, 0.12));
+    }
+
+    .phone-screen {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(85, 216, 201, 0.2), transparent 15rem),
+        linear-gradient(180deg, #121926, #090c13);
+      overflow: hidden;
+    }
+
+    .phone-screen::before {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      width: 108px;
+      height: 22px;
+      border-radius: 999px;
+      background: #05080d;
+      transform: translateX(-50%);
+      content: "";
+    }
+
+    .phone-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .totem-stage {
+      position: relative;
+      display: grid;
+      min-height: 310px;
+      place-items: center;
+      margin: 20px 0;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 50% 44%, rgba(85, 216, 201, 0.34), transparent 9rem),
+        linear-gradient(155deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      overflow: hidden;
+    }
+
+    .totem-stage::before {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(85, 216, 201, 0.24);
+      border-radius: 44%;
+      animation: spinSlow 14s linear infinite;
+      content: "";
+    }
+
+    .totem-stage::after {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border: 1px dashed rgba(255, 211, 110, 0.34);
+      border-radius: 42%;
+      animation: spinSlow 11s linear infinite reverse;
+      content: "";
+    }
+
+    .mascot-wrap {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 260px;
+      height: 260px;
+      animation: mascotHover 3s ease-in-out infinite;
+    }
+
+    .mascot-wrap svg {
+      width: min(240px, 88%);
+      height: auto;
+      overflow: visible;
+      filter: drop-shadow(0 32px 34px rgba(0, 0, 0, 0.36));
+    }
+
+    .accessory {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: accessoryPop 0.5s ease both;
+    }
+
+    .karma-ring {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: conic-gradient(var(--aqua) var(--progress, 42%), rgba(255, 255, 255, 0.09) 0);
+      box-shadow: inset 0 0 0 16px rgba(255, 255, 255, 0.04), 0 22px 48px rgba(85, 216, 201, 0.18);
+    }
+
+    .karma-ring::before {
+      position: absolute;
+      inset: 16px;
+      border-radius: inherit;
+      background: #0c111a;
+      content: "";
+    }
+
+    .karma-ring-content {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+
+    .karma-ring-content strong {
+      display: block;
+      font-size: 2.45rem;
+      line-height: 1;
+      letter-spacing: -0.07em;
+    }
+
+    .karma-ring-content span {
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .form-card {
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid var(--line);
+    }
+
+    .form-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      color: #dbe5f1;
+      font-size: 0.88rem;
+      font-weight: 900;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 17px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    input,
+    select {
+      min-height: 52px;
+      padding: 0 15px;
+    }
+
+    textarea {
+      min-height: 116px;
+      padding: 14px 15px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(85, 216, 201, 0.78);
+      background: rgba(255, 255, 255, 0.09);
+      box-shadow: 0 0 0 4px rgba(85, 216, 201, 0.12);
+    }
+
+    .upload-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .upload-line input {
+      padding-top: 14px;
+    }
+
+    .totem-selection {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .animal-card {
+      position: relative;
+      min-height: 470px;
+      padding: 20px;
+      border-radius: 30px;
+      overflow: hidden;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .animal-card::before {
+      position: absolute;
+      inset: -1px;
+      background: radial-gradient(circle at 50% 10%, var(--animal-glow), transparent 16rem);
+      opacity: 0.85;
+      content: "";
+    }
+
+    .animal-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .animal-card:hover,
+    .animal-card.selected {
+      border-color: rgba(85, 216, 201, 0.64);
+      transform: translateY(-6px);
+      box-shadow: 0 30px 82px rgba(0, 0, 0, 0.34);
+    }
+
+    .animal-card h3 {
+      margin: 15px 0 8px;
+      font-size: 2rem;
+      letter-spacing: -0.06em;
+    }
+
+    .animal-card p {
+      min-height: 72px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .animal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 18px;
+    }
+
+    .chip {
+      padding: 8px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #dbe5f1;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .chip.active {
+      border-color: rgba(85, 216, 201, 0.64);
+      background: rgba(85, 216, 201, 0.16);
+      color: var(--text);
+    }
+
+    .screen-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 8px 0 22px;
+    }
+
+    .screen-heading h2 {
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 4.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+    }
+
+    .screen-heading p {
+      max-width: 520px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .home-grid {
+      grid-template-columns: minmax(340px, 0.9fr) minmax(380px, 1fr) minmax(330px, 0.85fr);
+      align-items: start;
+    }
+
+    .panel {
+      padding: 20px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .panel-title h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: -0.04em;
+    }
+
+    .task-list {
+      display: grid;
+      max-height: 640px;
+      gap: 12px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .task-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: start;
+      padding: 13px;
+      border-radius: 20px;
+      animation: taskIn 0.32s ease both;
+    }
+
+    .task-orb {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(85, 216, 201, 0.2), rgba(255, 211, 110, 0.18));
+      color: var(--aqua);
+      font-weight: 950;
+    }
+
+    .task-card b {
+      display: block;
+      margin-bottom: 5px;
+      letter-spacing: -0.02em;
+    }
+
+    .task-card small {
+      display: block;
+      color: var(--muted);
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .task-points {
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: rgba(112, 240, 184, 0.12);
+      color: var(--mint);
+      font-size: 0.8rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .spotlight {
+      display: grid;
+      gap: 18px;
+      text-align: center;
+    }
+
+    .spotlight h3 {
+      margin-bottom: 4px;
+      font-size: 2.25rem;
+      letter-spacing: -0.07em;
+    }
+
+    .spotlight p {
+      margin: 0 auto;
+      max-width: 480px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .level-ladder {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    .ladder-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .ladder-step.done {
+      border-color: rgba(85, 216, 201, 0.35);
+      background: rgba(85, 216, 201, 0.1);
+    }
+
+    .ladder-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.12);
+    }
+
+    .ladder-step.done .ladder-dot {
+      background: var(--aqua);
+      box-shadow: 0 0 22px rgba(85, 216, 201, 0.65);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mini-card {
+      min-height: 118px;
+      padding: 16px;
+      border-radius: 22px;
+    }
+
+    .mini-card b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 2rem;
+      letter-spacing: -0.06em;
+    }
+
+    .mini-card span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .quote-board {
+      position: relative;
+      min-height: 150px;
+      padding: 18px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255, 211, 110, 0.18), transparent 10rem),
+        rgba(255, 255, 255, 0.055);
+      border: 1px solid var(--line);
+    }
+
+    .quote-board::after {
+      position: absolute;
+      right: -38px;
+      bottom: -42px;
+      width: 130px;
+      height: 130px;
+      border-radius: 42%;
+      border: 1px solid rgba(255, 211, 110, 0.28);
+      animation: spinSlow 8s linear infinite;
+      content: "";
+    }
+
+    .quote-board b {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--gold);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .quote-board p {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 950;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+    }
+
+    .floating-add {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 42;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: min(420px, calc(100vw - 32px));
+      padding: 12px 16px 12px 12px;
+      border: 1px solid rgba(85, 216, 201, 0.46);
+      border-radius: 999px;
+      background: rgba(9, 12, 19, 0.82);
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.48);
+      backdrop-filter: blur(26px);
+      transform: translateX(-50%);
+      cursor: pointer;
+    }
+
+    .plus-core {
+      position: relative;
+      display: grid;
+      width: 62px;
+      height: 62px;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--aqua), var(--mint));
+      color: #061016;
+      font-size: 2.1rem;
+      font-weight: 950;
+      box-shadow: 0 16px 44px rgba(85, 216, 201, 0.32);
+    }
+
+    .plus-core::after {
+      position: absolute;
+      inset: -8px;
+      border: 1px solid rgba(85, 216, 201, 0.42);
+      border-radius: inherit;
+      animation: pulseRing 1.8s ease-out infinite;
+      content: "";
+    }
+
+    .floating-add b {
+      display: block;
+      letter-spacing: -0.02em;
+    }
+
+    .floating-add span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .chart {
+      display: flex;
+      align-items: end;
+      gap: 10px;
+      min-height: 270px;
+      padding: 20px 8px 8px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+    }
+
+    .bar {
+      position: relative;
+      flex: 1;
+      min-width: 28px;
+      border-radius: 999px 999px 10px 10px;
+      background: linear-gradient(180deg, var(--aqua), rgba(85, 216, 201, 0.2));
+      transform-origin: bottom;
+      animation: growBar 0.78s ease both;
+    }
+
+    .bar span {
+      position: absolute;
+      left: 50%;
+      bottom: -26px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 900;
+      transform: translateX(-50%);
+    }
+
+    .bar b {
+      position: absolute;
+      left: 50%;
+      top: -28px;
+      font-size: 0.86rem;
+      transform: translateX(-50%);
+    }
+
+    .rings-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .small-ring {
+      position: relative;
+      display: grid;
+      min-height: 190px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.045);
+      text-align: center;
+    }
+
+    .small-ring::before {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      background: conic-gradient(var(--ring-color) var(--ring-value), rgba(255, 255, 255, 0.08) 0);
+      box-shadow: inset 0 0 0 13px rgba(255, 255, 255, 0.04);
+      content: "";
+    }
+
+    .small-ring::after {
+      position: absolute;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: #101722;
+      content: "";
+    }
+
+    .small-ring div {
+      position: absolute;
+      display: grid;
+      gap: 6px;
+      place-items: center;
+    }
+
+    .small-ring b {
+      font-size: 1.7rem;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .small-ring span {
+      max-width: 120px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+
+    .calendar-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 380px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .weekday {
+      padding: 0 6px 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .calendar-day {
+      position: relative;
+      min-height: 108px;
+      padding: 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .calendar-day:hover,
+    .calendar-day.active {
+      border-color: rgba(85, 216, 201, 0.58);
+      background: rgba(85, 216, 201, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .calendar-day strong {
+      display: block;
+      font-size: 1.1rem;
+    }
+
+    .calendar-day span {
+      display: inline-flex;
+      margin-top: 8px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255, 211, 110, 0.14);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .calendar-day.has-plan::after {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--aqua);
+      box-shadow: 0 0 16px rgba(85, 216, 201, 0.9);
+      content: "";
+    }
+
+    .plan-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .plan-item {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .plan-item b {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .plan-item small {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .achievement-card {
+      position: relative;
+      min-height: 230px;
+      padding: 18px;
+      border-radius: 26px;
+      overflow: hidden;
+    }
+
+    .achievement-card.locked {
+      opacity: 0.58;
+      filter: saturate(0.45);
+    }
+
+    .badge-art {
+      position: relative;
+      display: grid;
+      width: 78px;
+      height: 78px;
+      margin-bottom: 18px;
+      place-items: center;
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(85, 216, 201, 0.24), rgba(255, 211, 110, 0.16));
+    }
+
+    .badge-art::before {
+      width: 38px;
+      height: 38px;
+      border-radius: 34% 58% 42% 52%;
+      background: var(--badge-color);
+      box-shadow: 0 0 26px color-mix(in srgb, var(--badge-color), transparent 55%);
+      transform: rotate(18deg);
+      content: "";
+    }
+
+    .badge-art::after {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 4px solid #09111a;
+      content: "";
+    }
+
+    .achievement-card h3 {
+      margin-bottom: 8px;
+      letter-spacing: -0.04em;
+    }
+
+    .achievement-card p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .profile-grid {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+
+    .profile-cover {
+      min-height: 520px;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(85, 216, 201, 0.3), transparent 14rem),
+        rgba(255, 255, 255, 0.055);
+      text-align: center;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .theme-card {
+      min-height: 118px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+    }
+
+    .theme-card.active {
+      border-color: rgba(85, 216, 201, 0.62);
+      box-shadow: 0 0 0 4px rgba(85, 216, 201, 0.11);
+    }
+
+    .swatch {
+      height: 44px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      background: var(--swatch);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(5, 8, 13, 0.7);
+      backdrop-filter: blur(18px);
+    }
+
+    .modal-card {
+      position: relative;
+      width: min(720px, 100%);
+      max-height: min(860px, calc(100vh - 40px));
+      overflow: auto;
+      padding: 22px;
+      border-radius: 32px;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+    }
+
+    .close-btn {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .media-preview {
+      display: grid;
+      min-height: 170px;
+      place-items: center;
+      border: 1px dashed rgba(255, 255, 255, 0.22);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .media-preview img,
+    .media-preview video {
+      max-width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 18px;
+    }
+
+    .toast-stack {
+      position: fixed;
+      top: 104px;
+      right: 24px;
+      z-index: 90;
+      display: grid;
+      width: min(420px, calc(100vw - 32px));
+      gap: 12px;
+    }
+
+    .toast {
+      padding: 16px;
+      border: 1px solid rgba(85, 216, 201, 0.38);
+      border-radius: 22px;
+      background: rgba(10, 15, 23, 0.9);
+      box-shadow: var(--shadow);
+      animation: toastIn 0.35s ease both;
+      backdrop-filter: blur(22px);
+    }
+
+    .toast b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--aqua);
+      letter-spacing: -0.02em;
+    }
+
+    .toast p {
+      margin: 0;
+      color: #dce6f1;
+      line-height: 1.45;
+    }
+
+    .level-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(85, 216, 201, 0.25), transparent 22rem),
+        rgba(4, 7, 12, 0.78);
+      backdrop-filter: blur(18px);
+    }
+
+    .level-card {
+      width: min(660px, 100%);
+      padding: 34px;
+      border-radius: 36px;
+      text-align: center;
+      animation: levelBoom 0.6s cubic-bezier(.2, 1.4, .4, 1) both;
+    }
+
+    .level-card h2 {
+      margin: 14px 0 10px;
+      font-size: clamp(2.4rem, 7vw, 5.7rem);
+      line-height: 0.9;
+      letter-spacing: -0.09em;
+    }
+
+    .confetti {
+      position: fixed;
+      z-index: 120;
+      width: 10px;
+      height: 18px;
+      border-radius: 4px;
+      pointer-events: none;
+      animation: confettiFall 1.5s ease-in forwards;
+    }
+
+    .route-hint {
+      color: var(--muted);
+      font-weight: 850;
+      line-height: 1.5;
+    }
+
+    .empty-state {
+      padding: 28px 18px;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 22px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .quick-card {
+      min-height: 88px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.045);
+      cursor: pointer;
+    }
+
+    .quick-card:hover {
+      border-color: rgba(85, 216, 201, 0.52);
+      background: rgba(85, 216, 201, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .quick-card b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.92rem;
+    }
+
+    .quick-card small {
+      color: var(--muted);
+      font-weight: 780;
+      line-height: 1.35;
+    }
+
+    @keyframes skySweep {
+      from { transform: translate3d(-3%, -2%, 0) scale(1.02); }
+      to { transform: translate3d(3%, 2%, 0) scale(1.06); }
+    }
+
+    @keyframes screenIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.992); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes blobFloat {
+      from { transform: translate3d(0, 0, 0) rotate(0deg); }
+      to { transform: translate3d(-40px, -26px, 0) rotate(16deg); }
+    }
+
+    @keyframes pulseDot {
+      50% { transform: scale(1.45); opacity: 0.65; }
+    }
+
+    @keyframes spinSlow {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes mascotHover {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-13px) rotate(1deg); }
+    }
+
+    @keyframes accessoryPop {
+      from { opacity: 0; transform: scale(0.62) rotate(-18deg); }
+      to { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    @keyframes pulseRing {
+      to { opacity: 0; transform: scale(1.55); }
+    }
+
+    @keyframes taskIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes growBar {
+      from { transform: scaleY(0.04); opacity: 0.3; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(18px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes levelBoom {
+      from { opacity: 0; transform: scale(0.72) rotate(-2deg); }
+      to { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translate3d(0, -12vh, 0) rotate(0deg); opacity: 1; }
+      100% { transform: translate3d(var(--x), 105vh, 0) rotate(720deg); opacity: 0; }
+    }
+
+    @media (max-width: 1220px) {
+      .hero-grid,
+      .home-grid,
+      .calendar-layout,
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .home-grid .spotlight {
+        order: -1;
+      }
+
+      .achievement-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 860px) {
+      .app-shell {
+        padding: 14px;
+      }
+
+      .topbar {
+        position: static;
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 3px;
+      }
+
+      .nav-btn {
+        white-space: nowrap;
+      }
+
+      .hero-card,
+      .phone-card {
+        min-height: auto;
+      }
+
+      .hero-metrics,
+      .totem-selection,
+      .stats-grid,
+      .rings-row,
+      .achievement-grid,
+      .theme-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screen-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .calendar-grid {
+        gap: 7px;
+      }
+
+      .calendar-day {
+        min-height: 84px;
+        padding: 9px;
+      }
+
+      .floating-add {
+        align-items: center;
+        min-width: calc(100vw - 24px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar glass">
+      <button class="brand ghost-btn" data-screen="welcome" aria-label="На старт">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-word">
+          <strong>КармоМетр</strong>
+          <span>Кармася Техася</span>
+        </span>
+      </button>
+
+      <nav class="nav" aria-label="Навігація прототипу">
+        <button class="nav-btn active" data-screen="welcome">Старт</button>
+        <button class="nav-btn" data-screen="home">Панель</button>
+        <button class="nav-btn" data-screen="stats">Статистика</button>
+        <button class="nav-btn" data-screen="calendar">Календар</button>
+        <button class="nav-btn" data-screen="achievements">Нагороди</button>
+        <button class="nav-btn" data-screen="profile">Профіль</button>
+      </nav>
+
+      <button class="profile-pill" data-screen="profile">
+        <span class="avatar" id="topAvatar">К</span>
+        <span>
+          <b id="topName">Ковбой добра</b>
+          <small id="topLevel">Рівень 1</small>
+        </span>
+      </button>
+    </header>
+
+    <main>
+      <section class="screen active" id="welcomeScreen">
+        <div class="hero-grid">
+          <article class="hero-card glass">
+            <span class="eyebrow"><i class="spark-dot"></i> Мобільний прототип нового покоління</span>
+            <h1><span class="gradient-text">Задовільни карму. Зроби добро голосно.</span></h1>
+            <p class="hero-lead">
+              “Кармометр” перетворює добрі справи на рівні, тотемну еволюцію, статистику і щоденний азарт.
+              Реєструйся, обирай звіра, фіксуй добро та качай репутацію без нудного моралізаторства.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-btn" data-screen="register">Почати прототип</button>
+              <button class="ghost-btn" data-screen="totem">Одразу до тотемів</button>
+              <button class="ghost-btn" data-action="demo-fill">Запустити демо-хаос</button>
+            </div>
+            <div class="hero-metrics">
+              <div class="metric-card">
+                <b id="heroTotal">8</b>
+                <span>добрих справ уже лежать у сейфі карми</span>
+              </div>
+              <div class="metric-card">
+                <b id="heroLevel">1</b>
+                <span>поточний рівень тотемного вайбу</span>
+              </div>
+              <div class="metric-card">
+                <b>35</b>
+                <span>зухвалих фраз після виконання справи</span>
+              </div>
+            </div>
+          </article>
+
+          <aside class="phone-card glass">
+            <div class="phone-screen">
+              <div class="phone-top">
+                <span>17:30</span>
+                <span>KMTR / LIVE</span>
+              </div>
+              <div class="totem-stage">
+                <div class="mascot-wrap" id="heroMascot"></div>
+              </div>
+              <div class="quote-board">
+                <b>Фраза входу</b>
+                <p id="heroGreeting">Твори доброго, ковбой. Місто вже чекає твій хід.</p>
+              </div>
+              <div class="mini-grid">
+                <div class="mini-card">
+                  <b id="phonePoints">10</b>
+                  <span>балів карми</span>
+                </div>
+                <div class="mini-card">
+                  <b id="phoneStreak">4</b>
+                  <span>дні серії добра</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen" id="registerScreen">
+        <div class="screen-heading">
+          <div>
+            <span class="eyebrow"><i class="spark-dot"></i> Реєстрація</span>
+            <h2>Збираємо героя добра.</h2>
+          </div>
+          <p>Мейл, пароль, ім'я і фото. Прототип нічого нікуди не відправляє — все живе в браузері для клікабельного демо.</p>
+        </div>
+
+        <div class="profile-grid">
+          <form class="form-card glass" id="registerForm">
+            <div class="form-row">
+              <label for="nameInput">Як тебе називати в салуні добра?</label>
+              <input id="nameInput" type="text" value="Техаський Добродій" autocomplete="name" required>
+            </div>
+            <div class="form-row">
+              <label for="emailInput">Мейл для кармічного штабу</label>
+              <input id="emailInput" type="email" value="howdy@karmometr.app" autocomplete="email" required>
+            </div>
+            <div class="form-row">
+              <label for="passwordInput">Пароль, щоб зло не зайшло без стуку</label>
+              <input id="passwordInput" type="password" value="dobro-texas-777" autocomplete="new-password" required>
+            </div>
+            <div class="form-row">
+              <label for="photoInput">Фото профілю</label>
+              <div class="upload-line">
+                <span class="upload-preview" id="photoPreview">Т</span>
+                <input id="photoInput" type="file" accept="image/*">
+              </div>
+            </div>
+            <button class="primary-btn" type="submit">Далі: обрати тотема</button>
+          </form>
+
+          <aside class="profile-cover glass">
+            <div class="totem-stage">
+              <div class="mascot-wrap" id="registerMascot"></div>
+            </div>
+            <h3>Профіль має звучати як постріл у небо.</h3>
+            <p class="route-hint">Після реєстрації відкриється вибір тотемної тварини: бик, кішка або собака. Вона буде рости разом із твоєю кармою.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen" id="totemScreen">
+        <div class="screen-heading">
+          <div>
+            <span class="eyebrow"><i class="spark-dot"></i> Тотем</span>
+            <h2>Обери звіра, що понесе твою карму.</h2>
+          </div>
+          <p>Кожен тотем має свій характер і візуальну еволюцію. Рівень росте від добрих справ, а аксесуари відкриваються автоматично.</p>
+        </div>
+
+        <div class="totem-selection" id="totemSelection"></div>
+      </section>
+
+      <section class="screen" id="homeScreen">
+        <div class="screen-heading">
+          <div>
+            <span class="eyebrow"><i class="spark-dot"></i> Головний екран</span>
+            <h2 id="homeGreeting">Зафігачимо добра, ковбой.</h2>
+          </div>
+          <p>Ліворуч — журнал виконаних справ із датою та часом. Центр — тотем і кармометр. Праворуч — короткі дані, місії та генератор дій.</p>
+        </div>
+
+        <div class="home-grid">
+          <aside class="panel glass">
+            <div class="panel-title">
+              <h3>Добрі справи</h3>
+              <button class="tiny-btn" data-action="sort-tasks">Свіжі зверху</button>
+            </div>
+            <div class="task-list" id="taskList"></div>
+          </aside>
+
+          <section class="panel glass spotlight">
+            <div class="totem-stage">
+              <div class="mascot-wrap" id="homeMascot"></div>
+            </div>
+            <div>
+              <h3 id="totemTitle">Бик Блискавка</h3>
+              <p id="totemSubtitle">Поки ти робиш добро, твій тотем качає стиль і характер.</p>
+            </div>
+            <div class="karma-ring" id="karmaRing">
+              <div class="karma-ring-content">
+                <div>
+                  <strong id="levelNumber">1</strong>
+                  <span id="levelProgressText">0 / 3 до рівня 2</span>
+                </div>
+              </div>
+            </div>
+            <div class="level-ladder" id="levelLadder"></div>
+          </section>
+
+          <aside class="panel glass">
+            <div class="panel-title">
+              <h3>Пульт ковбоя</h3>
+              <button class="tiny-btn" data-action="random-quote">Нова фраза</button>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <b id="totalActs">0</b>
+                <span>всього справ</span>
+              </div>
+              <div class="mini-card">
+                <b id="totalPoints">0</b>
+                <span>балів карми</span>
+              </div>
+              <div class="mini-card">
+                <b id="todayActs">0</b>
+                <span>сьогодні</span>
+              </div>
+              <div class="mini-card">
+                <b id="monthActs">0</b>
+                <span>за місяць</span>
+              </div>
+            </div>
+            <div class="quote-board" style="margin-top: 14px;">
+              <b>Післясмак добра</b>
+              <p id="randomQuote">Та ти нереальний, бро. Карма щойно встала й аплодує.</p>
+            </div>
+            <div style="margin-top: 14px;">
+              <div class="panel-title">
+                <h3>Швидкі місії</h3>
+                <button class="tiny-btn" data-action="shuffle-missions">Змішати</button>
+              </div>
+              <div class="quick-grid" id="quickMissions"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen" id="statsScreen">
+        <div class="screen-heading">
+          <div>
+            <span class="eyebrow"><i class="spark-dot"></i> Статистика</span>
+            <h2>Цифри, що пахнуть перемогою.</h2>
+          </div>
+          <p>Місяць, тиждень, темп, медіа-докази та порівняння із минулим періодом — без сухої бухгалтерії.</p>
+        </div>
+
+        <div class="stats-grid">
+          <section class="panel glass">
+            <div class="panel-title">
+              <h3>Добро за 7 днів</h3>
+              <button class="tiny-btn" data-action="add-random-week">Докинути демо</button>
+            </div>
+            <div class="chart" id="weekChart"></div>
+          </section>
+
+          <section class="panel glass">
+            <div class="panel-title">
+              <h3>Зухвалі індикатори</h3>
+              <button class="tiny-btn" data-action="refresh-stats-copy">Оновити копі</button>
+            </div>
+            <div class="rings-row">
+              <div class="small-ring" style="--ring-color: var(--aqua); --ring-value: 72%;">
+                <div><b id="monthRing">0</b><span>справ цього місяця</span></div>
+              </div>
+              <div class="small-ring" style="--ring-color: var(--gold); --ring-value: 48%;">
+                <div><b id="mediaRing">0</b><span>доказів фото / відео / аудіо</span></div>
+              </div>
+              <div class="small-ring" style="--ring-color: var(--violet); --ring-value: 84%;">
+                <div><b id="deltaRing">+0</b><span>проти минулого тижня</span></div>
+              </div>
+            </div>
+            <div class="quote-board" style="margin-top: 16px;">
+              <b>Аналітичний удар</b>
+              <p id="statsCopy">Твоя доброта вже не просто на районі — вона заходить у графіки.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="screen" id="calendarScreen">
+        <div class="screen-heading">
+          <div>
+            <span class="eyebrow"><i class="spark-dot"></i> Календар</span>
+            <h2>Плануй добро, поки зло роззувається.</h2>
+          </div>
+          <p>Клікни на будь-який день, впиши добру справу й постав пріоритет. Заплановане можна потім виконати через головну кнопку.</p>
+        </div>
+
+        <div class="calendar-layout">
+          <section class="panel glass">
+            <div class="panel-title">
+              <h3 id="calendarTitle">Травень 2026</h3>
+              <button class="tiny-btn" data-action="today-calendar">Сьогодні</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+          </section>
+
+          <aside class="panel glass">
+            <div class="panel-title">
+              <h3 id="selectedDayTitle">План на день</h3>
+              <button class="tiny-btn" data-action="clear-plan-form">Очистити</button>
+            </div>
+            <form class="form-card" id="planForm">
+              <div class="form-row">
+                <label for="planText">Яку добру справу призначаємо?</label>
+                <input id="planText" type="text" placeholder="Наприклад: занести корм у притулок" required>
+              </div>
+              <div class="form-row">
+                <label for="planPriority">Пріоритет</label>
+                <select id="planPriority">
+                  <option>Спокійний постріл</option>
+                  <option>Серйозний рейд</option>
+                  <option>Легендарний заїзд</option>
+                </select>
+              </div>
+              <button class="primary-btn" type="submit">Додати в календар</button>
+            </form>
+            <div class="plan-list" id="planList"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen" id="achievementsScreen">
+        <div class="screen-heading">
+          <div>
+            <span class="eyebrow"><i class="spark-dot"></i> Нагороди</span>
+            <h2>Полиця трофеїв для добрих розбійників.</h2>
+          </div>
+          <p>Досягнення відкриваються від справ, балів, медіа-доказів і серій. Натискай картки, щоб побачити реакцію прототипу.</p>
+        </div>
+        <div class="achievement-grid" id="achievementGrid"></div>
+      </section>
+
+      <section class="screen" id="profileScreen">
+        <div class="screen-heading">
+          <div>
+            <span class="eyebrow"><i class="spark-dot"></i> Профіль</span>
+            <h2>Твій штаб карми.</h2>
+          </div>
+          <p>Тут змінюється ім'я, тотем, стиль інтерфейсу й короткий девіз. Все миттєво відбивається у прототипі.</p>
+        </div>
+
+        <div class="profile-grid">
+          <section class="profile-cover glass">
+            <div class="totem-stage">
+              <div class="mascot-wrap" id="profileMascot"></div>
+            </div>
+            <h3 id="profileNameTitle">Техаський Добродій</h3>
+            <p id="profileMottoText">Добро робиться швидко, красиво і без зайвого шуму.</p>
+            <div class="hero-actions" style="justify-content: center;">
+              <button class="ghost-btn" data-screen="totem">Змінити тотема</button>
+              <button class="primary-btn" data-action="level-party">Запустити level-up шоу</button>
+            </div>
+          </section>
+
+          <form class="form-card glass" id="profileForm">
+            <div class="form-row">
+              <label for="profileName">Ім'я героя</label>
+              <input id="profileName" type="text">
+            </div>
+            <div class="form-row">
+              <label for="profileMotto">Девіз</label>
+              <textarea id="profileMotto"></textarea>
+            </div>
+            <div class="form-row">
+              <label>Тема салуну</label>
+              <div class="theme-grid" id="themeGrid"></div>
+            </div>
+            <button class="primary-btn" type="submit">Зберегти стиль</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <button class="floating-add" id="openAddModal" aria-label="Додати добру справу">
+    <span class="plus-core">+</span>
+    <span>
+      <b>Додати добру справу</b>
+      <span>текст = 1 бал, медіа-доказ = ще 1 бал</span>
+    </span>
+  </button>
+
+  <div class="modal hidden" id="addModal" role="dialog" aria-modal="true" aria-labelledby="addTitle">
+    <section class="modal-card glass">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow"><i class="spark-dot"></i> Нова справа</span>
+          <h2 id="addTitle">Що доброго бахнулося?</h2>
+        </div>
+        <button class="close-btn" id="closeAddModal" aria-label="Закрити">x</button>
+      </div>
+      <form class="form-card" id="addForm">
+        <div class="form-row">
+          <label for="deedText">Опис доброї справи</label>
+          <textarea id="deedText" placeholder="Наприклад: допоміг сусіду донести важкі сумки й не зробив із цього пресреліз" required></textarea>
+        </div>
+        <div class="quick-grid" id="modalSuggestions"></div>
+        <div class="form-row">
+          <label for="deedMedia">Доказ за бажанням: фото, відео або аудіо</label>
+          <input id="deedMedia" type="file" accept="image/*,video/*,audio/*">
+          <div class="media-preview" id="mediaPreview">Без медіа теж норм. Але з доказом карма дає ще один бал.</div>
+        </div>
+        <button class="primary-btn" type="submit">Записати в легенду</button>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <div class="level-overlay hidden" id="levelOverlay">
+    <section class="level-card glass">
+      <div class="totem-stage">
+        <div class="mascot-wrap" id="levelMascot"></div>
+      </div>
+      <h2 id="levelTitle">Новий рівень!</h2>
+      <p id="levelText" class="hero-lead">Тотем причепурився, карма натягнула шпори.</p>
+      <button class="primary-btn" id="closeLevelOverlay">Йдемо далі робити добро</button>
+    </section>
+  </div>
+
+  <script>
+    const greetings = [
+      "Твори доброго, ковбой. Місто вже чекає твій хід.",
+      "Зафігачимо добра так, щоб пил стояв до ранку.",
+      "Карма на коні, а ти сьогодні тримаєш повід.",
+      "Добрий день для добрих справ і нахабно красивих перемог.",
+      "Вмикай режим легенди: комусь зараз стане легше.",
+      "Салун добра відкрито. Заходь і роби красиво.",
+      "Ти не просто зайшов. Ти приніс району шанс.",
+      "Ковбой добра, твоя черга світити без пафосу.",
+      "Сьогодні добро не просить дозволу. Воно їде.",
+      "Заряджено на людяність. Натискай плюс і летимо."
+    ];
+
+    const praisePhrases = [
+      "Та ти нереальний, бро! Карма щойно встала й аплодує.",
+      "Оце постріл добра. Навіть пил на дорозі став ввічливішим.",
+      "Легенда записана. Салун шепоче твоє ім'я.",
+      "Ти зробив добро так чисто, що графіки стали рівнішими.",
+      "Карма підкинула капелюха. Це було потужно.",
+      "Бро, це не справа, це маленький переворот людяності.",
+      "Твій тотем мурчить, гавкає або тупотить від гордості.",
+      "Плюс до карми. Мінус до хаосу. Красиво.",
+      "Так тримати: добро зайшло без стуку й навело порядок.",
+      "Небо над Техасом стало на відтінок добріше.",
+      "Ковбой, це був чистий рейд на користь світу.",
+      "Суспільство отримало апгрейд, а ти — заслужений бал.",
+      "Ти зараз зробив більше, ніж десять мотиваційних плакатів.",
+      "Карма поставила печатку: виконано з характером.",
+      "Добро прийнято. Пафос вимкнено. Результат блищить.",
+      "Оце хід. Навіть лихо зробило крок назад.",
+      "Ти не чекав ідеального моменту. Ти став моментом.",
+      "У протоколі добра новий жирний запис.",
+      "Респект летить швидше за поштового коня.",
+      "Якби в карми був джукбокс, зараз грав би твій трек.",
+      "Зроблено по-людськи, оформлено по-ковбойськи.",
+      "Цей бал пахне кавою, пилом і перемогою.",
+      "Добро зафіксовано. Тотем уже приміряє новий стиль.",
+      "Ти підняв планку, а вона навіть не образилась.",
+      "Оце так заїзд. Карма тримає двері відчиненими.",
+      "Малий подвиг, великий післясмак.",
+      "Ти натиснув не кнопку, а важіль людяності.",
+      "Справу зроблено. Світ став трохи менш колючим.",
+      "Кармічний банк прийняв депозит і видав повагу.",
+      "Так виглядає добро без зайвого шуму.",
+      "Ти щойно навів красу в чужому дні.",
+      "Коли добро має стиль, воно виглядає саме так.",
+      "Повага під'їхала на блискучих колесах.",
+      "Цей запис треба обвести золотим ласо.",
+      "Людяність прокачано. Наступний рівень ближче."
+    ];
+
+    const statsPhrases = [
+      "Твоя доброта вже не просто на районі — вона заходить у графіки.",
+      "Цифри кажуть: добро тут не випадковість, а система з характером.",
+      "Місяць виглядає так, ніби ти найняв бригаду світла.",
+      "Темп росте. Зло нервово перевіряє календар.",
+      "Аналітика підтверджує: ковбой добра не спить на посту.",
+      "Дані шепочуть: ще трохи — і тотем вимагатиме окремий гардероб."
+    ];
+
+    const quickIdeas = [
+      ["Підвезти людину", "Тихо врятувати чийсь маршрут."],
+      ["Купити корм", "Звірі теж голосують за твою карму."],
+      ["Підтримати донат", "Гривня може звучати як барабан добра."],
+      ["Написати подяку", "Комусь потрібен не лайк, а нормальні слова."],
+      ["Прибрати двір", "Менше сміття, більше поваги."],
+      ["Пояснити складне", "Знання без зверхності — це сила."],
+      ["Зателефонувати рідним", "Серце не любить режим очікування."],
+      ["Поступитися місцем", "Класика, але працює як магія."],
+      ["Допомогти з пакунками", "Сумки легші, день тепліший."],
+      ["Підтримати волонтерів", "Добро любить командну гру."]
+    ];
+
+    const levelThresholds = [0, 3, 8, 15, 24, 36, 51, 70];
+    const levelNames = ["Перший пил", "Шериф серця", "Майстер ласо", "Золотий вершник", "Легенда салуну", "Грім добра", "Космічний рейнджер", "Безсмертна карма"];
+    const accessoryNames = ["сяюча каблучка", "техаський капелюх", "зоряний жилет", "кармічне ласо", "неонові шпори", "корона салуну", "космічний плащ"];
+
+    const animals = {
+      bull: {
+        key: "bull",
+        name: "Бик Блискавка",
+        short: "Бик",
+        tone: "Сила, що не тисне, а підтримує.",
+        tags: ["витримка", "захист", "потужний вайб"],
+        glow: "rgba(255, 211, 110, 0.2)",
+        accent: "#ffd36e",
+        body: "#3b4658",
+        face: "#576579"
+      },
+      cat: {
+        key: "cat",
+        name: "Кішка Нічна Іскра",
+        short: "Кішка",
+        tone: "Грація, гострий розум і тихий контроль хаосу.",
+        tags: ["спритність", "інтуїція", "м'який удар"],
+        glow: "rgba(255, 122, 168, 0.2)",
+        accent: "#ff7aa8",
+        body: "#384052",
+        face: "#5f6a80"
+      },
+      dog: {
+        key: "dog",
+        name: "Собака Вірний Рейд",
+        short: "Собака",
+        tone: "Лояльність, драйв і готовність бігти туди, де потрібен друг.",
+        tags: ["вірність", "енергія", "команда"],
+        glow: "rgba(85, 216, 201, 0.22)",
+        accent: "#55d8c9",
+        body: "#334457",
+        face: "#65758b"
+      }
+    };
+
+    const themes = [
+      { id: "aqua", name: "Техаська м'ята", swatch: "linear-gradient(135deg, #55d8c9, #70f0b8)", vars: ["#55d8c9", "#70f0b8", "#ffd36e"] },
+      { id: "sunset", name: "Захід салуну", swatch: "linear-gradient(135deg, #ff7aa8, #ffd36e)", vars: ["#ff7aa8", "#ffd36e", "#63a7ff"] },
+      { id: "violet", name: "Нічний рейд", swatch: "linear-gradient(135deg, #9f8cff, #63a7ff)", vars: ["#9f8cff", "#63a7ff", "#70f0b8"] }
+    ];
+
+    const achievements = [
+      ["first", "Перший постріл", "Запиши першу добру справу.", 1, "acts", "#55d8c9"],
+      ["three", "Міні-легенда", "Зроби 3 справи й відкрий другий рівень.", 3, "acts", "#ffd36e"],
+      ["eight", "Шериф серця", "8 справ — район уже помітив.", 8, "acts", "#9f8cff"],
+      ["media", "Доказовий ковбой", "Прикріпи медіа до доброї справи.", 1, "media", "#ff7aa8"],
+      ["points", "Банк карми", "Набери 12 балів карми.", 12, "points", "#70f0b8"],
+      ["calendar", "Планувальник світла", "Заплануй хоча б одну справу.", 1, "plans", "#63a7ff"],
+      ["streak", "Серія без пилу", "Май 3 різні дні з добрими справами.", 3, "streak", "#b8ff6e"],
+      ["legend", "Легенда салуну", "Дійди до 5 рівня.", 5, "level", "#ffd36e"]
+    ];
+
+    const state = {
+      user: {
+        name: "Техаський Добродій",
+        email: "howdy@karmometr.app",
+        motto: "Добро робиться швидко, красиво і без зайвого шуму.",
+        photo: "",
+        theme: "aqua"
+      },
+      selectedAnimal: "bull",
+      tasks: [
+        { text: "Передав теплі речі тим, кому ніч сьогодні була занадто холодна", points: 2, media: true, date: offsetDate(0, -2) },
+        { text: "Купив корм для притулку й не забув про хвостатих босів", points: 2, media: true, date: offsetDate(0, -5) },
+        { text: "Пояснив колезі складну штуку без зверхнього техно-шуму", points: 1, media: false, date: offsetDate(1, -1) },
+        { text: "Допоміг сусідці донести пакунки до ліфта", points: 1, media: false, date: offsetDate(2, -4) },
+        { text: "Підтримав волонтерський збір і покликав друзів", points: 2, media: true, date: offsetDate(4, -3) },
+        { text: "Прибрав сміття біля під'їзду, поки ніхто не бачив", points: 1, media: false, date: offsetDate(6, -2) },
+        { text: "Написав щиру подяку людині, яка давно її заслужила", points: 1, media: false, date: offsetDate(8, -2) },
+        { text: "Поступився місцем і отримав погляд, що вартий окремої медалі", points: 1, media: false, date: offsetDate(10, -5) }
+      ],
+      plans: {
+        "2026-05-27": [{ text: "Занести корм у притулок", priority: "Серйозний рейд" }],
+        "2026-05-30": [{ text: "Відвезти речі на благодійний склад", priority: "Легендарний заїзд" }]
+      },
+      selectedDate: "2026-05-26",
+      sortNewest: true
+    };
+
+    const els = {};
+
+    document.addEventListener("DOMContentLoaded", () => {
+      cacheElements();
+      wireEvents();
+      renderAll();
+      showScreen("welcome");
+      rotateGreeting();
+      setInterval(rotateGreeting, 9000);
+    });
+
+    function cacheElements() {
+      [
+        "topAvatar", "topName", "topLevel", "heroMascot", "registerMascot", "homeMascot", "profileMascot", "levelMascot",
+        "heroGreeting", "heroTotal", "heroLevel", "phonePoints", "phoneStreak", "nameInput", "emailInput",
+        "passwordInput", "photoInput", "photoPreview", "totemSelection", "homeGreeting", "totemTitle", "totemSubtitle",
+        "karmaRing", "levelNumber", "levelProgressText", "levelLadder", "taskList", "totalActs", "totalPoints",
+        "todayActs", "monthActs", "randomQuote", "quickMissions", "weekChart", "monthRing", "mediaRing", "deltaRing",
+        "statsCopy", "calendarTitle", "calendarGrid", "selectedDayTitle", "planText", "planPriority", "planList",
+        "achievementGrid", "profileNameTitle", "profileMottoText", "profileName", "profileMotto", "themeGrid",
+        "openAddModal", "addModal", "closeAddModal", "addForm", "deedText", "deedMedia", "mediaPreview",
+        "modalSuggestions", "toastStack", "levelOverlay", "levelTitle", "levelText", "closeLevelOverlay",
+        "registerForm", "planForm", "profileForm"
+      ].forEach(id => els[id] = document.getElementById(id));
+    }
+
+    function wireEvents() {
+      document.querySelectorAll("[data-screen]").forEach(button => {
+        button.addEventListener("click", () => showScreen(button.dataset.screen));
+      });
+
+      document.querySelectorAll("[data-action]").forEach(button => {
+        button.addEventListener("click", () => handleAction(button.dataset.action));
+      });
+
+      els.registerForm.addEventListener("submit", event => {
+        event.preventDefault();
+        state.user.name = els.nameInput.value.trim() || "Ковбой добра";
+        state.user.email = els.emailInput.value.trim();
+        syncProfileInputs();
+        renderAll();
+        toast("Профіль зібрано", "Тепер обирай тотемного напарника. Він буде рости разом із твоєю кармою.");
+        showScreen("totem");
+      });
+
+      els.photoInput.addEventListener("change", event => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          state.user.photo = reader.result;
+          renderUser();
+          toast("Фото підхоплено", "Герой добра тепер має обличчя, а не просто легенду.");
+        };
+        reader.readAsDataURL(file);
+      });
+
+      els.openAddModal.addEventListener("click", () => openAddModal());
+      els.closeAddModal.addEventListener("click", closeAddModal);
+      els.addModal.addEventListener("click", event => {
+        if (event.target === els.addModal) closeAddModal();
+      });
+
+      els.deedMedia.addEventListener("change", renderMediaPreview);
+      els.addForm.addEventListener("submit", event => {
+        event.preventDefault();
+        addTaskFromForm();
+      });
+
+      els.planForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const text = els.planText.value.trim();
+        if (!text) return;
+        const dayPlans = state.plans[state.selectedDate] || [];
+        dayPlans.push({ text, priority: els.planPriority.value });
+        state.plans[state.selectedDate] = dayPlans;
+        els.planText.value = "";
+        renderCalendar();
+        renderAchievements();
+        toast("План зафіксовано", "Добро отримало дату, час і ковбойську відповідальність.");
+      });
+
+      els.profileForm.addEventListener("submit", event => {
+        event.preventDefault();
+        state.user.name = els.profileName.value.trim() || "Ковбой добра";
+        state.user.motto = els.profileMotto.value.trim() || state.user.motto;
+        renderAll();
+        toast("Стиль збережено", "Профіль звучить гостріше, салун киває схвально.");
+      });
+
+      els.closeLevelOverlay.addEventListener("click", () => {
+        els.levelOverlay.classList.add("hidden");
+      });
+
+      window.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          closeAddModal();
+          els.levelOverlay.classList.add("hidden");
+        }
+      });
+    }
+
+    function handleAction(action) {
+      const handlers = {
+        "demo-fill": () => {
+          showScreen("home");
+          toast("Демо режим увімкнено", "Усе вже клікається: додавай справи, плануй, міняй тотема й дивись статистику.");
+        },
+        "sort-tasks": () => {
+          state.sortNewest = !state.sortNewest;
+          renderTasks();
+          toast("Журнал перемішано", state.sortNewest ? "Свіжі справи знову зверху." : "Тепер дивимось шлях від першого подвигу.");
+        },
+        "random-quote": () => {
+          els.randomQuote.textContent = sample(praisePhrases);
+        },
+        "shuffle-missions": () => renderQuickMissions(),
+        "add-random-week": () => {
+          const idea = sample(quickIdeas);
+          state.tasks.unshift({ text: idea[0] + ": " + idea[1], points: Math.random() > 0.45 ? 2 : 1, media: Math.random() > 0.5, date: offsetDate(Math.floor(Math.random() * 7), -Math.floor(Math.random() * 6)) });
+          renderAll();
+          toast("Демо-справу додано", sample(praisePhrases));
+        },
+        "refresh-stats-copy": () => {
+          els.statsCopy.textContent = sample(statsPhrases);
+        },
+        "today-calendar": () => {
+          state.selectedDate = "2026-05-26";
+          renderCalendar();
+        },
+        "clear-plan-form": () => {
+          els.planText.value = "";
+          els.planPriority.selectedIndex = 0;
+        },
+        "level-party": () => {
+          showLevelOverlay(currentLevel(), true);
+        }
+      };
+      if (handlers[action]) handlers[action]();
+    }
+
+    function showScreen(name) {
+      document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
+      const target = document.getElementById(name + "Screen");
+      if (target) target.classList.add("active");
+      document.querySelectorAll(".nav-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.screen === name);
+      });
+      if (name === "home") rotateGreeting();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderAll() {
+      renderUser();
+      renderTotemSelection();
+      renderMascots();
+      renderProgress();
+      renderTasks();
+      renderQuickMissions();
+      renderStats();
+      renderCalendar();
+      renderAchievements();
+      renderThemes();
+      syncProfileInputs();
+    }
+
+    function renderUser() {
+      const initial = (state.user.name || "К").trim()[0].toUpperCase();
+      els.topName.textContent = state.user.name;
+      els.topLevel.textContent = "Рівень " + currentLevel();
+      els.profileNameTitle.textContent = state.user.name;
+      els.profileMottoText.textContent = state.user.motto;
+      if (state.user.photo) {
+        const image = `<img src="${state.user.photo}" alt="Фото профілю">`;
+        els.topAvatar.innerHTML = image;
+        els.photoPreview.innerHTML = image;
+      } else {
+        els.topAvatar.textContent = initial;
+        els.photoPreview.textContent = initial;
+      }
+      document.documentElement.style.setProperty("--aqua", activeTheme().vars[0]);
+      document.documentElement.style.setProperty("--mint", activeTheme().vars[1]);
+      document.documentElement.style.setProperty("--gold", activeTheme().vars[2]);
+    }
+
+    function renderTotemSelection() {
+      els.totemSelection.innerHTML = Object.values(animals).map(animal => `
+        <article class="animal-card ${state.selectedAnimal === animal.key ? "selected" : ""}" style="--animal-glow: ${animal.glow}" data-animal="${animal.key}">
+          <div class="totem-stage">
+            <div class="mascot-wrap">${mascotSvg(animal.key, currentLevel())}</div>
+          </div>
+          <h3>${animal.name}</h3>
+          <p>${animal.tone}</p>
+          <div class="animal-tags">
+            ${animal.tags.map(tag => `<span class="chip">${tag}</span>`).join("")}
+          </div>
+          <button class="primary-btn" type="button">${state.selectedAnimal === animal.key ? "Тотем активний" : "Обрати цього звіра"}</button>
+        </article>
+      `).join("");
+
+      els.totemSelection.querySelectorAll("[data-animal]").forEach(card => {
+        card.addEventListener("click", () => {
+          state.selectedAnimal = card.dataset.animal;
+          renderAll();
+          toast("Тотем обрано", `${animals[state.selectedAnimal].name} тепер з тобою. Робиш добро — він стає крутішим.`);
+          showScreen("home");
+        });
+      });
+    }
+
+    function renderMascots() {
+      const svg = mascotSvg(state.selectedAnimal, currentLevel());
+      ["heroMascot", "registerMascot", "homeMascot", "profileMascot", "levelMascot"].forEach(id => {
+        els[id].innerHTML = svg;
+      });
+      const animal = animals[state.selectedAnimal];
+      els.totemTitle.textContent = animal.name;
+      els.totemSubtitle.textContent = `${animal.tone} Відкрито: ${unlockedAccessories().join(", ") || "чистий старт без аксесуарів"}.`;
+    }
+
+    function renderProgress() {
+      const level = currentLevel();
+      const points = totalPoints();
+      const levelStart = levelThresholds[level - 1] || 0;
+      const next = levelThresholds[level] || levelThresholds[levelThresholds.length - 1];
+      const inLevel = points - levelStart;
+      const needed = Math.max(1, next - levelStart);
+      const percent = Math.min(100, Math.round((inLevel / needed) * 100));
+      els.karmaRing.style.setProperty("--progress", percent + "%");
+      els.levelNumber.textContent = level;
+      els.levelProgressText.textContent = level >= levelThresholds.length ? "максимум легенди" : `${inLevel} / ${needed} до рівня ${level + 1}`;
+      els.heroTotal.textContent = state.tasks.length;
+      els.heroLevel.textContent = level;
+      els.phonePoints.textContent = points;
+      els.phoneStreak.textContent = streakDays();
+      els.totalActs.textContent = state.tasks.length;
+      els.totalPoints.textContent = points;
+      els.todayActs.textContent = tasksForDays(0).length;
+      els.monthActs.textContent = monthTasks().length;
+      els.topLevel.textContent = "Рівень " + level;
+
+      els.levelLadder.innerHTML = levelNames.map((name, index) => {
+        const threshold = levelThresholds[index];
+        const done = points >= threshold;
+        const unlock = index === 0 ? "старт" : `${threshold} балів`;
+        const accessory = index === 0 ? "тотем прокинувся" : "відкриває " + accessoryNames[index - 1];
+        return `<div class="ladder-step ${done ? "done" : ""}">
+          <span class="ladder-dot"></span>
+          <div><b>Рівень ${index + 1}: ${name}</b><br><small>${unlock} — ${accessory}</small></div>
+        </div>`;
+      }).join("");
+    }
+
+    function renderTasks() {
+      const tasks = [...state.tasks].sort((a, b) => state.sortNewest ? new Date(b.date) - new Date(a.date) : new Date(a.date) - new Date(b.date));
+      if (!tasks.length) {
+        els.taskList.innerHTML = `<div class="empty-state">Журнал порожній. Натискай плюс і вписуй перший добрий постріл.</div>`;
+        return;
+      }
+      els.taskList.innerHTML = tasks.map(task => `
+        <article class="task-card">
+          <span class="task-orb">${task.media ? "M" : "K"}</span>
+          <div>
+            <b>${escapeHtml(task.text)}</b>
+            <small>${formatDate(task.date)}${task.media ? " · є медіа-доказ" : " · текстовий запис"}</small>
+          </div>
+          <span class="task-points">+${task.points}</span>
+        </article>
+      `).join("");
+    }
+
+    function renderQuickMissions() {
+      const shuffled = [...quickIdeas].sort(() => Math.random() - 0.5).slice(0, 4);
+      const cards = shuffled.map(([title, text]) => `
+        <button class="quick-card" type="button" data-idea="${escapeAttr(title + " — " + text)}">
+          <b>${title}</b>
+          <small>${text}</small>
+        </button>
+      `).join("");
+      els.quickMissions.innerHTML = cards;
+      els.modalSuggestions.innerHTML = cards;
+      document.querySelectorAll("[data-idea]").forEach(card => {
+        card.addEventListener("click", () => {
+          els.deedText.value = card.dataset.idea;
+          openAddModal();
+        });
+      });
+    }
+
+    function renderStats() {
+      const days = [6, 5, 4, 3, 2, 1, 0].map(daysAgo => ({
+        label: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"][new Date(offsetDate(daysAgo)).getDay()],
+        value: tasksForDays(daysAgo).length
+      }));
+      const max = Math.max(1, ...days.map(day => day.value));
+      els.weekChart.innerHTML = days.map(day => `
+        <div class="bar" style="height: ${Math.max(8, (day.value / max) * 92)}%;">
+          <b>${day.value}</b><span>${day.label}</span>
+        </div>
+      `).join("");
+
+      const thisWeek = tasksInRange(0, 6).length;
+      const previousWeek = tasksInRange(7, 13).length;
+      const delta = thisWeek - previousWeek;
+      els.monthRing.textContent = monthTasks().length;
+      els.mediaRing.textContent = state.tasks.filter(task => task.media).length;
+      els.deltaRing.textContent = delta >= 0 ? "+" + delta : String(delta);
+    }
+
+    function renderCalendar() {
+      const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
+      const firstDay = new Date("2026-05-01T12:00:00");
+      const daysInMonth = 31;
+      const offset = (firstDay.getDay() + 6) % 7;
+      const cells = [];
+      weekdays.forEach(day => cells.push(`<div class="weekday">${day}</div>`));
+      for (let i = 0; i < offset; i++) cells.push(`<div></div>`);
+      for (let day = 1; day <= daysInMonth; day++) {
+        const key = `2026-05-${String(day).padStart(2, "0")}`;
+        const plans = state.plans[key] || [];
+        const done = state.tasks.filter(task => task.date.slice(0, 10) === key).length;
+        cells.push(`
+          <button class="calendar-day ${plans.length ? "has-plan" : ""} ${state.selectedDate === key ? "active" : ""}" data-date="${key}">
+            <strong>${day}</strong>
+            ${done ? `<span>${done} виконано</span>` : plans.length ? `<span>${plans.length} план</span>` : ""}
+          </button>
+        `);
+      }
+      els.calendarGrid.innerHTML = cells.join("");
+      els.calendarGrid.querySelectorAll("[data-date]").forEach(day => {
+        day.addEventListener("click", () => {
+          state.selectedDate = day.dataset.date;
+          renderCalendar();
+        });
+      });
+
+      const date = new Date(state.selectedDate + "T12:00:00");
+      els.selectedDayTitle.textContent = `План на ${date.toLocaleDateString("uk-UA", { day: "numeric", month: "long" })}`;
+      const plans = state.plans[state.selectedDate] || [];
+      els.planList.innerHTML = plans.length ? plans.map(plan => `
+        <div class="plan-item">
+          <b>${escapeHtml(plan.text)}</b>
+          <small>${plan.priority}</small>
+        </div>
+      `).join("") : `<div class="empty-state">На цей день ще немає плану. Саме час зарядити календар добром.</div>`;
+    }
+
+    function renderAchievements() {
+      const progress = {
+        acts: state.tasks.length,
+        media: state.tasks.filter(task => task.media).length,
+        points: totalPoints(),
+        plans: Object.values(state.plans).flat().length,
+        streak: streakDays(),
+        level: currentLevel()
+      };
+      els.achievementGrid.innerHTML = achievements.map(([id, title, text, goal, type, color]) => {
+        const unlocked = progress[type] >= goal;
+        return `<button class="achievement-card ${unlocked ? "" : "locked"}" data-achievement="${id}" style="--badge-color: ${color}">
+          <span class="badge-art"></span>
+          <h3>${title}</h3>
+          <p>${text}</p>
+          <span class="chip ${unlocked ? "active" : ""}">${Math.min(progress[type], goal)} / ${goal}</span>
+        </button>`;
+      }).join("");
+      els.achievementGrid.querySelectorAll("[data-achievement]").forEach(card => {
+        card.addEventListener("click", () => {
+          const achievement = achievements.find(item => item[0] === card.dataset.achievement);
+          toast(achievement[1], card.classList.contains("locked") ? "Ще трохи добра — і ця штука твоя." : "Відкрито. Полиця трофеїв стала нахабніше блищати.");
+        });
+      });
+    }
+
+    function renderThemes() {
+      els.themeGrid.innerHTML = themes.map(theme => `
+        <button class="theme-card ${state.user.theme === theme.id ? "active" : ""}" type="button" data-theme="${theme.id}">
+          <div class="swatch" style="--swatch: ${theme.swatch}"></div>
+          <b>${theme.name}</b>
+        </button>
+      `).join("");
+      els.themeGrid.querySelectorAll("[data-theme]").forEach(card => {
+        card.addEventListener("click", () => {
+          state.user.theme = card.dataset.theme;
+          renderUser();
+          renderThemes();
+          toast("Тему змінено", "Інтерфейс перевзувся, але добрий характер лишився.");
+        });
+      });
+    }
+
+    function syncProfileInputs() {
+      els.profileName.value = state.user.name;
+      els.profileMotto.value = state.user.motto;
+    }
+
+    function openAddModal() {
+      els.addModal.classList.remove("hidden");
+      setTimeout(() => els.deedText.focus(), 80);
+    }
+
+    function closeAddModal() {
+      els.addModal.classList.add("hidden");
+    }
+
+    function addTaskFromForm() {
+      const text = els.deedText.value.trim();
+      if (!text) return;
+      const hadMedia = Boolean(els.deedMedia.files[0]);
+      const previousLevel = currentLevel();
+      state.tasks.unshift({
+        text,
+        points: hadMedia ? 2 : 1,
+        media: hadMedia,
+        date: new Date().toISOString()
+      });
+      els.deedText.value = "";
+      els.deedMedia.value = "";
+      els.mediaPreview.innerHTML = "Без медіа теж норм. Але з доказом карма дає ще один бал.";
+      closeAddModal();
+      renderAll();
+      const phrase = sample(praisePhrases);
+      els.randomQuote.textContent = phrase;
+      toast("Справу записано", phrase);
+      const nextLevel = currentLevel();
+      if (nextLevel > previousLevel) {
+        showLevelOverlay(nextLevel);
+      }
+      showScreen("home");
+    }
+
+    function renderMediaPreview() {
+      const file = els.deedMedia.files[0];
+      if (!file) {
+        els.mediaPreview.textContent = "Без медіа теж норм. Але з доказом карма дає ще один бал.";
+        return;
+      }
+      const url = URL.createObjectURL(file);
+      if (file.type.startsWith("image/")) {
+        els.mediaPreview.innerHTML = `<img src="${url}" alt="Медіа-доказ">`;
+      } else if (file.type.startsWith("video/")) {
+        els.mediaPreview.innerHTML = `<video src="${url}" controls></video>`;
+      } else if (file.type.startsWith("audio/")) {
+        els.mediaPreview.innerHTML = `<audio src="${url}" controls></audio>`;
+      } else {
+        els.mediaPreview.textContent = file.name;
+      }
+    }
+
+    function showLevelOverlay(level, manual = false) {
+      renderMascots();
+      els.levelTitle.textContent = `Рівень ${level}: ${levelNames[level - 1] || "Легенда"}`;
+      const accessory = accessoryNames[level - 2];
+      els.levelText.textContent = manual
+        ? "Шоу запущено вручну: тотем сяє, карма робить коло пошани."
+        : `Оце так заїзд. Тотем відкрив ${accessory || "нову харизму"}, а карма просить продовження.`;
+      els.levelOverlay.classList.remove("hidden");
+      burstConfetti();
+    }
+
+    function burstConfetti() {
+      const colors = ["#55d8c9", "#70f0b8", "#ffd36e", "#ff7aa8", "#9f8cff", "#63a7ff"];
+      for (let i = 0; i < 90; i++) {
+        const piece = document.createElement("span");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.top = "-20px";
+        piece.style.background = colors[i % colors.length];
+        piece.style.setProperty("--x", (Math.random() * 280 - 140) + "px");
+        piece.style.animationDelay = Math.random() * 0.45 + "s";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 2200);
+      }
+    }
+
+    function toast(title, message) {
+      const node = document.createElement("div");
+      node.className = "toast";
+      node.innerHTML = `<b>${escapeHtml(title)}</b><p>${escapeHtml(message)}</p>`;
+      els.toastStack.prepend(node);
+      setTimeout(() => node.remove(), 5200);
+    }
+
+    function rotateGreeting() {
+      const greeting = sample(greetings);
+      els.heroGreeting.textContent = greeting;
+      els.homeGreeting.textContent = greeting.replace("ковбой", state.user.name.split(" ")[0] || "ковбой");
+    }
+
+    function mascotSvg(type, level) {
+      const animal = animals[type] || animals.bull;
+      const commonAccessories = accessoriesSvg(level, animal.accent);
+      if (type === "cat") {
+        return `
+          <svg viewBox="0 0 220 220" role="img" aria-label="${animal.name}">
+            <defs>${svgDefs(animal)}</defs>
+            <ellipse cx="110" cy="187" rx="62" ry="13" fill="rgba(0,0,0,0.24)"/>
+            <path d="M54 95 C50 62 76 42 95 61 L110 76 L126 61 C145 42 171 62 166 95 C181 116 178 152 157 171 C134 193 87 193 63 171 C42 152 39 116 54 95Z" fill="url(#bodyGrad)"/>
+            <path d="M72 80 L55 42 L93 65Z" fill="${animal.body}" stroke="rgba(255,255,255,0.2)" stroke-width="4"/>
+            <path d="M148 80 L165 42 L127 65Z" fill="${animal.body}" stroke="rgba(255,255,255,0.2)" stroke-width="4"/>
+            <path d="M66 112 C73 84 147 84 154 112 C163 151 138 176 110 176 C82 176 57 151 66 112Z" fill="${animal.face}"/>
+            <circle cx="86" cy="123" r="8" fill="#08111a"/><circle cx="134" cy="123" r="8" fill="#08111a"/>
+            <path d="M105 139 L115 139 L110 147Z" fill="${animal.accent}"/>
+            <path d="M96 154 C103 160 117 160 124 154" fill="none" stroke="#111827" stroke-width="5" stroke-linecap="round"/>
+            <path d="M52 150 C25 154 28 109 59 118" fill="none" stroke="${animal.accent}" stroke-width="13" stroke-linecap="round"/>
+            ${commonAccessories}
+          </svg>`;
+      }
+      if (type === "dog") {
+        return `
+          <svg viewBox="0 0 220 220" role="img" aria-label="${animal.name}">
+            <defs>${svgDefs(animal)}</defs>
+            <ellipse cx="110" cy="187" rx="62" ry="13" fill="rgba(0,0,0,0.24)"/>
+            <path d="M58 106 C50 72 78 50 110 50 C142 50 170 72 162 106 C178 123 174 155 152 174 C130 193 90 193 68 174 C46 155 42 123 58 106Z" fill="url(#bodyGrad)"/>
+            <path d="M66 85 C41 75 34 105 55 128 C64 116 68 100 66 85Z" fill="${animal.body}"/>
+            <path d="M154 85 C179 75 186 105 165 128 C156 116 152 100 154 85Z" fill="${animal.body}"/>
+            <path d="M70 112 C79 89 141 89 150 112 C160 150 136 176 110 176 C84 176 60 150 70 112Z" fill="${animal.face}"/>
+            <circle cx="88" cy="124" r="8" fill="#08111a"/><circle cx="132" cy="124" r="8" fill="#08111a"/>
+            <path d="M101 140 C106 134 114 134 119 140 C117 150 103 150 101 140Z" fill="#101722"/>
+            <path d="M97 157 C105 166 119 166 127 157" fill="none" stroke="#111827" stroke-width="5" stroke-linecap="round"/>
+            <path d="M151 151 C181 146 190 168 170 179" fill="none" stroke="${animal.accent}" stroke-width="12" stroke-linecap="round"/>
+            ${commonAccessories}
+          </svg>`;
+      }
+      return `
+        <svg viewBox="0 0 220 220" role="img" aria-label="${animal.name}">
+          <defs>${svgDefs(animal)}</defs>
+          <ellipse cx="110" cy="187" rx="66" ry="13" fill="rgba(0,0,0,0.24)"/>
+          <path d="M54 114 C48 76 74 50 110 50 C146 50 172 76 166 114 C181 132 175 163 151 179 C128 195 92 195 69 179 C45 163 39 132 54 114Z" fill="url(#bodyGrad)"/>
+          <path d="M75 71 C54 40 25 52 28 77 C46 67 60 70 75 90Z" fill="${animal.accent}"/>
+          <path d="M145 71 C166 40 195 52 192 77 C174 67 160 70 145 90Z" fill="${animal.accent}"/>
+          <path d="M68 111 C76 84 144 84 152 111 C164 151 138 178 110 178 C82 178 56 151 68 111Z" fill="${animal.face}"/>
+          <circle cx="87" cy="123" r="8" fill="#08111a"/><circle cx="133" cy="123" r="8" fill="#08111a"/>
+          <path d="M100 142 C106 148 114 148 120 142" fill="none" stroke="#111827" stroke-width="5" stroke-linecap="round"/>
+          <path d="M89 141 L131 141 L123 158 L97 158Z" fill="rgba(255,255,255,0.2)"/>
+          ${commonAccessories}
+        </svg>`;
+    }
+
+    function svgDefs(animal) {
+      return `
+        <linearGradient id="bodyGrad" x1="45" y1="38" x2="178" y2="184" gradientUnits="userSpaceOnUse">
+          <stop stop-color="${animal.face}"/>
+          <stop offset="0.58" stop-color="${animal.body}"/>
+          <stop offset="1" stop-color="#202838"/>
+        </linearGradient>
+        <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      `;
+    }
+
+    function accessoriesSvg(level, accent) {
+      const parts = [];
+      if (level >= 2) {
+        parts.push(`<circle class="accessory" cx="144" cy="154" r="10" fill="none" stroke="${accent}" stroke-width="5" filter="url(#softGlow)"/>`);
+      }
+      if (level >= 3) {
+        parts.push(`<path class="accessory" d="M76 65 L145 65 L136 42 L87 42Z" fill="#101722" stroke="${accent}" stroke-width="4"/><path class="accessory" d="M66 68 L154 68" stroke="${accent}" stroke-width="7" stroke-linecap="round"/>`);
+      }
+      if (level >= 4) {
+        parts.push(`<path class="accessory" d="M79 168 C98 184 126 184 145 168 L137 198 L87 198Z" fill="${accent}" opacity="0.62"/>`);
+      }
+      if (level >= 5) {
+        parts.push(`<path class="accessory" d="M164 126 C205 126 205 174 165 174 C136 174 136 142 162 142" fill="none" stroke="#ffd36e" stroke-width="6" stroke-linecap="round"/>`);
+      }
+      if (level >= 6) {
+        parts.push(`<path class="accessory" d="M76 188 L66 207 M144 188 L154 207" stroke="#ff7aa8" stroke-width="6" stroke-linecap="round"/>`);
+      }
+      if (level >= 7) {
+        parts.push(`<path class="accessory" d="M82 51 L97 28 L110 50 L124 28 L139 51 Z" fill="#ffd36e" stroke="#fff1b8" stroke-width="3"/>`);
+      }
+      return parts.join("");
+    }
+
+    function currentLevel() {
+      const points = totalPoints();
+      let level = 1;
+      for (let i = 0; i < levelThresholds.length; i++) {
+        if (points >= levelThresholds[i]) level = i + 1;
+      }
+      return level;
+    }
+
+    function unlockedAccessories() {
+      return accessoryNames.slice(0, Math.max(0, currentLevel() - 1));
+    }
+
+    function totalPoints() {
+      return state.tasks.reduce((sum, task) => sum + task.points, 0);
+    }
+
+    function monthTasks() {
+      return state.tasks.filter(task => task.date.slice(0, 7) === "2026-05" || sameMonth(new Date(task.date), new Date()));
+    }
+
+    function tasksForDays(daysAgo) {
+      const target = new Date(offsetDate(daysAgo));
+      return state.tasks.filter(task => sameDay(new Date(task.date), target));
+    }
+
+    function tasksInRange(fromDaysAgo, toDaysAgo) {
+      return state.tasks.filter(task => {
+        const date = new Date(task.date);
+        return Array.from({ length: toDaysAgo - fromDaysAgo + 1 }, (_, i) => fromDaysAgo + i).some(daysAgo => sameDay(date, new Date(offsetDate(daysAgo))));
+      });
+    }
+
+    function streakDays() {
+      return new Set(state.tasks.map(task => task.date.slice(0, 10))).size;
+    }
+
+    function offsetDate(daysAgo = 0, hoursOffset = 0) {
+      const date = new Date();
+      date.setDate(date.getDate() - daysAgo);
+      date.setHours(Math.max(8, date.getHours() + hoursOffset), Math.floor(Math.random() * 55), 0, 0);
+      return date.toISOString();
+    }
+
+    function sameDay(a, b) {
+      return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+    }
+
+    function sameMonth(a, b) {
+      return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth();
+    }
+
+    function formatDate(value) {
+      return new Date(value).toLocaleString("uk-UA", {
+        day: "2-digit",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function sample(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function activeTheme() {
+      return themes.find(theme => theme.id === state.user.theme) || themes[0];
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replaceAll("\n", " ");
+    }
+  </script>
+</body>
+</html>
