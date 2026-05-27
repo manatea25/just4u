@@ -60,58 +60,69 @@
       width: min(1120px, 100%);
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 0.92fr 1.08fr;
       gap: 10px;
-      align-items: center;
+      align-items: stretch;
     }
 
-    .logo-box {
+    .logo-wrap {
       border: 1px solid #3a5378;
-      border-radius: 13px;
-      padding: 7px 10px;
+      border-radius: 14px;
       background: #10203a;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      padding: 8px;
+      display: grid;
+      align-content: center;
+      gap: 6px;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
-    .logo-word {
+    .logo-image-frame {
+      border: 1px solid #405b82;
+      border-radius: 12px;
+      background: #0d1b31;
+      padding: 8px;
+      min-height: 66px;
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-image {
+      display: block;
+      width: 100%;
+      max-height: 54px;
+      object-fit: contain;
+    }
+
+    .logo-fallback {
+      display: none;
+      color: #f1f7ff;
       font-weight: 900;
       letter-spacing: 0.2px;
       font-size: 1.2rem;
-      color: #f1f7ff;
-    }
-
-    .logo-mark {
-      width: 33px;
-      height: 33px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      color: white;
-      background: linear-gradient(145deg, #7fe8df, #58d0c5);
-      box-shadow: 0 8px 16px rgba(88, 208, 197, 0.35);
-      font-size: 1rem;
+      text-align: center;
     }
 
     .logo-sub {
       color: var(--muted);
       font-size: 0.75rem;
       font-weight: 700;
-      margin-top: 2px;
+      text-align: center;
     }
 
-    .moral-meter {
+    .dual-meter {
       border: 1px solid #3a5378;
       border-radius: 14px;
       background: #142640;
-      padding: 8px 10px;
+      padding: 8px;
       position: relative;
       overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 8px;
+      align-items: end;
     }
 
-    .moral-meter::after {
+    .dual-meter::after {
       content: "";
       position: absolute;
       width: 130px;
@@ -129,96 +140,153 @@
       80%, 100% { left: calc(100% + 90px); }
     }
 
-    .moral-head {
+    .meter-side {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      align-items: end;
       gap: 8px;
-      margin-bottom: 6px;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
     }
 
-    .moral-side {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: #c8daf2;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+    .meter-side.good {
+      justify-content: flex-end;
+    }
+
+    .meter-character {
+      display: block;
+      width: auto;
+      max-width: 72px;
+      max-height: 118px;
+      object-fit: contain;
+      object-position: bottom;
+      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.35));
+    }
+
+    .meter-character-fallback {
+      display: none;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      border: 1px solid #4d6890;
+      background: #1a2f4d;
+      place-items: center;
+      font-size: 1.4rem;
+      box-shadow: 0 8px 16px rgba(6, 12, 22, 0.45);
+    }
+
+    .vertical-meter-wrap {
+      display: grid;
+      justify-items: center;
+      gap: 5px;
+      min-width: 56px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .v-label {
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
       white-space: nowrap;
     }
 
-    .moral-side.good { color: #b8ffdd; }
-    .moral-side.bad { color: #ffc3ce; }
+    .v-label.good { color: #b8ffdd; }
+    .v-label.bad { color: #ffc3ce; }
+
+    .v-track {
+      width: 16px;
+      height: 112px;
+      border-radius: 999px;
+      border: 1px solid #466388;
+      background: #0f1f36;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 2px;
+    }
+
+    .v-fill {
+      width: 100%;
+      height: 0%;
+      border-radius: 999px;
+      transition: height 880ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .v-fill.good {
+      background: linear-gradient(180deg, #8cf2e8, #47c9be);
+      box-shadow: 0 0 12px rgba(100, 217, 207, 0.58);
+    }
+
+    .v-fill.bad {
+      background: linear-gradient(180deg, #ff9fb0, #ff6a82);
+      box-shadow: 0 0 12px rgba(255, 109, 131, 0.5);
+    }
+
+    .v-count {
+      font-size: 0.8rem;
+      font-weight: 900;
+      border-radius: 999px;
+      padding: 2px 8px;
+      border: 1px solid;
+      min-width: 42px;
+      text-align: center;
+    }
+
+    .v-count.good {
+      color: #dcfff8;
+      border-color: #83e6dd;
+      background: rgba(47, 116, 109, 0.52);
+    }
+
+    .v-count.bad {
+      color: #ffe6eb;
+      border-color: #ff9cae;
+      background: rgba(125, 52, 69, 0.5);
+    }
+
+    .balance-core {
+      min-width: 94px;
+      display: grid;
+      justify-items: center;
+      gap: 6px;
+      text-align: center;
+      align-content: center;
+      align-self: center;
+      position: relative;
+      z-index: 1;
+    }
 
     .balance-pill {
       border-radius: 999px;
       border: 1px solid #83e6dd;
       background: linear-gradient(145deg, #1c4a4a, #1f6260);
       color: #cafff8;
-      padding: 3px 9px;
+      padding: 4px 10px;
       font-weight: 900;
       font-size: 0.78rem;
       display: inline-flex;
       align-items: center;
       gap: 4px;
       transition: transform 0.3s ease;
+      white-space: nowrap;
     }
 
     .balance-pill.bump {
       transform: scale(1.09);
     }
 
-    .moral-track {
-      width: 100%;
-      height: 12px;
-      border-radius: 999px;
-      border: 1px solid #466388;
-      background: #0f1f36;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .moral-center {
-      position: absolute;
-      top: -2px;
-      bottom: -2px;
-      left: 50%;
-      width: 2px;
-      background: rgba(255, 255, 255, 0.45);
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-      z-index: 2;
-    }
-
-    .moral-fill {
-      position: absolute;
-      top: 1px;
-      bottom: 1px;
-      width: 0%;
-      border-radius: 999px;
-      transition: width 880ms cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 1;
-    }
-
-    .moral-fill.good {
-      left: 50%;
-      background: linear-gradient(90deg, #7ae7dd, #47c9be);
-      box-shadow: 0 0 14px rgba(100, 217, 207, 0.6);
-    }
-
-    .moral-fill.bad {
-      right: 50%;
-      background: linear-gradient(90deg, #ff8094, #ff6a82);
-      box-shadow: 0 0 14px rgba(255, 109, 131, 0.55);
-    }
-
     .moral-hint {
-      margin-top: 5px;
       color: #9bb2d3;
-      font-size: 0.73rem;
+      font-size: 0.7rem;
       font-weight: 700;
+      line-height: 1.25;
+      max-width: 102px;
     }
 
-    .screen {
+.screen {
       display: none;
       padding-top: 14px;
       animation: pop-in 0.2s ease;
@@ -549,7 +617,13 @@
     @keyframes spark-fly { 0% { opacity: 1; transform: translate(0, 0) scale(1); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); } }
 
     @media (min-width: 860px) { .home-grid { grid-template-columns: 1.2fr 0.8fr; } }
-    @media (max-width: 660px) { .topbar-row { grid-template-columns: 1fr; } }
+    @media (max-width: 860px) {
+      .topbar-row { grid-template-columns: 1fr; }
+      .dual-meter { grid-template-columns: 1fr; }
+      .balance-core { min-width: 0; max-width: none; }
+      .moral-hint { max-width: none; }
+      .meter-side, .meter-side.good { justify-content: center; }
+    }
     @media (max-width: 560px) {
       .grid-2, .stats-grid { grid-template-columns: 1fr; }
       .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -562,24 +636,36 @@
   <div class="app">
     <header class="topbar">
       <div class="topbar-row">
-        <div>
-          <div class="logo-box">
-            <div class="logo-word">KarmoMetr</div>
-            <div class="logo-mark">👍</div>
+        <div class="logo-wrap">
+          <div class="logo-image-frame">
+            <img src="assets/karmometr-logo.png" alt="KarmoMetr logo" class="logo-image" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <div class="logo-fallback">KarmoMetr</div>
           </div>
           <div class="logo-sub">Кармася Техася · Добро на максималках</div>
         </div>
-        <div class="moral-meter">
-          <div class="moral-head">
-            <span class="moral-side good">😇 + <b id="goodCountTop">0</b></span>
-            <span class="balance-pill" id="balancePill">⚖️ 0</span>
-            <span class="moral-side bad"><b id="badCountTop">0</b> - 😈</span>
+        <div class="dual-meter">
+          <div class="meter-side bad">
+            <img src="assets/devil.png" alt="Дияволиця" class="meter-character" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+            <div class="meter-character-fallback">😈</div>
+            <div class="vertical-meter-wrap">
+              <span class="v-label bad">Погані</span>
+              <div class="v-track bad"><div id="badVerticalFill" class="v-fill bad"></div></div>
+              <span id="badCountTop" class="v-count bad">0</span>
+            </div>
           </div>
-          <div class="moral-track">
-            <div class="moral-center"></div>
-            <div id="moralFill" class="moral-fill good"></div>
+          <div class="balance-core">
+            <span class="balance-pill" id="balancePill">⚖️ +0</span>
+            <div id="moralHint" class="moral-hint">Баланс нейтральний. Один добрий хід змінить усе.</div>
           </div>
-          <div id="moralHint" class="moral-hint">Баланс нейтральний. Один добрий хід змінить усе.</div>
+          <div class="meter-side good">
+            <div class="vertical-meter-wrap">
+              <span class="v-label good">Добрі</span>
+              <div class="v-track good"><div id="goodVerticalFill" class="v-fill good"></div></div>
+              <span id="goodCountTop" class="v-count good">0</span>
+            </div>
+            <img src="assets/angel.png" alt="Янгол" class="meter-character" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+            <div class="meter-character-fallback">😇</div>
+          </div>
         </div>
       </div>
     </header>
@@ -989,15 +1075,17 @@
       requestAnimationFrame(frame);
     }
 
-    function spawnHeaderSparks() {
-      const rect = document.getElementById("moralFill").getBoundingClientRect();
+    function spawnHeaderSparks(targetId = "goodVerticalFill") {
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
       for (let i = 0; i < 14; i += 1) {
         const dot = document.createElement("span");
         dot.className = "spark";
-        dot.style.left = `${rect.left + rect.width + Math.random() * 8}px`;
-        dot.style.top = `${rect.top + rect.height / 2}px`;
-        dot.style.setProperty("--dx", `${(Math.random() - 0.5) * 170}px`);
-        dot.style.setProperty("--dy", `${(Math.random() - 0.7) * 120}px`);
+        dot.style.left = `${rect.left + rect.width / 2 + (Math.random() - 0.5) * 12}px`;
+        dot.style.top = `${rect.top + rect.height * (0.2 + Math.random() * 0.75)}px`;
+        dot.style.setProperty("--dx", `${(Math.random() - 0.5) * 160}px`);
+        dot.style.setProperty("--dy", `${(Math.random() - 0.8) * 140}px`);
         document.body.appendChild(dot);
         setTimeout(() => dot.remove(), 760);
       }
@@ -1008,34 +1096,28 @@
       const balance = totalPoints();
       const good = goodCount();
       const bad = badCount();
-      const maxRange = 40;
-      const ratio = Math.max(-1, Math.min(1, balance / maxRange));
-      const fill = document.getElementById("moralFill");
-      fill.classList.remove("good", "bad");
-      if (ratio >= 0) {
-        fill.classList.add("good");
-        fill.style.left = "50%";
-        fill.style.right = "auto";
-        fill.style.width = `${ratio * 50}%`;
-      } else {
-        fill.classList.add("bad");
-        fill.style.right = "50%";
-        fill.style.left = "auto";
-        fill.style.width = `${Math.abs(ratio) * 50}%`;
-      }
+      const scaleMax = Math.max(4, good, bad);
+      const goodPercent = Math.min(100, (good / scaleMax) * 100);
+      const badPercent = Math.min(100, (bad / scaleMax) * 100);
+
+      const goodFill = document.getElementById("goodVerticalFill");
+      const badFill = document.getElementById("badVerticalFill");
+      if (goodFill) goodFill.style.height = `${goodPercent}%`;
+      if (badFill) badFill.style.height = `${badPercent}%`;
 
       document.getElementById("goodCountTop").textContent = good;
       document.getElementById("badCountTop").textContent = bad;
       document.getElementById("moralHint").textContent =
         balance > 0
-          ? `Баланс у плюсi: +${balance}. Ти на світлій стороні.`
+          ? `Баланс у плюсі: +${balance}. Ти на світлій стороні.`
           : balance < 0
             ? `Баланс у мінусі: ${balance}. Час для доброго реваншу.`
             : "Баланс нейтральний. Один добрий хід змінить усе.";
 
       if (animate) {
         animateBalancePill(previousBalance, balance);
-        spawnHeaderSparks();
+        const sparkTarget = balance >= previousBalance ? "goodVerticalFill" : "badVerticalFill";
+        spawnHeaderSparks(sparkTarget);
       } else {
         document.getElementById("balancePill").textContent = `⚖️ ${balance >= 0 ? "+" : ""}${balance}`;
       }
